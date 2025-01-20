@@ -4,6 +4,7 @@
 //
 //  Created by 정성윤 on 2024/07/14.
 //
+//release 1.0.0
 
 import UIKit
 import SnapKit
