@@ -23,21 +23,32 @@ final class AdsCollectionViewCell : UICollectionViewCell, GADBannerViewDelegate 
     }()
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setLayout()
+        configureView()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
+
 //MARK: - UI Layout
 private extension AdsCollectionViewCell {
-    private func setLayout() {
-        self.backgroundColor = .white
-        
+    private func configureHierarchy() {
         self.addSubview(AdsView)
+        configureLayout()
+    }
+    
+    private func configureLayout() {
         AdsView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.verticalEdges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(24)
         }
+    }
+    
+    private func configureView() {
+        self.backgroundColor = .black
+        AdsView.clipsToBounds = true
+        AdsView.layer.cornerRadius = 15
+        configureHierarchy()
     }
 }
 //MARK: - Configure

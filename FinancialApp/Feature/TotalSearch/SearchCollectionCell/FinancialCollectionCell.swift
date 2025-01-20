@@ -17,7 +17,7 @@ final class FinancialCollectionCell : UICollectionViewCell {
     private let title : UILabel = {
         let label = UILabel()
         label.text = nil
-        label.textColor = .keyColor
+        label.textColor = .black
         label.backgroundColor = .white
         label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
         return label

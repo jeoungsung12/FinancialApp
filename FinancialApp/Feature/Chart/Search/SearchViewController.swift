@@ -19,10 +19,10 @@ class SearchViewController : UIViewController, UITextFieldDelegate {
     private let searchViewModel = SearchViewModel()
     private var coinData : [CoinDataWithAdditionalInfo] = []
     //MARK: UI Components
-    private lazy var tapGesture : UITapGestureRecognizer = {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        return gesture
-    }()
+//    private lazy var tapGesture : UITapGestureRecognizer = {
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+//        return gesture
+//    }()
     //검색 창
     private let searchView : UIView = {
         let view = UIView()
@@ -154,7 +154,7 @@ extension SearchViewController {
         self.navigationItem.titleView = searchView
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBtn)
         self.view.clipsToBounds = true
-        self.view.addGestureRecognizer(tapGesture)
+//        self.view.addGestureRecognizer(tapGesture)
         self.searchText.delegate = self
         
         totalView.addSubview(titleLabel)

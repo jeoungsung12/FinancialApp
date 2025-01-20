@@ -21,10 +21,10 @@ class OrderSearchViewController : UIViewController, UITextFieldDelegate {
     private var timer: Timer?
     
     //MARK: UI Components
-    private lazy var tapGesture : UITapGestureRecognizer = {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        return gesture
-    }()
+//    private lazy var tapGesture : UITapGestureRecognizer = {
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+//        return gesture
+//    }()
     //검색 창
     private let searchView : UIView = {
         let view = UIView()
@@ -132,7 +132,7 @@ extension OrderSearchViewController {
         self.navigationItem.titleView = searchView
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(customView: searchBtn)
         self.view.clipsToBounds = true
-        self.view.addGestureRecognizer(tapGesture)
+//        self.view.addGestureRecognizer(tapGesture)
         self.searchText.delegate = self
         
         totalView.addSubview(titleLabel)

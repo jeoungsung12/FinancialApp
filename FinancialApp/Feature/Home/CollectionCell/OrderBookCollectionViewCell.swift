@@ -14,11 +14,10 @@ import Foundation
 final class OrderBookCollectionViewCell : UICollectionViewCell {
     static let id : String = "OrderBookCollectionViewCell"
     //MARK: - UI Components
-    private let titleLabel : UITextField = {
-        let label = UITextField()
-        label.isEnabled = false
-        label.textColor = .black
-        label.backgroundColor = .white
+    private let titleLabel : UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.backgroundColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
@@ -27,22 +26,23 @@ final class OrderBookCollectionViewCell : UICollectionViewCell {
         let label = UILabel()
         label.textColor = .gray
         label.font = UIFont.systemFont(ofSize: 11, weight: .regular)
-        label.backgroundColor = .white
+        label.backgroundColor = .black
         return label
     }()
     //코인 가격
     private let price : UILabel = {
         let label = UILabel()
-        label.backgroundColor = .white
-        label.textColor = .black
+        label.backgroundColor = .black
+        label.textColor = .white
         label.font = UIFont.boldSystemFont(ofSize: 15)
         label.layer.borderWidth = 1
+        label.layer.borderColor = UIColor.black.cgColor
         return label
     }()
     //코인 상승세
     private let arrow : UILabel = {
         let label = UILabel()
-        label.backgroundColor = .white
+        label.backgroundColor = .black
         label.textColor = .gray
         label.font = UIFont.boldSystemFont(ofSize: 10)
         return label
@@ -84,24 +84,27 @@ private extension OrderBookCollectionViewCell {
 //MARK: - Configure
 extension OrderBookCollectionViewCell {
     public func configure(with model: [AddTradesModel]) {
+        //TODO: - 수정
         let name = model.compactMap{ $0.coinName }.first ?? ""
         let market = model.compactMap{ $0.tradesData.market }.first ?? ""
         let price = model.compactMap{ $0.tradesData.trade_price }.first ?? 0
         let ask_bid = model.compactMap{ $0.tradesData.ask_bid }.first ?? ""
         let volume = model.compactMap{ $0.tradesData.trade_volume }.first ?? 0
+        
         self.titleLabel.text = "\(name) \(market)"
         self.price.text = String(price)
+        //빼내기
         if ask_bid == "ASK" {
             self.price.layer.borderColor = UIColor.red.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.price.layer.borderColor = UIColor.white.cgColor
+                self.price.layer.borderColor = UIColor.black.cgColor
             }
             self.arrow.text = "📈매수"
             self.arrow.textColor = .red
         }else {
             self.price.layer.borderColor = UIColor.blue.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                self.price.layer.borderColor = UIColor.white.cgColor
+                self.price.layer.borderColor = UIColor.black.cgColor
             }
             self.arrow.text = "📉매도"
             self.arrow.textColor = .blue

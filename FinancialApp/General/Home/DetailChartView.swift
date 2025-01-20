@@ -1,0 +1,65 @@
+//
+//  DetailChartView.swift
+//  SeSAC_Week4(Assignment5)
+//
+//  Created by 정성윤 on 1/18/25.
+//
+
+import UIKit
+import SnapKit
+
+final class DetailChartView: UIView {
+    private let titleLabel = UILabel()
+    private var chartHostingViewController: ChartHostingViewController?
+    private var selectedType: Bool = false
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        configureView()
+    }
+    
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(_ title: String,_ highModel: [Double],_ lowModel: [Double]) {
+        titleLabel.text = title
+        chartHostingViewController = ChartHostingViewController(rootView: ChartView(chartData: [highModel, lowModel]))
+        configureView()
+    }
+       
+}
+
+extension DetailChartView {
+    
+    func configureHierachy() {
+        self.addSubview(titleLabel)
+        if let chartHostingViewController = chartHostingViewController {
+            self.addSubview(chartHostingViewController.view)
+        }
+        configureLayout()
+    }
+    
+    func configureLayout() {
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalToSuperview()
+            make.leading.equalToSuperview().offset(24)
+        }
+        
+        chartHostingViewController?.view.snp.makeConstraints { make in
+            make.height.equalTo(150)
+            make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.leading.trailing.bottom.equalToSuperview().inset(24)
+        }
+    }
+    
+    func configureView() {
+        titleLabel.textColor = .white
+        titleLabel.textAlignment = .left
+        titleLabel.font = .systemFont(ofSize: 20, weight: .heavy)
+        
+        configureHierachy()
+    }
+}

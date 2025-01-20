@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Light - Authentication.png",
+      "filename" : "splash.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Light - Authentication@2x.png",
+      "filename" : "splash@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Light - Authentication@3x.png",
+      "filename" : "splash@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

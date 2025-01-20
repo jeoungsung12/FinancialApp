@@ -25,7 +25,7 @@ class NewsViewController: UIViewController, UITextFieldDelegate, UIScrollViewDel
         btn.backgroundColor = .clear
         btn.contentMode = .scaleAspectFit
         btn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        btn.tintColor = .keyColor
+        btn.tintColor = .black
         return btn
     }()
     //타이틀

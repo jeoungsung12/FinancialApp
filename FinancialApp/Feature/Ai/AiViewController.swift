@@ -24,10 +24,10 @@ class AiViewController : UIViewController, UITextFieldDelegate {
     private var marketName : [String] = []
     
     //MARK: UI Components
-    private lazy var tapGesture : UITapGestureRecognizer = {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        return gesture
-    }()
+//    private lazy var tapGesture : UITapGestureRecognizer = {
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
+//        return gesture
+//    }()
     //검색 창
     private let searchView : UIView = {
         let view = UIView()
@@ -36,7 +36,7 @@ class AiViewController : UIViewController, UITextFieldDelegate {
         view.layer.cornerRadius = 10
         view.backgroundColor = .white
         view.layer.masksToBounds = true
-        view.layer.borderColor = UIColor.keyColor.cgColor
+        view.layer.borderColor = UIColor.black.cgColor
         view.frame = CGRect(x: 0, y: 0, width: 250, height: 35)
         return view
     }()
@@ -53,7 +53,7 @@ class AiViewController : UIViewController, UITextFieldDelegate {
     private let searchBtn : UIButton = {
         let btn = UIButton()
         btn.clipsToBounds = true
-        btn.tintColor = .keyColor
+        btn.tintColor = .black
         btn.backgroundColor = .clear
         btn.contentMode = .scaleAspectFit
         btn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
@@ -63,13 +63,13 @@ class AiViewController : UIViewController, UITextFieldDelegate {
     private let navigationTitleLabel : UILabel = {
         let label = UILabel()
         label.text = "Bitcher"
-        label.textColor = .keyColor
+        label.textColor = .black
         label.textAlignment = .center
         label.font = UIFont.boldSystemFont(ofSize: 20)
         return label
     }()
     private let loadingIndicator : NVActivityIndicatorView = {
-        let view = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), type: .ballBeat, color: .keyColor)
+        let view = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), type: .ballBeat, color: .gray)
         view.clipsToBounds = true
         return view
     }()
@@ -139,7 +139,7 @@ extension AiViewController {
         self.title = "Ai"
         self.view.clipsToBounds = true
         self.view.backgroundColor = .white
-        self.view.addGestureRecognizer(tapGesture)
+//        self.view.addGestureRecognizer(tapGesture)
         self.navigationItem.titleView = navigationTitleLabel
        
         self.searchText.text = nil

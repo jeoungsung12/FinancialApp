@@ -10,6 +10,10 @@ import RxSwift
 import RxCocoa
 import Alamofire
 
+enum CandleType {
+    
+}
+
 class CandleService {
     static func MinuteCandle(market : String, method : String) -> Observable<[CandleMinuteModel]> {
         return Observable.create { observer in
@@ -30,8 +34,11 @@ class CandleService {
     }
     static func DayCandle(market : String, method : String) -> Observable<[CandleDayModel]> {
         return Observable.create { observer in
-            let url = "https://api.upbit.com/v1/candles/\(method)?market=\(market)&count=30"
+            let url = "https://api.upbit.com/v1/candles/\(method)?market=\(market)&count=10"
             AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
+                .responseString { response in
+//                    print(response)
+                }
                 .validate()
                 .responseDecodable(of: [CandleDayModel].self) { response in
                     switch response.result {

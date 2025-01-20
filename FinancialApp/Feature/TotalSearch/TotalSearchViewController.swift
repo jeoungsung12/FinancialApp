@@ -30,7 +30,7 @@ class TotalSearchViewController : UIViewController, UITextFieldDelegate, UIColle
     private let searchViewModel = TotalSearchViewModel()
     private var coinData : [CoinDataWithAdditionalInfo] = []
     private var orderData : [AddTradesModel] = []
-    private var currentPage: [Section: Int] = [:]
+//    private var currentPage: [Section: Int] = [:]
     
     //코인명
     private var koreanName : [String] = []
@@ -69,15 +69,15 @@ class TotalSearchViewController : UIViewController, UITextFieldDelegate, UIColle
         view.register(SearchCollectionViewCell.self, forCellWithReuseIdentifier: SearchCollectionViewCell.id)
         return view
     }()
-    private lazy var tapGesture : UITapGestureRecognizer = {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard))
-        return gesture
-    }()
+//    private lazy var tapGesture : UITapGestureRecognizer = {
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
+//        return gesture
+//    }()
     //검색 창
     private let searchView : UIView = {
         let view = UIView()
         view.backgroundColor = .white
-        view.layer.borderColor = UIColor.keyColor.cgColor
+        view.layer.borderColor = UIColor.black.cgColor
         view.layer.cornerRadius = 10
         view.layer.masksToBounds = true
         view.layer.borderWidth = 1
@@ -100,7 +100,7 @@ class TotalSearchViewController : UIViewController, UITextFieldDelegate, UIColle
         let btn = UIButton()
         btn.backgroundColor = .white
         btn.setImage(UIImage(systemName: "magnifyingglass"), for: .normal)
-        btn.tintColor = .keyColor
+        btn.tintColor = .black
         return btn
     }()
     private lazy var moveBtn : UIButton = {
@@ -112,13 +112,13 @@ class TotalSearchViewController : UIViewController, UITextFieldDelegate, UIColle
         return btn
     }()
     private let loadingIndicator : NVActivityIndicatorView = {
-        let view = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), type: .ballBeat, color: .keyColor)
+        let view = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), type: .ballBeat, color: .black)
         return view
     }()
     private let logoLabel : UILabel = {
         let label = UILabel()
         label.text = "Bitcher"
-        label.textColor = .keyColor
+        label.textColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 20)
         label.textAlignment = .center
         return label
@@ -144,7 +144,7 @@ extension TotalSearchViewController {
         self.view.backgroundColor = .white
         self.navigationItem.titleView = logoLabel
         self.view.clipsToBounds = true
-        self.view.addGestureRecognizer(tapGesture)
+//        self.view.addGestureRecognizer(tapGesture)
         
         
         self.searchText.delegate = self

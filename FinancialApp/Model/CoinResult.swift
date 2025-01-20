@@ -8,8 +8,8 @@
 import Foundation
 
 struct CoinResult {
-    let category : [CategoryList]
-    let newsData : [NewsItems]
-    let coinData : [[CoinDataWithAdditionalInfo]]
-    let orderBook : [[AddTradesModel]]
+    let chartData: [CandleMinuteModel]
+    let newsData: [NewsItems]
+    let coinData: [[CoinDataWithAdditionalInfo]]
+    let orderBook: [[AddTradesModel]]
 }

@@ -6,57 +6,43 @@
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import SnapKit
-import Foundation
 
 final class NewsListCollectionViewCell : UICollectionViewCell {
     static let id = "NewsListCollectionViewCell"
-    //MARK: - UI Components
-    private let title : UILabel = {
+    private let titleLabel : UILabel = {
         let label = UILabel()
-        label.text = "📰 뉴스"
-        label.textColor = .keyColor
-        label.backgroundColor = .white
-        label.font = UIFont.systemFont(ofSize: 13, weight: .bold)
-        return label
-    }()
-    //뉴스제목
-    private let titleLabel : UITextView = {
-        let label = UITextView()
-        label.isEditable = false
-        label.textColor = .black
+        label.textColor = .white
+        label.numberOfLines = 1
         label.textAlignment = .left
-        label.isScrollEnabled = false
-        label.backgroundColor = .white
-        label.isUserInteractionEnabled = false
+        label.backgroundColor = .black
         label.font = UIFont.boldSystemFont(ofSize: 18)
         return label
     }()
-    //뉴스기사
-    private let decLabel : UITextView = {
-        let label = UITextView()
-        label.textColor = .gray
+    
+    private let decLabel : UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 2
+        label.textColor = .lightGray
         label.textAlignment = .left
-        label.isScrollEnabled = false
-        label.backgroundColor = .white
-        label.isUserInteractionEnabled = false
-        label.font = UIFont.systemFont(ofSize: 15)
+        label.backgroundColor = .black
+        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
         return label
     }()
-    //뉴스 발행일
+    
     private let dateLabel : UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .gray
+        label.numberOfLines = 1
         label.textAlignment = .right
-        label.backgroundColor = .white
-        label.font = UIFont.boldSystemFont(ofSize: 13)
+        label.backgroundColor = .black
+        label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return label
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setLayout()
+        configureView()
     }
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -64,51 +50,48 @@ final class NewsListCollectionViewCell : UICollectionViewCell {
 }
 //MARK: - UI Layout
 private extension NewsListCollectionViewCell {
-    private func setLayout() {
-        self.layer.borderWidth = 1
-        self.layer.cornerRadius = 15
-        self.layer.masksToBounds = true
-        self.layer.borderColor = UIColor.keyColor.cgColor
-        
-        self.addSubview(title)
+    
+    private func configureHierarchy() {
         self.addSubview(titleLabel)
         self.addSubview(decLabel)
         self.addSubview(dateLabel)
         
-        title.snp.makeConstraints { make in
-            make.height.equalTo(15)
-            make.leading.top.equalToSuperview().inset(10)
-        }
+        configureLayout()
+    }
+    
+    private func configureLayout() {
         titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(title.snp.bottom).offset(20)
-            make.leading.trailing.equalToSuperview().inset(10)
+            make.top.equalToSuperview()
+            make.leading.trailing.equalToSuperview().inset(24)
         }
         decLabel.snp.makeConstraints { make in
-            make.bottom.equalToSuperview().inset(20)
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.trailing.equalToSuperview().inset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(8)
+            make.leading.trailing.equalToSuperview().inset(24)
+            make.bottom.lessThanOrEqualToSuperview().offset(-4)
         }
         dateLabel.snp.makeConstraints { make in
-            make.trailing.bottom.equalToSuperview().inset(10)
+            make.top.equalTo(decLabel.snp.bottom).offset(4)
+            make.trailing.equalToSuperview().inset(24)
         }
+    }
+    
+    private func configureView() {
+        configureHierarchy()
     }
 }
 //MARK: - Action
 extension NewsListCollectionViewCell {
+    
     func configure(with model: NewsItems) {
-        let titleWithoutHTML = model.title?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).removingHTMLEntities()
-        titleLabel.text = "📢 \(titleWithoutHTML ?? "")"
-        let decWithoutHTML = model.description?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).removingHTMLEntities()
+        
+        
+        let titleWithoutHTML = UserDefinedFunction.shared.replacingOccurrences(model.title)
+        titleLabel.text = titleWithoutHTML
+        
+        let decWithoutHTML = UserDefinedFunction.shared.replacingOccurrences(model.description)
         decLabel.text = decWithoutHTML
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
-        if let date = dateFormatter.date(from: model.pubDate ?? "") {
-            dateFormatter.dateFormat = "EEE, dd MMM yyyy"
-            let formattedDate = dateFormatter.string(from: date)
-            dateLabel.text = formattedDate
-        } else {
-            print("날짜를 변환하는 동안 문제가 발생했습니다.")
-        }
+        
+        let date = UserDefinedFunction.shared.dateFormatter(date: model.pubDate)
+        dateLabel.text = date
     }
 }
