@@ -18,10 +18,10 @@ class OrderSearchViewModel {
     
     init() {
         //MARK: - SearchCoinInfo
-        searchInputrigger.flatMapLatest { coinName in
-            return SearchOrder.searchCoin(searchName: coinName)
-        }
-        .bind(to: searchResult)
-        .disposed(by: disposeBag)
+//        searchInputrigger.flatMapLatest { coinName in
+//            return SearchOrder.searchCoin(searchName: coinName)
+//        }
+//        .bind(to: searchResult)
+//        .disposed(by: disposeBag)
     }
 }

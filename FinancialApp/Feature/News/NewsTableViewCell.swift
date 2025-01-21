@@ -92,14 +92,14 @@ extension NewsTableViewCell {
         }
     }
     func configure(with model: NewsItems) {
-        let titleWithoutHTML = model.title?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).removingHTMLEntities()
-        titleLabel.text = "📢 \(titleWithoutHTML ?? "")"
-        let decWithoutHTML = model.description?.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).removingHTMLEntities()
+        let titleWithoutHTML = model.title.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).removingHTMLEntities()
+        titleLabel.text = "📢 \(titleWithoutHTML)"
+        let decWithoutHTML = model.description.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).removingHTMLEntities()
         decLabel.text = decWithoutHTML
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         dateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss Z"
-        if let date = dateFormatter.date(from: model.pubDate ?? "") {
+        if let date = dateFormatter.date(from: model.pubDate) {
             dateFormatter.dateFormat = "EEE, dd MMM yyyy"
             let formattedDate = dateFormatter.string(from: date)
             dateLabel.text = formattedDate

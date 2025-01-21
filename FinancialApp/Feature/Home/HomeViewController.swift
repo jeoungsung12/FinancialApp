@@ -39,7 +39,7 @@ extension HomeViewController {
     
     private func setNavigation() {
         self.view.backgroundColor = .black
-        self.navigationController?.setNaviagtion(vc: self, title: "", backTitle: "", color: .black)
+        self.navigationController?.setNaviagtion(vc: self, title: "", backTitle: "", color: .white)
     }
     
     private func configureHierarchy() {
@@ -50,7 +50,8 @@ extension HomeViewController {
     
     private func configureLayout() {
         collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
+            make.verticalEdges.equalTo(self.view.safeAreaInsets)
         }
         loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
@@ -88,24 +89,25 @@ private extension HomeViewController {
                 snapShot.appendSections([bannerSection])
                 snapShot.appendItems([chartItems], toSection: bannerSection)
                 
-                let newsItems = data.newsData.map { newsData in
-                    return HomeItem.newsList(newsData)
+                
+                let orderItems = data.orderBook.map { orderData in
+                    return HomeItem.orderBook(orderData)
                 }
                 let cagtegorySection = HomeSection.category
                 snapShot.appendSections([cagtegorySection])
-                snapShot.appendItems(newsItems, toSection: cagtegorySection)
+                snapShot.appendItems(orderItems, toSection: cagtegorySection)
                 
                 let AdsItems = HomeItem.Ads("")
                 let AdsSection = HomeSection.horizotional
                 snapShot.appendSections([AdsSection])
                 snapShot.appendItems([AdsItems], toSection: AdsSection)
                 
-                let orderItems = data.orderBook.map { orderData in
-                    return HomeItem.orderBook(orderData)
+                let newsItems = data.newsData.map { newsData in
+                    return HomeItem.newsList(newsData)
                 }
-                let orderSection = HomeSection.vertical
-                snapShot.appendSections([orderSection])
-                snapShot.appendItems(orderItems, toSection: orderSection)
+                let verticalSection = HomeSection.vertical
+                snapShot.appendSections([verticalSection])
+                snapShot.appendItems(newsItems, toSection: verticalSection)
                 
                 self.dataSource?.apply(snapShot)
                 self.loadingIndicator.stopAnimating()
@@ -117,7 +119,6 @@ private extension HomeViewController {
     }
     
     private func setBindView() {
-        //컬렉션 뷰 선택
         collectionView.rx.itemSelected.bind(onNext: { [weak self] indexPath in
             guard let self = self else { return }
             let item = self.dataSource?.itemIdentifier(for: indexPath)
@@ -126,8 +127,7 @@ private extension HomeViewController {
                 //TODO: - 수정
                 print("")
             case .newsList(let content):
-                guard let link = content.originallink else { return }
-                if let url = URL(string: link) {
+                if let url = URL(string: content.originallink) {
                     UIApplication.shared.open(url)
                 }
             case .Ads(_):

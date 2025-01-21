@@ -18,10 +18,10 @@ class SearchViewModel {
     
     init() {
         //MARK: - SearchCoinInfo
-        searchInputrigger.flatMapLatest { coinName in
-            return SearchCoin.searchCoin(searchName: coinName)
-        }
-        .bind(to: searchResult)
-        .disposed(by: disposeBag)
+//        searchInputrigger.flatMapLatest { coinName in
+//            return SearchCoin.searchCoin(searchName: coinName)
+//        }
+//        .bind(to: searchResult)
+//        .disposed(by: disposeBag)
     }
 }

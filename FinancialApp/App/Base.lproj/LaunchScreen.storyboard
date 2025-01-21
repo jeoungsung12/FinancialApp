@@ -21,22 +21,19 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="5tz-MA-SDX">
-                                <rect key="frame" x="0.0" y="276" width="393" height="300"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="300" id="8jP-Lt-yVo"/>
-                                </constraints>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splash" translatesAutoresizingMaskIntoConstraints="NO" id="WQh-g8-cu9">
+                                <rect key="frame" x="44" y="500" width="325" height="294"/>
                             </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="5tz-MA-SDX" secondAttribute="trailing" id="3oF-pw-aVJ"/>
                             <constraint firstItem="SxR-aL-cPs" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="9fG-ZP-oiD"/>
-                            <constraint firstItem="5tz-MA-SDX" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" id="Vb1-ti-Ccz"/>
-                            <constraint firstItem="5tz-MA-SDX" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="Z14-a9-200"/>
-                            <constraint firstItem="5tz-MA-SDX" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="j4u-gL-uOY"/>
+                            <constraint firstItem="WQh-g8-cu9" firstAttribute="top" secondItem="SxR-aL-cPs" secondAttribute="bottom" constant="44" id="PHY-JC-227"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WQh-g8-cu9" secondAttribute="trailing" constant="24" id="cVh-fD-9IP"/>
                             <constraint firstItem="SxR-aL-cPs" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="jGd-jC-AtS"/>
+                            <constraint firstItem="WQh-g8-cu9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="44" id="skc-ue-w0H"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WQh-g8-cu9" secondAttribute="bottom" constant="24" id="wAP-X6-uMX"/>
                         </constraints>
                     </view>
                 </viewController>
@@ -46,6 +43,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="splash" width="613" height="407"/>
+        <image name="splash" width="1288" height="968"/>
     </resources>
 </document>

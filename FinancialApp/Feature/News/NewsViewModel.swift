@@ -20,7 +20,7 @@ class NewsViewModel {
     init() {
         inputTrigger
             .subscribe { query in
-                NewsService.getNews(query: query, start: 1)
+                NewsService().getNews(query: query, display: 3)
                     .map { coinData -> [NewsItems] in
                         return coinData
                     }
@@ -29,9 +29,10 @@ class NewsViewModel {
             }
             .disposed(by: disposeBag)
     }
+    //TODO: - 변경
     func loadMoreData(query: String, completion: @escaping () -> Void) {
         currentPage += 1
-        NewsService.getNews(query: query, start: currentPage)
+        NewsService().getNews(query: query, display: 3)
             .map { coinData -> [NewsItems] in
                 return coinData
             }

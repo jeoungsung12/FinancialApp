@@ -32,27 +32,15 @@ struct ChartView: View {
             }
             .chartXAxis(.hidden)
             .chartYAxis(.hidden)
-            .background(.clear)
             
             Chart {
                 ForEach(chartData[1].indices, id: \.self) { index in
                     LineMark(x: .value("Date", index), y: .value("Value", chartData[1][index]))
                         .interpolationMethod(.cardinal)
-                    
-//                    AreaMark(x: .value("Date", index), y: .value("Value", chartData[1][index]))
-//                        .interpolationMethod(.cardinal)
-//                        .foregroundStyle(
-//                            LinearGradient(
-//                                gradient: Gradient(colors: [Color.blue.opacity(0.8), Color.white.opacity(0.3)]),
-//                                startPoint: .top,
-//                                endPoint: .bottom
-//                            )
-//                        )
                 }
             }
             .chartXAxis(.hidden)
             .chartYAxis(.hidden)
-            .background(.clear)
         }
     }
 }

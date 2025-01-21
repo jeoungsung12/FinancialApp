@@ -8,6 +8,6 @@
 import Foundation
 
 struct FinancialResult {
-    let financialData : [FinancialModel]
-    let loanData : [LoanModel]
+    let financialData: [FinancialModel]
+    let loanData: [LoanModel]
 }

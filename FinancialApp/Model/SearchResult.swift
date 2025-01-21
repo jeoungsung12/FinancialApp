@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct SearchResult : Hashable{
-    let coinData : [CoinDataWithAdditionalInfo]
-    let orderData : [AddTradesModel]
+struct SearchResult {
+    let coinData: [CoinDataWithAdditionalInfo]
+    let orderData: [AddTradesModel]
 }

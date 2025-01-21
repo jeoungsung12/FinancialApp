@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct CategoryList : Hashable, Codable {
-    let btnImage : String
-    let btnLabel : String
+struct CategoryList {
+    let btnImage: String
+    let btnLabel: String
 }

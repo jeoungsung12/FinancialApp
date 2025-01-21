@@ -14,7 +14,7 @@ enum HomeSection : Hashable {
     case vertical
 }
 enum HomeItem : Hashable {
-    case chart([CandleMinuteModel]) //TODO: - 변경
+    case chart([CandleModel]) //TODO: - 변경
     case newsList(NewsItems)
     case Ads(String)
     case orderBook([AddTradesModel])

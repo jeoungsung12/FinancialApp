@@ -20,6 +20,9 @@
 		E43C7EC52D3E478C009C81C2 /* DetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC22D3E478C009C81C2 /* DetailChartView.swift */; };
 		E43C7EC72D3E489F009C81C2 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC62D3E489F009C81C2 /* ChartData.swift */; };
 		E43C7EC92D3E4D76009C81C2 /* ChartCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC82D3E4D76009C81C2 /* ChartCellView.swift */; };
+		E43C80A22D3F2ACA009C81C2 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E43C80A12D3F2ACA009C81C2 /* Realm */; };
+		E43C80A42D3F2ACA009C81C2 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E43C80A32D3F2ACA009C81C2 /* RealmSwift */; };
+		E43C80A62D3F34CF009C81C2 /* DatabaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C80A52D3F34CF009C81C2 /* DatabaseObject.swift */; };
 		E45B49812D388BFD008803B6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E45B49802D388BFD008803B6 /* .gitignore */; };
 		E45B49BE2D38C518008803B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B49B72D38C518008803B6 /* SceneDelegate.swift */; };
 		E45B49BF2D38C518008803B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B49B62D38C518008803B6 /* AppDelegate.swift */; };
@@ -50,7 +53,6 @@
 		E4CAF4D92BB9B2AD00CB18EC /* CoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAF4D82BB9B2AD00CB18EC /* CoinService.swift */; };
 		E4CAF4DC2BB9B61C00CB18EC /* GetAllCoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAF4DB2BB9B61C00CB18EC /* GetAllCoinModel.swift */; };
 		E4CAF4DF2BBBB6F800CB18EC /* DGCharts in Frameworks */ = {isa = PBXBuildFile; productRef = E4CAF4DE2BBBB6F800CB18EC /* DGCharts */; };
-		E4CAF4E22BBBB70800CB18EC /* SCLAlertView in Frameworks */ = {isa = PBXBuildFile; productRef = E4CAF4E12BBBB70800CB18EC /* SCLAlertView */; };
 		E4CAF4E52BBBC9F900CB18EC /* SearchCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAF4E42BBBC9F900CB18EC /* SearchCoin.swift */; };
 		E4CAF4ED2BBBD04600CB18EC /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAF4EC2BBBD04500CB18EC /* SearchViewController.swift */; };
 		E4CAF4EF2BBBD04D00CB18EC /* SearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4CAF4EE2BBBD04D00CB18EC /* SearchViewModel.swift */; };
@@ -118,6 +120,7 @@
 		E43C7EC22D3E478C009C81C2 /* DetailChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChartView.swift; sourceTree = "<group>"; };
 		E43C7EC62D3E489F009C81C2 /* ChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
 		E43C7EC82D3E4D76009C81C2 /* ChartCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCellView.swift; sourceTree = "<group>"; };
+		E43C80A52D3F34CF009C81C2 /* DatabaseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseObject.swift; sourceTree = "<group>"; };
 		E45B49802D388BFD008803B6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E45B49B62D38C518008803B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E45B49B72D38C518008803B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -198,10 +201,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E43C80A42D3F2ACA009C81C2 /* RealmSwift in Frameworks */,
+				E43C80A22D3F2ACA009C81C2 /* Realm in Frameworks */,
 				E4F56AE42C5F4EAC00FE4DDF /* GoogleMobileAds in Frameworks */,
 				E4CAF4D72BB9AE0900CB18EC /* Kingfisher in Frameworks */,
 				E4DABECF2BBEB68E00AE9DFB /* iOSDropDown in Frameworks */,
-				E4CAF4E22BBBB70800CB18EC /* SCLAlertView in Frameworks */,
 				E4DABEBC2BBC7A2200AE9DFB /* NVActivityIndicatorView in Frameworks */,
 				E4CAF4BC2BB982FD00CB18EC /* Alamofire in Frameworks */,
 				E4CAF4B62BB982C600CB18EC /* SnapKit in Frameworks */,
@@ -391,6 +395,7 @@
 				E48306892C4914F90017F6B2 /* CoinResult.swift */,
 				E4DC77D02C4FA3B600B45001 /* SearchResult.swift */,
 				E4DC77E42C50ED6700B45001 /* FinancialResult.swift */,
+				E43C80A52D3F34CF009C81C2 /* DatabaseObject.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -675,10 +680,11 @@
 				E4CAF4BB2BB982FD00CB18EC /* Alamofire */,
 				E4CAF4D62BB9AE0900CB18EC /* Kingfisher */,
 				E4CAF4DE2BBBB6F800CB18EC /* DGCharts */,
-				E4CAF4E12BBBB70800CB18EC /* SCLAlertView */,
 				E4DABEBB2BBC7A2200AE9DFB /* NVActivityIndicatorView */,
 				E4DABECE2BBEB68E00AE9DFB /* iOSDropDown */,
 				E4F56AE32C5F4EAC00FE4DDF /* GoogleMobileAds */,
+				E43C80A12D3F2ACA009C81C2 /* Realm */,
+				E43C80A32D3F2ACA009C81C2 /* RealmSwift */,
 			);
 			productName = Beecher;
 			productReference = E4CAF4952BB9808300CB18EC /* FinancialApp.app */;
@@ -715,10 +721,10 @@
 				E4CAF4BA2BB982FD00CB18EC /* XCRemoteSwiftPackageReference "Alamofire" */,
 				E4CAF4D52BB9AE0900CB18EC /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				E4CAF4DD2BBBB6F800CB18EC /* XCRemoteSwiftPackageReference "Charts" */,
-				E4CAF4E02BBBB70700CB18EC /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */,
 				E4DABEBA2BBC7A2200AE9DFB /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 				E4DABECD2BBEB68D00AE9DFB /* XCRemoteSwiftPackageReference "iOSDropDown" */,
 				E4F56AE22C5F4EAC00FE4DDF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
+				E43C80A02D3F2ACA009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = E4CAF4962BB9808300CB18EC /* Products */;
 			projectDirPath = "";
@@ -789,6 +795,7 @@
 				E4DABF0E2BC2CBEC00AE9DFB /* NewsViewController.swift in Sources */,
 				E4DABF322BC2EDEA00AE9DFB /* ChatServiceModel.swift in Sources */,
 				E4DABF2D2BC2EAF900AE9DFB /* AiViewModel.swift in Sources */,
+				E43C80A62D3F34CF009C81C2 /* DatabaseObject.swift in Sources */,
 				E48306882C4909620017F6B2 /* CategoryList.swift in Sources */,
 				E4DABECC2BBEB21C00AE9DFB /* CandleModel.swift in Sources */,
 				E4CAF4DC2BB9B61C00CB18EC /* GetAllCoinModel.swift in Sources */,
@@ -1063,6 +1070,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		E43C80A02D3F2ACA009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		E4CAF4AF2BB982BD00CB18EC /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -1111,14 +1126,6 @@
 				minimumVersion = 5.0.0;
 			};
 		};
-		E4CAF4E02BBBB70700CB18EC /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/vikmeup/SCLAlertView-Swift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.8.2;
-			};
-		};
 		E4DABEBA2BBC7A2200AE9DFB /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ninjaprox/NVActivityIndicatorView.git";
@@ -1146,6 +1153,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E43C80A12D3F2ACA009C81C2 /* Realm */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E43C80A02D3F2ACA009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = Realm;
+		};
+		E43C80A32D3F2ACA009C81C2 /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E43C80A02D3F2ACA009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
+		};
 		E4CAF4B02BB982BD00CB18EC /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E4CAF4AF2BB982BD00CB18EC /* XCRemoteSwiftPackageReference "RxSwift" */;
@@ -1180,11 +1197,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E4CAF4DD2BBBB6F800CB18EC /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = DGCharts;
-		};
-		E4CAF4E12BBBB70800CB18EC /* SCLAlertView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4CAF4E02BBBB70700CB18EC /* XCRemoteSwiftPackageReference "SCLAlertView-Swift" */;
-			productName = SCLAlertView;
 		};
 		E4DABEBB2BBC7A2200AE9DFB /* NVActivityIndicatorView */ = {
 			isa = XCSwiftPackageProductDependency;

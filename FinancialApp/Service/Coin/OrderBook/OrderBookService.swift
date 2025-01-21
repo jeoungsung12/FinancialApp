@@ -46,29 +46,24 @@ class OrderBookService {
 //        print("시작 \(start), 끝 \(limit)")
 
         for (index, coinModel) in slicedData.enumerated() {
-            if let market = coinModel.market {
-                group.enter()
-                let delay = delayInterval * TimeInterval(index)
-                threadPool.asyncAfter(deadline: .now() + delay) {
-                    let url = "https://api.upbit.com/v1/trades/ticks?market=\(market)&count=1"
-                    AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
-                        .validate()
-                        .responseDecodable(of: [TradesModel].self) { response in
-                            defer { group.leave() }
-                            switch response.result {
-                            case .success(let coinData):
-                                if let coinName = coinModel.korean_name,
-                                   let englishName = coinModel.english_name{
-                                    let coinDataWithAdditionalInfo = coinData.map { AddTradesModel(tradesData: $0, coinName: coinName, englishName: englishName) }
-                                    DispatchQueue.main.async {
-                                        coinDataArray.append(coinDataWithAdditionalInfo)
-                                    }
-                                }
-                            case .failure(let error):
-                                print("\(error)")
+            group.enter()
+            let delay = delayInterval * TimeInterval(index)
+            threadPool.asyncAfter(deadline: .now() + delay) {
+                let url = "https://api.upbit.com/v1/trades/ticks?market=\(coinModel.market)&count=1"
+                AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
+                    .validate()
+                    .responseDecodable(of: [TradesModel].self) { response in
+                        defer { group.leave() }
+                        switch response.result {
+                        case .success(let coinData):
+                            let coinDataWithAdditionalInfo = coinData.map { AddTradesModel(tradesData: $0, coinName: coinModel.korean_name, englishName: coinModel.english_name) }
+                            DispatchQueue.main.async {
+                                coinDataArray.append(coinDataWithAdditionalInfo)
                             }
+                        case .failure(let error):
+                            print("\(error)")
                         }
-                }
+                    }
             }
         }
         group.notify(queue: .main) {

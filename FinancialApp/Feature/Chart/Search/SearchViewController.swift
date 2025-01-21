@@ -295,7 +295,7 @@ extension SearchViewController {
             .disposed(by: disposeBag)
         MoveBtn.rx.controlEvent(.touchUpInside)
             .subscribe { _ in
-                self.navigationController?.pushViewController(MainDetailViewController(coinData: self.coinData), animated: true)
+//                self.navigationController?.pushViewController(MainDetailViewController(coinData: self.coinData), animated: true)
             }
             .disposed(by: disposeBag)
     }

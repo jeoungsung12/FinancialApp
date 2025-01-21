@@ -46,28 +46,24 @@ class CoinService {
 //        print("시작 \(start), 끝 \(limit)")
 
         for (index, coinModel) in slicedData.enumerated() {
-            if let market = coinModel.market {
-                group.enter()
-                let delay = delayInterval * TimeInterval(index)
-                threadPool.asyncAfter(deadline: .now() + delay) {
-                    let url = "https://api.upbit.com/v1/ticker?markets=\(market)"
-                    AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
-                        .validate()
-                        .responseDecodable(of: [CoinData].self) { response in
-                            defer { group.leave() }
-                            switch response.result {
-                            case .success(let coinData):
-                                if let coinName = coinModel.korean_name {
-                                    let coinDataWithAdditionalInfo = coinData.map { CoinDataWithAdditionalInfo(coinData: $0, coinName: coinName) }
-                                    DispatchQueue.main.async {
-                                        coinDataArray.append(coinDataWithAdditionalInfo)
-                                    }
-                                }
-                            case .failure(let error):
-                                print("\(error)")
+            group.enter()
+            let delay = delayInterval * TimeInterval(index)
+            threadPool.asyncAfter(deadline: .now() + delay) {
+                let url = "https://api.upbit.com/v1/ticker?markets=\(coinModel.market)"
+                AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
+                    .validate()
+                    .responseDecodable(of: [CoinData].self) { response in
+                        defer { group.leave() }
+                        switch response.result {
+                        case .success(let coinData):
+                            let coinDataWithAdditionalInfo = coinData.map { CoinDataWithAdditionalInfo(coinData: $0, coinName: coinModel.korean_name) }
+                            DispatchQueue.main.async {
+                                coinDataArray.append(coinDataWithAdditionalInfo)
                             }
+                        case .failure(let error):
+                            print("\(error)")
                         }
-                }
+                    }
             }
         }
         group.notify(queue: .main) {

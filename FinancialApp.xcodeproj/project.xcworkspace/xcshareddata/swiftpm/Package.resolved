@@ -1,5 +1,5 @@
 {
-  "originHash" : "9531cb02e79f108c7843188136e03bbce8b249bafe75951cb970864badb4d27e",
+  "originHash" : "af54b1cd978d5718b5784ad29d13d5c8adb6082849db34efc55d06ebb9ea266c",
   "pins" : [
     {
       "identity" : "alamofire",
@@ -47,21 +47,30 @@
       }
     },
     {
+      "identity" : "realm-core",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-core.git",
+      "state" : {
+        "revision" : "85eeca41654cc9070ad81a21a4b1d153ad467c33",
+        "version" : "14.13.1"
+      }
+    },
+    {
+      "identity" : "realm-swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/realm/realm-swift.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "1f09fb14dd9d275b5686016fe8508d491b87cb0b"
+      }
+    },
+    {
       "identity" : "rxswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReactiveX/RxSwift.git",
       "state" : {
         "revision" : "9dcaa4b333db437b0fbfaf453fad29069044a8b4",
         "version" : "6.6.0"
-      }
-    },
-    {
-      "identity" : "sclalertview-swift",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/vikmeup/SCLAlertView-Swift.git",
-      "state" : {
-        "revision" : "a36c9258dc623f368753a17d4bea4e0a751bc02f",
-        "version" : "0.8.2"
       }
     },
     {

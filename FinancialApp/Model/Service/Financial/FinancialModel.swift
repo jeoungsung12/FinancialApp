@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+//TODO: - 변경
 //현재 환율
 struct FinancialModel : Hashable, Codable {
     let result : Int? //결과

@@ -11,25 +11,19 @@ import RxCocoa
 import Alamofire
 
 class NewsService {
-    static func getNews(query : String, start : Int) -> Observable<[NewsItems]> {
-        return Observable.create { observer in
-            let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-            let url = "https://openapi.naver.com/v1/search/news.json?query=\(queryEncoded)&display=5&start=\(start)&sort=sim"
-            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json", "X-Naver-Client-Id" : Bundle.main.NewsClientID, "X-Naver-Client-Secret" : Bundle.main.NewsClientSecret])
-                .responseString { response in
-//                    print(response)
-                }
-                .validate()
-                .responseDecodable(of: NewsServiceModel.self) { response in
-                    switch response.result {
-                    case .success(let data):
-                        observer.onNext(data.items ?? [])
-                        observer.onCompleted()
-                    case .failure(let error):
-                        observer.onError(error)
-                    }
-                }
-            return Disposables.create()
-        }
+    func getNews(query: String, display: Int) -> Observable<[NewsItems]> {
+        let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        let url =
+        APIEndpoint.news.rawValue + "\(queryEncoded)&display=\(display)&sort=sim"
+        let headers: HTTPHeaders = [
+            "accept" : "application/json",
+            "X-Naver-Client-Id" : Bundle.main.NewsClientID,
+            "X-Naver-Client-Secret" : Bundle.main.NewsClientSecret
+        ]
+        return NetworkManager.shared.getData(url, headers: headers)
+            .flatMap { (result: NewsServiceModel) -> Observable<[NewsItems]> in
+                Observable.just(result.items)
+            }
     }
+    
 }

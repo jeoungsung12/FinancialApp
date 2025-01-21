@@ -122,7 +122,7 @@ class AiViewController : UIViewController, UITextFieldDelegate {
         self.navigationController?.navigationBar.tintColor = UIColor.black
         self.navigationController?.navigationBar.backgroundColor = .white
         setLayout()
-        setBinding()
+//        setBinding()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -207,98 +207,98 @@ extension AiViewController {
 }
 //MARK: - setBinding
 private extension AiViewController {
-    private func setBinding() {
-        aiViewModel.inputTrigger.onNext(())
-        aiViewModel.outputResult.bind(onNext: {[weak self] coinName in
-            guard let self = self else { return }
-            let market = coinName.compactMap { $0.market }
-            let koreanName = coinName.compactMap { $0.korean_name }
-            let englishName = coinName.compactMap { $0.english_name }
-            self.marketName = market
-            self.koreanName = koreanName
-            self.englishName = englishName
-        }).disposed(by: disposeBag)
-        
-        searchBtn.rx.tap
-            .bind(onNext: {[weak self] _ in
-                guard let self = self else { return }
-                self.hideKeyboard()
-                if let text = searchText.text {
-                    if searchText.text != "" {
-                        if (self.marketName.contains(text)) || (self.koreanName.contains(text)) || (self.englishName.contains(text)) {
-                            rewardHelper.showRewardedAd(viewController: self)
-                            self.loadingIndicator.startAnimating()
-                            DispatchQueue.main.asyncAfter(deadline: .now()+5.0) {
-                                self.chartImage.image = nil
-                                self.chartImage.snp.remakeConstraints { make in
-                                    make.height.equalTo(0)
-                                    make.top.equalToSuperview()
-                                    make.leading.trailing.equalToSuperview().inset(20)
-                                }
-                                self.resizeTextAnimation(text: self.descriptionText, title: "관련 데이터를 분석 중 입니다...")
-                                self.setGif(imageName: "data")
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                                    var market : String = ""
-                                    if (self.marketName.contains(text)) {
-                                        market = text
-                                    }else if (self.koreanName.contains(text)) {
-                                        for index in 0..<self.koreanName.count {
-                                            if self.koreanName[index] == text {
-                                                market = self.marketName[index]
-                                                break
-                                            }
-                                        }
-                                    }else if (self.englishName.contains(text)) {
-                                        for index in 0..<self.englishName.count {
-                                            if self.englishName[index] == text {
-                                                market = self.marketName[index]
-                                                break
-                                            }
-                                        }
-                                    }
-                                    self.loadingIndicator.stopAnimating()
-                                    self.setGif(imageName: "chart")
-                                    self.aiViewModel.WMTrigger.onNext([market, "months"])
-                                    self.resizeTextAnimation(text: self.descriptionText, title: "암호화폐의 차트를 분석 중 입니다...")
-                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                                        self.aiViewModel.newsTrigger.onNext(text)
-                                        self.resizeTextAnimation(text: self.descriptionText, title: "암호화폐의 관련 기사를 수집 중 입니다...")
-                                        self.setGif(imageName: "news")
-                                    }
-                                }
-                            }
-                        }else{
-                            setAlert(title: "코인명(한/영/마켓) 확인", message: "⚠️ 코인명(한/영)을 다시 확인해 주세요")
-                        }
-                    }else{
-                        setAlert(title: "코인명(한/영/마켓) 확인", message: "⚠️ 코인명(한/영)을 다시 확인해 주세요")
-                    }
-                }
-            }).disposed(by: disposeBag)
-        //분석
-        self.aiViewModel.WMResult.bind(onNext: {[weak self] candle in
-            guard let self = self else { return }
-            self.aiViewModel.newsResult.bind(onNext: {[weak self] news in
-                guard let self = self else { return }
-                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                    self.setGif(imageName: "coin")
-                    self.resizeTextAnimation(text: self.descriptionText, title: "암호화폐를 분석 중 입니다...")
-                    self.aiViewModel.chatTrigger.onNext(ChatModel(data: candle, news: news))
-                }
-            }).disposed(by: self.disposeBag)
-        }).disposed(by: self.disposeBag)
-        //결과
-        self.aiViewModel.chatResult.bind(onNext: {[weak self] result in
-            guard let self else { return }
-            self.gifImage.image = nil
-            self.loadingIndicator.stopAnimating()
-            let message = result.choices.compactMap { $0.message }
-            let content = message.compactMap { $0.content }
-            self.descriptionText.text = nil
-            imageMatching(content: content)
-            self.descriptionText.textAlignment = .left
-        }).disposed(by: self.disposeBag)
-    }
+//    private func setBinding() {
+//        aiViewModel.inputTrigger.onNext(())
+//        aiViewModel.outputResult.bind(onNext: {[weak self] coinName in
+//            guard let self = self else { return }
+//            let market = coinName.compactMap { $0.market }
+//            let koreanName = coinName.compactMap { $0.korean_name }
+//            let englishName = coinName.compactMap { $0.english_name }
+//            self.marketName = market
+//            self.koreanName = koreanName
+//            self.englishName = englishName
+//        }).disposed(by: disposeBag)
+//        
+//        searchBtn.rx.tap
+//            .bind(onNext: {[weak self] _ in
+//                guard let self = self else { return }
+//                self.hideKeyboard()
+//                if let text = searchText.text {
+//                    if searchText.text != "" {
+//                        if (self.marketName.contains(text)) || (self.koreanName.contains(text)) || (self.englishName.contains(text)) {
+//                            rewardHelper.showRewardedAd(viewController: self)
+//                            self.loadingIndicator.startAnimating()
+//                            DispatchQueue.main.asyncAfter(deadline: .now()+5.0) {
+//                                self.chartImage.image = nil
+//                                self.chartImage.snp.remakeConstraints { make in
+//                                    make.height.equalTo(0)
+//                                    make.top.equalToSuperview()
+//                                    make.leading.trailing.equalToSuperview().inset(20)
+//                                }
+//                                self.resizeTextAnimation(text: self.descriptionText, title: "관련 데이터를 분석 중 입니다...")
+//                                self.setGif(imageName: "data")
+//                                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//                                    var market : String = ""
+//                                    if (self.marketName.contains(text)) {
+//                                        market = text
+//                                    }else if (self.koreanName.contains(text)) {
+//                                        for index in 0..<self.koreanName.count {
+//                                            if self.koreanName[index] == text {
+//                                                market = self.marketName[index]
+//                                                break
+//                                            }
+//                                        }
+//                                    }else if (self.englishName.contains(text)) {
+//                                        for index in 0..<self.englishName.count {
+//                                            if self.englishName[index] == text {
+//                                                market = self.marketName[index]
+//                                                break
+//                                            }
+//                                        }
+//                                    }
+//                                    self.loadingIndicator.stopAnimating()
+//                                    self.setGif(imageName: "chart")
+//                                    self.aiViewModel.WMTrigger.onNext([market, "months"])
+//                                    self.resizeTextAnimation(text: self.descriptionText, title: "암호화폐의 차트를 분석 중 입니다...")
+//                                    DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//                                        self.aiViewModel.newsTrigger.onNext(text)
+//                                        self.resizeTextAnimation(text: self.descriptionText, title: "암호화폐의 관련 기사를 수집 중 입니다...")
+//                                        self.setGif(imageName: "news")
+//                                    }
+//                                }
+//                            }
+//                        }else{
+//                            setAlert(title: "코인명(한/영/마켓) 확인", message: "⚠️ 코인명(한/영)을 다시 확인해 주세요")
+//                        }
+//                    }else{
+//                        setAlert(title: "코인명(한/영/마켓) 확인", message: "⚠️ 코인명(한/영)을 다시 확인해 주세요")
+//                    }
+//                }
+//            }).disposed(by: disposeBag)
+//        //분석
+//        self.aiViewModel.WMResult.bind(onNext: { [weak self] candle in
+//            guard let self = self else { return }
+//            self.aiViewModel.newsResult.bind(onNext: {[weak self] news in
+//                guard let self = self else { return }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
+//                    self.setGif(imageName: "coin")
+//                    self.resizeTextAnimation(text: self.descriptionText, title: "암호화폐를 분석 중 입니다...")
+//                    self.aiViewModel.chatTrigger.onNext(ChatModel(data: candle, news: news))
+//                }
+//            }).disposed(by: self.disposeBag)
+//        }).disposed(by: self.disposeBag)
+//        //결과
+//        self.aiViewModel.chatResult.bind(onNext: {[weak self] result in
+//            guard let self else { return }
+//            self.gifImage.image = nil
+//            self.loadingIndicator.stopAnimating()
+//            let message = result.choices.compactMap { $0.message }
+//            let content = message.compactMap { $0.content }
+//            self.descriptionText.text = nil
+//            imageMatching(content: content)
+//            self.descriptionText.textAlignment = .left
+//        }).disposed(by: self.disposeBag)
+//    }
 }
 //MARK: - Action
 private extension AiViewController {

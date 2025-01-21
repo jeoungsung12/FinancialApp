@@ -41,7 +41,7 @@ private extension ChartCell {
 //MARK: - Action
 extension ChartCell {
     
-    func configure(_ model: [CandleMinuteModel]) {
+    func configure(_ model: [CandleModel]) {
         let highPrices = model.compactMap { $0.high_price }
         let lowPrices = model.compactMap { $0.low_price }
         //TODO: - 빼내기
@@ -55,7 +55,7 @@ extension ChartCell {
             return (value - highPrices[index - 1]) / highPrices[index - 1] * 100
         }
         
-        chartView.configure(model[0].market ?? "", highChanges, lowChanges)
+        chartView.configure(model[0].market, model[0].opening_price.formatted(), highChanges, lowChanges)
     }
     
 }

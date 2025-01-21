@@ -119,7 +119,7 @@ extension MainViewController {
             .disposed(by: disposeBag)
         tableView.rx.modelSelected([CoinDataWithAdditionalInfo].self)
             .subscribe { selectedModel in
-                self.navigationController?.pushViewController(MainDetailViewController(coinData: selectedModel), animated: true)
+//                self.navigationController?.pushViewController(MainDetailViewController(coinData: selectedModel), animated: true)
             }
             .disposed(by: disposeBag)
         tableView.rx.didScroll

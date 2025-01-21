@@ -45,14 +45,14 @@ class TotalSearchViewModel {
         
         
         //MARK: - SearchCoinInfo
-        searchInputrigger.flatMapLatest { coinName in
-            return Observable.combineLatest(SearchCoin.searchCoin(searchName: coinName), SearchOrder.searchCoin(searchName: coinName)) { coinData, orderData -> Result<SearchResult, Error> in
-                return .success(SearchResult(coinData: coinData, orderData: orderData))
-            }.catch { error in
-                return Observable.just(.failure(error))
-            }
-        }
-        .bind(to: searchResult)
-        .disposed(by: disposeBag)
+//        searchInputrigger.flatMapLatest { coinName in
+//            return Observable.combineLatest(SearchCoin.searchCoin(searchName: coinName), SearchOrder.searchCoin(searchName: coinName)) { coinData, orderData -> Result<SearchResult, Error> in
+//                return .success(SearchResult(coinData: coinData, orderData: orderData))
+//            }.catch { error in
+//                return Observable.just(.failure(error))
+//            }
+//        }
+//        .bind(to: searchResult)
+//        .disposed(by: disposeBag)
     }
 }
