@@ -20,9 +20,11 @@
 		E43C7EC52D3E478C009C81C2 /* DetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC22D3E478C009C81C2 /* DetailChartView.swift */; };
 		E43C7EC72D3E489F009C81C2 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC62D3E489F009C81C2 /* ChartData.swift */; };
 		E43C7EC92D3E4D76009C81C2 /* ChartCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC82D3E4D76009C81C2 /* ChartCellView.swift */; };
-		E43C80A22D3F2ACA009C81C2 /* Realm in Frameworks */ = {isa = PBXBuildFile; productRef = E43C80A12D3F2ACA009C81C2 /* Realm */; };
-		E43C80A42D3F2ACA009C81C2 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E43C80A32D3F2ACA009C81C2 /* RealmSwift */; };
 		E43C80A62D3F34CF009C81C2 /* DatabaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C80A52D3F34CF009C81C2 /* DatabaseObject.swift */; };
+		E43C80AA2D3F40EB009C81C2 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C80A92D3F40EB009C81C2 /* CryptoData.swift */; };
+		E43C80AD2D3F4267009C81C2 /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E43C80AC2D3F4267009C81C2 /* RealmSwift */; };
+		E43C81822D3FC25A009C81C2 /* GreedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C81812D3FC25A009C81C2 /* GreedModel.swift */; };
+		E43C81F82D3FCA1A009C81C2 /* InfoCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C81F72D3FCA1A009C81C2 /* InfoCollectionViewCell.swift */; };
 		E45B49812D388BFD008803B6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E45B49802D388BFD008803B6 /* .gitignore */; };
 		E45B49BE2D38C518008803B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B49B72D38C518008803B6 /* SceneDelegate.swift */; };
 		E45B49BF2D38C518008803B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B49B62D38C518008803B6 /* AppDelegate.swift */; };
@@ -32,7 +34,7 @@
 		E48306882C4909620017F6B2 /* CategoryList.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48306872C4909620017F6B2 /* CategoryList.swift */; };
 		E483068A2C4914F90017F6B2 /* CoinResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48306892C4914F90017F6B2 /* CoinResult.swift */; };
 		E483068C2C495C840017F6B2 /* AdsCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E483068B2C495C840017F6B2 /* AdsCollectionViewCell.swift */; };
-		E483068E2C49651C0017F6B2 /* OrderBookCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E483068D2C49651C0017F6B2 /* OrderBookCollectionViewCell.swift */; };
+		E483068E2C49651C0017F6B2 /* TicksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */; };
 		E492F2C72C43BD5E0012B7F3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */; };
 		E492F2C92C43BF560012B7F3 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492F2C82C43BF560012B7F3 /* HomeViewModel.swift */; };
 		E492F2CF2C46D6E90012B7F3 /* NewsListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492F2CE2C46D6E80012B7F3 /* NewsListCollectionViewCell.swift */; };
@@ -121,6 +123,9 @@
 		E43C7EC62D3E489F009C81C2 /* ChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
 		E43C7EC82D3E4D76009C81C2 /* ChartCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartCellView.swift; sourceTree = "<group>"; };
 		E43C80A52D3F34CF009C81C2 /* DatabaseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseObject.swift; sourceTree = "<group>"; };
+		E43C80A92D3F40EB009C81C2 /* CryptoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoData.swift; sourceTree = "<group>"; };
+		E43C81812D3FC25A009C81C2 /* GreedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreedModel.swift; sourceTree = "<group>"; };
+		E43C81F72D3FCA1A009C81C2 /* InfoCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoCollectionViewCell.swift; sourceTree = "<group>"; };
 		E45B49802D388BFD008803B6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E45B49B62D38C518008803B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E45B49B72D38C518008803B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -130,7 +135,7 @@
 		E48306872C4909620017F6B2 /* CategoryList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryList.swift; sourceTree = "<group>"; };
 		E48306892C4914F90017F6B2 /* CoinResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinResult.swift; sourceTree = "<group>"; };
 		E483068B2C495C840017F6B2 /* AdsCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdsCollectionViewCell.swift; sourceTree = "<group>"; };
-		E483068D2C49651C0017F6B2 /* OrderBookCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookCollectionViewCell.swift; sourceTree = "<group>"; };
+		E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicksCollectionViewCell.swift; sourceTree = "<group>"; };
 		E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		E492F2C82C43BF560012B7F3 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
 		E492F2CE2C46D6E80012B7F3 /* NewsListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsListCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -201,8 +206,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E43C80A42D3F2ACA009C81C2 /* RealmSwift in Frameworks */,
-				E43C80A22D3F2ACA009C81C2 /* Realm in Frameworks */,
 				E4F56AE42C5F4EAC00FE4DDF /* GoogleMobileAds in Frameworks */,
 				E4CAF4D72BB9AE0900CB18EC /* Kingfisher in Frameworks */,
 				E4DABECF2BBEB68E00AE9DFB /* iOSDropDown in Frameworks */,
@@ -211,6 +214,7 @@
 				E4CAF4B62BB982C600CB18EC /* SnapKit in Frameworks */,
 				E4CAF4B32BB982BD00CB18EC /* RxSwift in Frameworks */,
 				E4CAF4B92BB982F200CB18EC /* SwiftKeychainWrapper in Frameworks */,
+				E43C80AD2D3F4267009C81C2 /* RealmSwift in Frameworks */,
 				E4CAF4DF2BBBB6F800CB18EC /* DGCharts in Frameworks */,
 				E4CAF4B12BB982BD00CB18EC /* RxCocoa in Frameworks */,
 			);
@@ -260,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				E43C7EB42D3E3CB6009C81C2 /* HomeSection.swift */,
+				E43C81812D3FC25A009C81C2 /* GreedModel.swift */,
 				E43C7EC62D3E489F009C81C2 /* ChartData.swift */,
 			);
 			path = Home;
@@ -301,9 +306,10 @@
 			isa = PBXGroup;
 			children = (
 				E492F2CE2C46D6E80012B7F3 /* NewsListCollectionViewCell.swift */,
-				E483068D2C49651C0017F6B2 /* OrderBookCollectionViewCell.swift */,
+				E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */,
 				E483068B2C495C840017F6B2 /* AdsCollectionViewCell.swift */,
 				E43C7EC82D3E4D76009C81C2 /* ChartCellView.swift */,
+				E43C81F72D3FCA1A009C81C2 /* InfoCollectionViewCell.swift */,
 			);
 			path = CollectionCell;
 			sourceTree = "<group>";
@@ -361,6 +367,7 @@
 				E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */,
 				E4DABF192BC2D4DE00AE9DFB /* HIDEAPIKEY++Bundle.swift */,
 				E4DC77DA2C50199700B45001 /* ChartInfo.swift */,
+				E43C80A92D3F40EB009C81C2 /* CryptoData.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -683,8 +690,7 @@
 				E4DABEBB2BBC7A2200AE9DFB /* NVActivityIndicatorView */,
 				E4DABECE2BBEB68E00AE9DFB /* iOSDropDown */,
 				E4F56AE32C5F4EAC00FE4DDF /* GoogleMobileAds */,
-				E43C80A12D3F2ACA009C81C2 /* Realm */,
-				E43C80A32D3F2ACA009C81C2 /* RealmSwift */,
+				E43C80AC2D3F4267009C81C2 /* RealmSwift */,
 			);
 			productName = Beecher;
 			productReference = E4CAF4952BB9808300CB18EC /* FinancialApp.app */;
@@ -724,7 +730,7 @@
 				E4DABEBA2BBC7A2200AE9DFB /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 				E4DABECD2BBEB68D00AE9DFB /* XCRemoteSwiftPackageReference "iOSDropDown" */,
 				E4F56AE22C5F4EAC00FE4DDF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
-				E43C80A02D3F2ACA009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */,
+				E43C80AB2D3F4267009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = E4CAF4962BB9808300CB18EC /* Products */;
 			projectDirPath = "";
@@ -762,6 +768,7 @@
 			files = (
 				E4CAF4CD2BB9884000CB18EC /* MainViewController.swift in Sources */,
 				E4DABED82BBF15C600AE9DFB /* OrderBookViewController.swift in Sources */,
+				E43C80AA2D3F40EB009C81C2 /* CryptoData.swift in Sources */,
 				E4CAF4CF2BB9884000CB18EC /* MainTableViewCell.swift in Sources */,
 				E4CAF4CB2BB9884000CB18EC /* MainDetailViewController.swift in Sources */,
 				E492F2CF2C46D6E90012B7F3 /* NewsListCollectionViewCell.swift in Sources */,
@@ -771,6 +778,7 @@
 				E492F2C72C43BD5E0012B7F3 /* HomeViewController.swift in Sources */,
 				E4DABEE82BBFBDB800AE9DFB /* GetPaprikaModel.swift in Sources */,
 				E4DABF1A2BC2D4DE00AE9DFB /* HIDEAPIKEY++Bundle.swift in Sources */,
+				E43C81F82D3FCA1A009C81C2 /* InfoCollectionViewCell.swift in Sources */,
 				E4DABEE42BBFB68700AE9DFB /* OrderBookDetailViewModel.swift in Sources */,
 				E4DABEF22BC0108C00AE9DFB /* OrderBookModel.swift in Sources */,
 				E4CAF4E52BBBC9F900CB18EC /* SearchCoin.swift in Sources */,
@@ -778,6 +786,7 @@
 				E43C7EC32D3E478C009C81C2 /* ChartHostingViewController.swift in Sources */,
 				E43C7EC42D3E478C009C81C2 /* ChartView.swift in Sources */,
 				E43C7EC52D3E478C009C81C2 /* DetailChartView.swift in Sources */,
+				E43C81822D3FC25A009C81C2 /* GreedModel.swift in Sources */,
 				E483068C2C495C840017F6B2 /* AdsCollectionViewCell.swift in Sources */,
 				E4DABF142BC2CEC200AE9DFB /* NewsServiceModel.swift in Sources */,
 				E4DABEDA2BBF16D800AE9DFB /* OrderBookTableViewCell.swift in Sources */,
@@ -825,7 +834,7 @@
 				E4DABF162BC2CECB00AE9DFB /* NewsService.swift in Sources */,
 				E4DABF2B2BC2EAF100AE9DFB /* AiViewController.swift in Sources */,
 				E4DABF102BC2CBF200AE9DFB /* NewsViewModel.swift in Sources */,
-				E483068E2C49651C0017F6B2 /* OrderBookCollectionViewCell.swift in Sources */,
+				E483068E2C49651C0017F6B2 /* TicksCollectionViewCell.swift in Sources */,
 				E43C7EC72D3E489F009C81C2 /* ChartData.swift in Sources */,
 				E4DC77D12C4FA3B600B45001 /* SearchResult.swift in Sources */,
 				E4DC77CD2C4D096800B45001 /* TotalSearchViewController.swift in Sources */,
@@ -989,7 +998,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1027,7 +1036,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1070,7 +1079,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E43C80A02D3F2ACA009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		E43C80AB2D3F4267009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/realm/realm-swift.git";
 			requirement = {
@@ -1153,14 +1162,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E43C80A12D3F2ACA009C81C2 /* Realm */ = {
+		E43C80AC2D3F4267009C81C2 /* RealmSwift */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E43C80A02D3F2ACA009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = Realm;
-		};
-		E43C80A32D3F2ACA009C81C2 /* RealmSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E43C80A02D3F2ACA009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */;
+			package = E43C80AB2D3F4267009C81C2 /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
 		};
 		E4CAF4B02BB982BD00CB18EC /* RxCocoa */ = {

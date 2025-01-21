@@ -11,7 +11,7 @@ import RxCocoa
 import SnapKit
 import Foundation
 
-final class OrderBookCollectionViewCell : UICollectionViewCell {
+final class TicksCollectionViewCell : UICollectionViewCell {
     static let id : String = "OrderBookCollectionViewCell"
     //MARK: - UI Components
     private let titleLabel : UILabel = {
@@ -21,6 +21,7 @@ final class OrderBookCollectionViewCell : UICollectionViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
+    
     //거래량 총액
     private let availLabel : UILabel = {
         let label = UILabel()
@@ -29,6 +30,7 @@ final class OrderBookCollectionViewCell : UICollectionViewCell {
         label.backgroundColor = .black
         return label
     }()
+    
     //코인 가격
     private let price : UILabel = {
         let label = UILabel()
@@ -39,6 +41,7 @@ final class OrderBookCollectionViewCell : UICollectionViewCell {
         label.layer.borderColor = UIColor.black.cgColor
         return label
     }()
+    
     //코인 상승세
     private let arrow : UILabel = {
         let label = UILabel()
@@ -47,6 +50,18 @@ final class OrderBookCollectionViewCell : UICollectionViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 10)
         return label
     }()
+    
+    private let icon : UILabel = {
+        let label = UILabel()
+        label.textColor = .white
+        label.clipsToBounds = true
+        label.textAlignment = .center
+        label.layer.cornerRadius = 20
+        label.backgroundColor = .clear.randomColor()
+        label.font = .systemFont(ofSize: 20, weight: .heavy)
+        return label
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -56,44 +71,58 @@ final class OrderBookCollectionViewCell : UICollectionViewCell {
     }
 }
 //MARK: - UI Layout
-private extension OrderBookCollectionViewCell {
+private extension TicksCollectionViewCell {
     private func setLayout() {
+        self.addSubview(icon)
         self.addSubview(titleLabel)
         self.addSubview(availLabel)
         self.addSubview(price)
         self.addSubview(arrow)
         
+        icon.snp.makeConstraints { make in
+            make.size.equalTo(40)
+            make.leading.equalToSuperview()
+        }
         titleLabel.snp.makeConstraints { make in
-            make.top.leading.equalToSuperview().inset(10)
+            make.top.equalToSuperview().inset(8)
             make.height.equalTo(15)
+            make.leading.equalTo(icon.snp.trailing).offset(12)
         }
         availLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(10)
-            make.leading.equalToSuperview().offset(10)
+            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.leading.equalTo(icon.snp.trailing).offset(22)
         }
         price.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(10)
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(8)
         }
         arrow.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(10)
             make.top.equalTo(price.snp.bottom).offset(5)
         }
+        
     }
 }
 //MARK: - Configure
-extension OrderBookCollectionViewCell {
+extension TicksCollectionViewCell {
     public func configure(with model: [AddTradesModel]) {
         //TODO: - 수정
-        let name = model.compactMap{ $0.coinName }.first ?? ""
-        let market = model.compactMap{ $0.tradesData.market }.first ?? ""
-        let price = model.compactMap{ $0.tradesData.trade_price }.first ?? 0
-        let ask_bid = model.compactMap{ $0.tradesData.ask_bid }.first ?? ""
-        let volume = model.compactMap{ $0.tradesData.trade_volume }.first ?? 0
+        guard let model = model.first else { return }
+        let name = model.coinName
+        let market = model.tradesData.market
+        let englishName = model.englishName
+        let price = model.tradesData.trade_price
+        let ask_bid = model.tradesData.ask_bid
+        let volume = model.tradesData.trade_volume
         
         self.titleLabel.text = "\(name) \(market)"
-        self.price.text = String(price)
-        //빼내기
+        self.price.text = "\(price.formatted())₩"
+        self.availLabel.text = "\(volume)"
+        if let text = englishName.first {
+            icon.text = String(text)
+        }
+        
+        //TODO: - 빼내기
         if ask_bid == "ASK" {
             self.price.layer.borderColor = UIColor.red.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -109,6 +138,5 @@ extension OrderBookCollectionViewCell {
             self.arrow.text = "📉매도"
             self.arrow.textColor = .blue
         }
-        availLabel.text = "\(volume)"
     }
 }

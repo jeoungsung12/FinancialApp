@@ -30,4 +30,12 @@ extension UIColor {
     static let BackColor2 : UIColor = {
         return UIColor(named: "BackColor2") ?? .white
     }()
+    
+    func randomColor() -> UIColor {
+        let red = CGFloat.random(in: 0...1)
+        let green = CGFloat.random(in: 0...1)
+        let blue = CGFloat.random(in: 0...1)
+        let color = UIColor(red: red, green: green, blue: blue, alpha: 0.7)
+        return color
+    }
 }

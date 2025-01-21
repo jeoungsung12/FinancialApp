@@ -21,15 +21,15 @@ class OrderBookViewModel {
     
     init() {
         //MARK: - GetCoinInfo
-        inputTrigger
-            .subscribe { _ in
-                OrderBookService.getAllCoin(start: self.initialLoadStart, limit: self.initialLoadLimit)
-                    .map { coinData -> [[AddTradesModel]] in
-                        return coinData
-                    }
-                    .bind(to: self.MainTable)
-                    .disposed(by: self.disposeBag)
-            }
-            .disposed(by: disposeBag)
+//        inputTrigger
+//            .subscribe { _ in
+//                OrderBookService.getAllCoin(start: self.initialLoadStart, limit: self.initialLoadLimit)
+//                    .map { coinData -> [[AddTradesModel]] in
+//                        return coinData
+//                    }
+//                    .bind(to: self.MainTable)
+//                    .disposed(by: self.disposeBag)
+//            }
+//            .disposed(by: disposeBag)
     }
 }

@@ -32,16 +32,16 @@ class TotalSearchViewModel {
         .bind(to: coinResult)
         .disposed(by: self.disposeBag)
         
-        inputTrigger
-            .flatMapLatest { _ in
-                return Observable.combineLatest(FinancialNetwork.getAP01(), FinancialNetwork.getAP02()) { financialData, loadData -> Result<FinancialResult,Error> in
-                    return .success(FinancialResult( financialData: financialData, loanData: loadData))
-                }.catch { error in
-                    return Observable.just(.failure(error))
-                }
-            }
-            .bind(to: outputResult)
-            .disposed(by: disposeBag)
+//        inputTrigger
+//            .flatMapLatest { _ in
+//                return Observable.combineLatest(FinancialNetwork.getAP01(), FinancialNetwork.getAP02()) { financialData, loadData -> Result<FinancialResult,Error> in
+//                    return .success(FinancialResult( financialData: financialData, loanData: loadData))
+//                }.catch { error in
+//                    return Observable.just(.failure(error))
+//                }
+//            }
+//            .bind(to: outputResult)
+//            .disposed(by: disposeBag)
         
         
         //MARK: - SearchCoinInfo

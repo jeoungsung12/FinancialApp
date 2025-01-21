@@ -85,10 +85,15 @@ private extension HomeViewController {
                 var snapShot = NSDiffableDataSourceSnapshot<HomeSection, HomeItem>()
                 
                 let chartItems = HomeItem.chart(data.chartData)
-                let bannerSection = HomeSection.banner("")
+                let bannerSection = HomeSection.banner
                 snapShot.appendSections([bannerSection])
                 snapShot.appendItems([chartItems], toSection: bannerSection)
                 
+                //TODO: - 수정
+                let firstItems = HomeItem.infoData(InfoDataModel(greed: data.greedData, loan: data.loanData, exchange: data.exchange, inter: data.international))
+                let infoSection = HomeSection.info
+                snapShot.appendSections([infoSection])
+                snapShot.appendItems([firstItems], toSection: infoSection)
                 
                 let orderItems = data.orderBook.map { orderData in
                     return HomeItem.orderBook(orderData)
@@ -125,6 +130,8 @@ private extension HomeViewController {
             switch item {
             case .chart(_):
                 //TODO: - 수정
+                print("")
+            case .infoData(_):
                 print("")
             case .newsList(let content):
                 if let url = URL(string: content.originallink) {

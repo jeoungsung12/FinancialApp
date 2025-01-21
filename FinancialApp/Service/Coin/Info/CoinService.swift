@@ -11,6 +11,16 @@ import RxCocoa
 import Alamofire
 
 class CoinService {
+    
+    func getFearGreedIndex() -> Observable<GreedModel> {
+        let url = "https://api.alternative.me/fng/"
+        return NetworkManager.shared.getData(url, headers: nil)
+            .flatMap { (response: GreedModel) in
+            return Observable.just(response)
+        }
+    }
+    
+    
     static func getAllCoin(start: Int, limit: Int) -> Observable<[[CoinDataWithAdditionalInfo]]> {
         return Observable.create { observer in
             let url = "https://api.upbit.com/v1/market/all?isDetails=False"

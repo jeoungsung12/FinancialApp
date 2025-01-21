@@ -14,11 +14,13 @@ extension HomeViewController {
         collectionView.delegate = self
         collectionView.refreshControl = refresh
         collectionView.backgroundColor = .black
+        collectionView.showsVerticalScrollIndicator = false
         collectionView.register(ChartCell.self, forCellWithReuseIdentifier: ChartCell.id)
-        collectionView.register(NewsListCollectionViewCell.self, forCellWithReuseIdentifier: NewsListCollectionViewCell.id)
-        collectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.id)
         collectionView.register(AdsCollectionViewCell.self, forCellWithReuseIdentifier: AdsCollectionViewCell.id)
-        collectionView.register(OrderBookCollectionViewCell.self, forCellWithReuseIdentifier: OrderBookCollectionViewCell.id)
+        collectionView.register(InfoCollectionViewCell.self, forCellWithReuseIdentifier: InfoCollectionViewCell.id)
+        collectionView.register(TicksCollectionViewCell.self, forCellWithReuseIdentifier: TicksCollectionViewCell.id)
+        collectionView.register(NewsListCollectionViewCell.self, forCellWithReuseIdentifier: NewsListCollectionViewCell.id)
+        //        collectionView.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.id)
     }
     
     func createLayout() -> UICollectionViewCompositionalLayout {
@@ -30,6 +32,8 @@ extension HomeViewController {
             switch section {
             case .banner:
                 return self?.createBannerSection()
+            case .info:
+                return self?.createInfoSection()
             case .category:
                 return self?.createCategorySection()
             case .horizotional:
@@ -54,26 +58,38 @@ extension HomeViewController {
         return section
     }
     
+    private func createInfoSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(1.0))
+        let item = NSCollectionLayoutItem(layoutSize: itemSize)
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(80))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 4)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12)
+        let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .continuous
+        
+        return section
+    }
+    
     private func createCategorySection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.35))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 24, bottom: 4, trailing: 24)
-        
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(200))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .absolute(200))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 3)
+        group.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 24, bottom: 4, trailing: 24)
+        
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
+        section.orthogonalScrollingBehavior = .continuous
         
         return section
     }
     
     private func createVerticalSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.5))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.3))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(250))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(350))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 3)
         let section = NSCollectionLayoutSection(group: group)
-        section.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: -24, trailing: 0)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0)
         return section
     }
     
@@ -95,16 +111,22 @@ extension HomeViewController {
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartCell.id, for: indexPath) as? ChartCell
                 cell?.configure(chartModel)
                 return cell
-            case .newsList(let newsData):
+            case let .infoData(infoData):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.id, for: indexPath) as? InfoCollectionViewCell
+                print(indexPath)
+                let data = infoData.data(index: indexPath.row)
+                cell?.configure(model: data)
+                return cell
+            case let .newsList(newsData):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsListCollectionViewCell.id, for: indexPath) as? NewsListCollectionViewCell
                 cell?.configure(with: newsData)
                 return cell
-            case .Ads(let AdsString):
+            case let  .Ads(AdsString):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdsCollectionViewCell.id, for: indexPath) as? AdsCollectionViewCell
                 cell?.configure(AdsString)
                 return cell
-            case .orderBook(let orderData):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderBookCollectionViewCell.id, for: indexPath) as? OrderBookCollectionViewCell
+            case let .orderBook(orderData):
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TicksCollectionViewCell.id, for: indexPath) as? TicksCollectionViewCell
                 cell?.configure(with: orderData)
                 return cell
             }
@@ -115,8 +137,11 @@ extension HomeViewController {
             let section = self?.dataSource?.sectionIdentifier(for: indexPath.section)
             
             switch section {
-            case .banner(let title):
-                (header as? HeaderView)?.configure(title: title)
+            case .banner:
+//                (header as? HeaderView)?.configure(title: title)
+                print("banner")
+            case .info:
+                print("info")
             case .category:
                 print("category")
             case .horizotional:

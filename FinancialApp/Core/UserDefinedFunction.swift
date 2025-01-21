@@ -24,6 +24,13 @@ final class UserDefinedFunction {
         return date
     }
     
+    func getCurrentDate() -> String {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.string(from: date)
+    }
+    
     func replacingOccurrences(_ text: String?) -> String {
         guard let text = text else { return  "" }
         return text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).removingHTMLEntities()

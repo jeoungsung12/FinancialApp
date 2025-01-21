@@ -21,6 +21,7 @@ final class NetworkManager {
             AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headers)
                 .validate()
                 .responseDecodable(of: T.self) { response in
+//                    print(response.debugDescription)
                     switch response.result {
                     case let .success(data):
                         observer.onNext(data)

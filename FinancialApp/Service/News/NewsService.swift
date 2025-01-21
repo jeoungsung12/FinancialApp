@@ -22,7 +22,7 @@ class NewsService {
         ]
         return NetworkManager.shared.getData(url, headers: headers)
             .flatMap { (result: NewsServiceModel) -> Observable<[NewsItems]> in
-                Observable.just(result.items)
+                return Observable.just(result.items)
             }
     }
     
