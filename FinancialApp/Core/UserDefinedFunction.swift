@@ -36,4 +36,20 @@ final class UserDefinedFunction {
         return text.replacingOccurrences(of: "<[^>]+>", with: "", options: .regularExpression, range: nil).removingHTMLEntities()
     }
     
+    func setScaleChart(highPrices: [Double], lowPrices: [Double]) -> [[Double]] {
+        let highChanges: [Double] = highPrices.enumerated().map { (index, value) in
+            if index == 0 { return 0.0 }
+            let previous = highPrices[index - 1]
+            return ((value - previous) / previous) * 100
+        }
+        
+        let lowChanges: [Double] = lowPrices.enumerated().map { (index, value) in
+            if index == 0 { return 0.0 }
+            let previous = lowPrices[index - 1]
+            return ((value - previous) / previous) * 100
+        }
+        
+        return [highChanges, lowChanges]
+    }
+    
 }

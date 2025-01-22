@@ -10,9 +10,8 @@ import Foundation
 struct CoinResult {
     let greedData: GreedModel
     let loanData: [LoanModel]
-    let international: [InternationalModel]
     let exchange: [FinancialModel]
-    let chartData: [CandleModel]
+    let chartData: [[CandleModel]]
     let newsData: [NewsItems]
     let orderBook: [[AddTradesModel]]
 }

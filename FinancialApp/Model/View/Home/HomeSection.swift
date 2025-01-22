@@ -24,20 +24,7 @@ enum HomeItem: Hashable {
 }
 
 struct InfoDataModel: Hashable {
-    let greed: GreedModel
-    let loan: [LoanModel]
-    let exchange: [FinancialModel]
-    let inter: [InternationalModel]
-    
-    func data(index: Int) -> Any {
-        if index == 0 {
-            return self.greed
-        } else if index == 1 {
-            return self.loan
-        } else if index == 2 {
-            return self.exchange
-        } else {
-            return self.inter
-        }
-    }
+    let title: String
+    let subTitle: String
+    let description: String
 }

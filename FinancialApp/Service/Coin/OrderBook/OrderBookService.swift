@@ -17,6 +17,7 @@ class OrderBookService {
         }
         return Observable.zip(returnObserver)
     }
+    
     //TODO: - 변경
     //체결보기
     func getDetail(coinModel: CryptoModel) -> Observable<[AddTradesModel]> {

@@ -15,11 +15,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         let vc1 = UINavigationController(rootViewController: HomeViewController())
         //TODO: - 수정
-        let vc2 = UINavigationController(rootViewController: HomeViewController())
+        let vc2 = UINavigationController(rootViewController: HeartViewController())
         let vc3 = UINavigationController(rootViewController: HomeViewController())
         let vc4 = UINavigationController(rootViewController: HomeViewController())
         let tabVC = UITabBarController()
-        tabVC.tabBar.backgroundColor = .darkGray.withAlphaComponent(0.2)
+        tabVC.tabBar.backgroundColor = .darkGray.withAlphaComponent(0.8)
         tabVC.tabBar.clipsToBounds = true
         tabVC.tabBar.layer.cornerRadius = 20
         tabVC.tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
@@ -28,7 +28,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         tabVC.setViewControllers([vc1, vc2, vc3, vc4], animated: true)
         guard let items = tabVC.tabBar.items else { return }
         items[0].image = UIImage(systemName: "chart.xyaxis.line")
-        items[1].image = UIImage(systemName: "xmark")
+        items[1].image = UIImage(systemName: "heart")
         items[2].image = UIImage(systemName: "homekit")
         items[3].image = UIImage(systemName: "pencil")
         
@@ -41,7 +41,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.windowScene = scene
         window?.makeKeyAndVisible()
     }
-
+    
     func sceneDidDisconnect(_ scene: UIScene) {
         
     }

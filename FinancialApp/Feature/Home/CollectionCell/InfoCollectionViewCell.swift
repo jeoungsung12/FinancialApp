@@ -16,7 +16,7 @@ final class InfoCollectionViewCell : UICollectionViewCell {
         label.numberOfLines = 1
         label.textAlignment = .center
         label.backgroundColor = .clear
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = UIFont.boldSystemFont(ofSize: 15)
         return label
     }()
     
@@ -48,7 +48,7 @@ final class InfoCollectionViewCell : UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 }
-//MARK: - UI Layout
+
 private extension InfoCollectionViewCell {
     
     private func configureHierarchy() {
@@ -62,57 +62,43 @@ private extension InfoCollectionViewCell {
     private func configureLayout() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(12)
-            make.leading.trailing.equalToSuperview().inset(4)
+            make.leading.trailing.equalToSuperview().inset(8)
         }
         decLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
             make.leading.trailing.equalToSuperview().inset(8)
-            make.bottom.lessThanOrEqualToSuperview().offset(-4)
+            make.bottom.lessThanOrEqualToSuperview().offset(-6)
         }
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(decLabel.snp.bottom).offset(4)
-            make.trailing.equalToSuperview().inset(4)
+            make.trailing.equalToSuperview().inset(8)
         }
     }
     
     private func configureView() {
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
-        self.backgroundColor = .systemGray4
+        self.backgroundColor = .systemGray5.withAlphaComponent(0.5)
         configureHierarchy()
     }
 }
-//MARK: - Action
+
 extension InfoCollectionViewCell {
     
-    func configure(model: Any) {
-        if let model = model as? GreedModel,
-           let data = model.data.first {
-            let Icon = (data.value_classification.contains("Greed")) ? "😲" : "😈"
-            titleLabel.text = "\(data.value)%\(Icon)"
-            decLabel.text = "공포탐욕지수"
-        }
-        
-        if let model = model as? [LoanModel],
-           let date = model.first?.sfln_intrc_nm,
-           let loan_int = model.first?.int_r {
+    func configure(model: InfoDataModel, index: Int) {
+        if index == 0 {
+            titleLabel.text = "\(model.title)%"
+            let type = KoreanGreed.neutral.catchText(model.subTitle)
+            decLabel.text = type.returnText
+            dateLabel.text = "공포탐욕지수"
+        } else if index == 1 {
             dateLabel.text = "고정 기준 금리"
-            self.decLabel.text = "\(date)"
-            self.titleLabel.text = "📊 \(loan_int) %"
-        }
-        
-        
-        if let model = model as? [InternationalModel] {
-            print(model)
-        }
-        
-        if let model = model as? [FinancialModel],
-           let name = model.first?.cur_nm, let unit = model.first?.cur_unit,
-           let ttb = model.first?.ttb, let tts = model.first?.tts, let deal = model.first?.deal_bas_r {
-            self.decLabel.text = "\(name) \(unit)"
-            self.titleLabel.text = "📥\(ttb)₩\n📤\(tts)₩"
-            self.dateLabel.text = "매매 기준율 : \(deal)₩"
-            
+            self.decLabel.text = model.description
+            self.titleLabel.text = model.title
+        } else if index == 2 {
+            self.titleLabel.text = model.title
+            self.decLabel.text = model.subTitle
+            self.dateLabel.text = model.description
         }
     }
 }

@@ -11,6 +11,8 @@ final class ChartCell : UICollectionViewCell {
     static let id = "ChartCell"
     
     private let chartView = DetailChartView()
+    private var chartData: [[CandleModel]] = []
+    private var chartNum: Int = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -41,21 +43,13 @@ private extension ChartCell {
 //MARK: - Action
 extension ChartCell {
     
-    func configure(_ model: [CandleModel]) {
+    func configure(_ model: [[CandleModel]],_ row: Int) {
+        self.chartData = model
+        let model = model[chartNum]
         let highPrices = model.compactMap { $0.high_price }
         let lowPrices = model.compactMap { $0.low_price }
-        //TODO: - 빼내기
-        let highChanges = highPrices.enumerated().map { index, value in
-            guard index > 0 else { return 0.0 }
-            return (value - highPrices[index - 1]) / highPrices[index - 1] * 100
-        }
-        
-        let lowChanges = lowPrices.enumerated().map { index, value in
-            guard index > 0 else { return 0.0 }
-            return (value - highPrices[index - 1]) / highPrices[index - 1] * 100
-        }
-        
-        chartView.configure(model[0].market, model[0].opening_price.formatted(), highChanges, lowChanges)
+        let scale = UserDefinedFunction.shared.setScaleChart(highPrices: highPrices, lowPrices: lowPrices)
+        chartView.configure(model[0].market, row, model[0].opening_price.formatted(), scale[0], scale[1])
     }
     
 }

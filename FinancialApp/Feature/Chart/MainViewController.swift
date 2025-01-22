@@ -146,7 +146,7 @@ extension MainViewController {
             .disposed(by: disposeBag)
         searchBtn.rx.tap
             .subscribe { _ in
-                self.navigationController?.pushViewController(SearchViewController(), animated: true)
+                self.navigationController?.pushViewController(HeartViewController(), animated: true)
             }
             .disposed(by: disposeBag)
     }

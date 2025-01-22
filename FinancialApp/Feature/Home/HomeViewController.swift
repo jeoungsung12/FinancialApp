@@ -15,12 +15,11 @@ import NVActivityIndicatorView
 final class HomeViewController : UIViewController, UICollectionViewDelegate {
     private let disposeBag = DisposeBag()
     private let homeViewModel = HomeViewModel()
-    //TODO: - 페이지 네이션 수정
-    private var currentPage: [HomeSection: Int] = [:]
     private let inputTrigger = PublishSubject<Void>()
     
     let refresh = UIRefreshControl()
-    let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
+    private let searchBar = UISearchBar()
+    private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
     lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
     var dataSource : UICollectionViewDiffableDataSource<HomeSection, HomeItem>?
     
@@ -40,19 +39,29 @@ extension HomeViewController {
     private func setNavigation() {
         self.view.backgroundColor = .black
         self.navigationController?.setNaviagtion(vc: self, title: "", backTitle: "", color: .white)
+        //TODO: - 빼내기
+        self.navigationController?.navigationBar.isHidden = true
     }
     
     private func configureHierarchy() {
+        self.view.addSubview(searchBar)
         self.view.addSubview(collectionView)
         self.view.addSubview(loadingIndicator)
         configureLayout()
     }
     
     private func configureLayout() {
+        searchBar.snp.makeConstraints { make in
+            make.top.equalToSuperview().offset(24)
+            make.horizontalEdges.equalToSuperview().inset(12)
+        }
+        
         collectionView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview()
-            make.verticalEdges.equalTo(self.view.safeAreaInsets)
+            make.bottom.equalTo(self.view.safeAreaInsets)
+            make.top.equalTo(searchBar.snp.bottom).offset(24)
         }
+        
         loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
@@ -66,6 +75,7 @@ extension HomeViewController {
     }
     
     private func configureView() {
+        searchBar.delegate = self
         refresh.tintColor = .lightGray
         refresh.addTarget(self, action: #selector(refreshEnding), for: .valueChanged)
         setCollectionView()
@@ -84,16 +94,38 @@ private extension HomeViewController {
             case .success(let data):
                 var snapShot = NSDiffableDataSourceSnapshot<HomeSection, HomeItem>()
                 
-                let chartItems = HomeItem.chart(data.chartData)
+                let chartItems = data.chartData.map { data in
+                    return HomeItem.chart(data)
+                }
                 let bannerSection = HomeSection.banner
                 snapShot.appendSections([bannerSection])
-                snapShot.appendItems([chartItems], toSection: bannerSection)
+                snapShot.appendItems(chartItems, toSection: bannerSection)
                 
-                //TODO: - 수정
-                let firstItems = HomeItem.infoData(InfoDataModel(greed: data.greedData, loan: data.loanData, exchange: data.exchange, inter: data.international))
+                var InfoData: [InfoDataModel] = []
+                let datas = [data.greedData, data.loanData, data.exchange]
+                //TODO: - 빼내기
+                for data in datas {
+                    if let data = data as? GreedModel,
+                       let firstData = data.data.first {
+                        InfoData.append(InfoDataModel(title: firstData.value, subTitle: firstData.value_classification, description: ""))
+                    }
+                    if let data = data as? [LoanModel],
+                       let data = data.first, let loan = data.int_r, let date = data.sfln_intrc_nm {
+                        InfoData.append(InfoDataModel(title: "\(loan)%", subTitle: "", description: date))
+                    }
+                    if let data = data as? [FinancialModel],
+                       let model = data.first, let name = model.cur_nm, let unit = model.cur_unit,
+                       let ttb = model.ttb, let tts = model.tts {
+                        //TODO: - 연산 프로퍼티
+                        InfoData.append(InfoDataModel(title: "환율", subTitle: "입금: 📥 \(ttb)₩\n출금: 📤 \(tts)₩", description: "\(name) \(unit)"))
+                    }
+                }
+                let infoItems = InfoData.map { data in
+                    return HomeItem.infoData(data)
+                }
                 let infoSection = HomeSection.info
                 snapShot.appendSections([infoSection])
-                snapShot.appendItems([firstItems], toSection: infoSection)
+                snapShot.appendItems(infoItems, toSection: infoSection)
                 
                 let orderItems = data.orderBook.map { orderData in
                     return HomeItem.orderBook(orderData)

@@ -21,8 +21,16 @@ enum CandleType: String {
 
 class CandleService {
     
+    //TODO: - 비동기 Concurrency
+    func getCandleList(markets : [String], method : CandleType) -> Observable<[[CandleModel]]> {
+        let returnObserver = markets.map { market in
+            return self.getCandle(market: market, method: method)
+        }
+        return Observable.zip(returnObserver)
+    }
+    
     func getCandle(market : String, method : CandleType) -> Observable<[CandleModel]> {
-        let url = APIEndpoint.getCandle.rawValue + method.rawValue + "\(market)&count=50"
+        let url = APIEndpoint.getCandle.rawValue + method.rawValue + "\(market)&count=30"
         let headers: HTTPHeaders = ["accept" : "application/json"]
         return NetworkManager.shared.getData(url, headers: headers)
             .flatMap { (result: [CandleModel]) -> Observable<[CandleModel]> in

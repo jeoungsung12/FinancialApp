@@ -14,6 +14,7 @@ extension HomeViewController {
         collectionView.delegate = self
         collectionView.refreshControl = refresh
         collectionView.backgroundColor = .black
+        collectionView.keyboardDismissMode = .onDrag
         collectionView.showsVerticalScrollIndicator = false
         collectionView.register(ChartCell.self, forCellWithReuseIdentifier: ChartCell.id)
         collectionView.register(AdsCollectionViewCell.self, forCellWithReuseIdentifier: AdsCollectionViewCell.id)
@@ -25,7 +26,7 @@ extension HomeViewController {
     
     func createLayout() -> UICollectionViewCompositionalLayout {
         let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 14
+        config.interSectionSpacing = 24
         return UICollectionViewCompositionalLayout(sectionProvider: { [weak self] sectionIndex, _ in
             let section = self?.dataSource?.sectionIdentifier(for: sectionIndex)
             
@@ -46,11 +47,9 @@ extension HomeViewController {
         }, configuration: config)
     }
     
-    //TODO: - 변경
     private func createBannerSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(250))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
         let section = NSCollectionLayoutSection(group: group)
@@ -59,12 +58,15 @@ extension HomeViewController {
     }
     
     private func createInfoSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.3), heightDimension: .fractionalHeight(1.0))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .estimated(150), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(80))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 4)
-        group.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 12, bottom: 4, trailing: 12)
+        
+        let groupSize = NSCollectionLayoutSize(widthDimension: .estimated(150), heightDimension: .absolute(90))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
+        
         let section = NSCollectionLayoutSection(group: group)
+        section.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 24, bottom: 4, trailing: 24)
+        section.interGroupSpacing = 12
         section.orthogonalScrollingBehavior = .continuous
         
         return section
@@ -76,7 +78,7 @@ extension HomeViewController {
         let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.8), heightDimension: .absolute(200))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 3)
         group.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 24, bottom: 4, trailing: 24)
-        
+        group.interItemSpacing = .fixed(24)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .continuous
         
@@ -86,7 +88,7 @@ extension HomeViewController {
     private func createVerticalSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.3))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(350))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(340))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 3)
         let section = NSCollectionLayoutSection(group: group)
         section.contentInsets = NSDirectionalEdgeInsets(top: 24, leading: 0, bottom: 24, trailing: 0)
@@ -96,7 +98,7 @@ extension HomeViewController {
     private func createHorizontalSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(70))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
         let section = NSCollectionLayoutSection(group: group)
         section.orthogonalScrollingBehavior = .none
@@ -109,13 +111,11 @@ extension HomeViewController {
             switch itemIdentifier {
             case let .chart(chartModel):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartCell.id, for: indexPath) as? ChartCell
-                cell?.configure(chartModel)
+                cell?.configure([chartModel], indexPath.row+1)
                 return cell
             case let .infoData(infoData):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InfoCollectionViewCell.id, for: indexPath) as? InfoCollectionViewCell
-                print(indexPath)
-                let data = infoData.data(index: indexPath.row)
-                cell?.configure(model: data)
+                cell?.configure(model: infoData, index: indexPath.row)
                 return cell
             case let .newsList(newsData):
                 let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsListCollectionViewCell.id, for: indexPath) as? NewsListCollectionViewCell
@@ -154,4 +154,8 @@ extension HomeViewController {
             return header
         }
     }
+}
+
+extension HomeViewController: UISearchBarDelegate {
+    
 }

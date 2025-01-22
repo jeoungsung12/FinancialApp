@@ -37,6 +37,7 @@ struct ChartView: View {
                 ForEach(chartData[1].indices, id: \.self) { index in
                     LineMark(x: .value("Date", index), y: .value("Value", chartData[1][index]))
                         .interpolationMethod(.cardinal)
+                        .foregroundStyle(.green.opacity(0.7))
                 }
             }
             .chartXAxis(.hidden)

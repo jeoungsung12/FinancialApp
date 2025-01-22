@@ -6,9 +6,8 @@
 //
 
 import RealmSwift
-
+//
 class DatabaseObject: Object {
     @Persisted var market: String
-    @Persisted var korean_name: String
-    @Persisted var english_name: String
 }
+
