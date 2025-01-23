@@ -18,11 +18,12 @@ final class HeartViewController: UIViewController {
     private let searchBar = UISearchBar()
     private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
     
-    private var heartList: [String] = [] {
+    private var heartList: [[AddTradesModel]] = [] {
         didSet {
             tableView.reloadData()
         }
     }
+    private var timer: Timer?
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,6 +32,12 @@ final class HeartViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         inputTrigger.onNext(())
+        setupTimer()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.fire()
     }
     
     private func configure() {
@@ -59,7 +66,7 @@ extension HeartViewController {
         }
         
         setBinding()
-        
+        setupTimer()
         self.inputTrigger.onNext(())
     }
     
@@ -88,7 +95,8 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HeartTableViewCell.id, for: indexPath) as? HeartTableViewCell else { return UITableViewCell() }
-        cell.configure(with: [AddTradesModel(tradesData: TradesModel(market: "", trade_price: 0, trade_volume: 0, ask_bid: ""), coinName: heartList[indexPath.row], englishName: "")])
+        cell.selectionStyle = .none
+        cell.configure(with: heartList[indexPath.row])
         return cell
     }
     
@@ -104,11 +112,19 @@ extension HeartViewController {
         let input = HeartViewModel.Input(inputTrigger: inputTrigger.asObserver())
         let output = heartViewModel.transform(input: input)
         output.heartList
-            .bind(onNext: { [weak self] (list:[String]) in
+            .bind(onNext: { [weak self] (list:[[AddTradesModel]]) in
                 self?.heartList = list
                 self?.loadingIndicator.stopAnimating()
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func setupTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(updateData), userInfo: nil, repeats: true)
+        timer?.fire()
+    }
+    @objc private func updateData() {
+        inputTrigger.onNext(())
     }
     
 }

@@ -17,18 +17,25 @@ final class HeartViewModel {
     }
     
     struct Output {
-        let heartList: Observable<[String]>
+        let heartList: Observable<[[AddTradesModel]]>
     }
     
     func transform(input: Input) -> Output {
-        let heartList = input.inputTrigger
-            .map { _ in
-                return Array(Database.shared.market)
-            }
-            .asObservable()
+        let database = Database.shared.market
+        let model = changeToModel(database)
+        let heartList = input.inputTrigger.flatMapLatest { result in
+            return OrderBookService().getTotal(totalData: model)
+        }
         
         return Output(heartList: heartList)
     }
     
+    private func changeToModel(_ database: [String]) -> [CryptoModel] {
+        var model: [CryptoModel] = []
+        for db in database {
+            model += cryptoData.filter { $0.market == db }
+        }
+        return model
+    }
     
 }

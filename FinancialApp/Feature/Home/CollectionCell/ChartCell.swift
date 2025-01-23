@@ -48,8 +48,8 @@ extension ChartCell {
         let model = model[chartNum]
         let highPrices = model.compactMap { $0.high_price }
         let lowPrices = model.compactMap { $0.low_price }
-        let scale = UserDefinedFunction.shared.setScaleChart(highPrices: highPrices, lowPrices: lowPrices)
-        chartView.configure(model[0].market, row, model[0].opening_price.formatted(), scale[0], scale[1])
+//        let scale = UserDefinedFunction.shared.setScaleChart(highPrices: highPrices, lowPrices: lowPrices)
+        chartView.configure(model[0].market, row, model[0].opening_price.formatted(), model)
     }
     
 }

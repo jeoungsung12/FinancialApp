@@ -1,18 +1,14 @@
 //
-//  OrderBookCollectionViewCell.swift
-//  Beecher
+//  HeartCustomView.swift
+//  FinancialApp
 //
-//  Created by 정성윤 on 2024/07/18.
+//  Created by 정성윤 on 1/23/25.
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import SnapKit
-import Foundation
 
-final class TicksCollectionViewCell : UICollectionViewCell {
-    static let id : String = "OrderBookCollectionViewCell"
+final class HeartCustomView: UIView {
     //MARK: - UI Components
     private let titleLabel : UILabel = {
         let label = UILabel()
@@ -66,12 +62,14 @@ final class TicksCollectionViewCell : UICollectionViewCell {
         super.init(frame: frame)
         setLayout()
     }
+    
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
-//MARK: - UI Layout
-private extension TicksCollectionViewCell {
+
+extension HeartCustomView {
     private func setLayout() {
         self.addSubview(icon)
         self.addSubview(titleLabel)
@@ -100,11 +98,8 @@ private extension TicksCollectionViewCell {
             make.trailing.equalToSuperview().inset(10)
             make.top.equalTo(price.snp.bottom).offset(5)
         }
-        
     }
-}
-//MARK: - Configure
-extension TicksCollectionViewCell {
+    
     public func configure(with model: [AddTradesModel]) {
         //TODO: - 수정
         guard let model = model.first else { return }
@@ -138,4 +133,5 @@ extension TicksCollectionViewCell {
             self.arrow.textColor = .blue.withAlphaComponent(0.8)
         }
     }
+    
 }

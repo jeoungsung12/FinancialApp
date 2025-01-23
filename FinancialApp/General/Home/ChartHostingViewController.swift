@@ -8,5 +8,5 @@
 import UIKit
 import SwiftUI
 
-final class ChartHostingViewController: UIHostingController<ChartView> { 
+final class ChartHostingViewController: UIHostingController<CandleChartView> { 
 }

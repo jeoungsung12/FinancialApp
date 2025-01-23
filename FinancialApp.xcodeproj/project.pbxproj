@@ -12,8 +12,9 @@
 		E40B24732D410B4500A16D4C /* splash.png in Resources */ = {isa = PBXBuildFile; fileRef = E40B24722D410B4500A16D4C /* splash.png */; };
 		E40B247E2D41156200A16D4C /* Database.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40B247D2D41156200A16D4C /* Database.swift */; };
 		E40B24802D411D3600A16D4C /* HeartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40B247F2D411D3600A16D4C /* HeartTableViewCell.swift */; };
-		E40B24882D41252500A16D4C /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E40B24872D41252500A16D4C /* RealmSwift */; };
-		E40B24892D41254A00A16D4C /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = E40B24872D41252500A16D4C /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		E40B27182D426F4700A16D4C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = E40B27172D426F4700A16D4C /* Toast */; };
+		E40B271A2D426FEF00A16D4C /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40B27192D426FEF00A16D4C /* UIView + Extension.swift */; };
+		E40B271C2D42816E00A16D4C /* HeartCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40B271B2D42816E00A16D4C /* HeartCustomView.swift */; };
 		E43C7EAC2D3E3B7E009C81C2 /* Navigation + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAB2D3E3B7E009C81C2 /* Navigation + Extension.swift */; };
 		E43C7EAE2D3E3B8F009C81C2 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */; };
 		E43C7EB02D3E3B92009C81C2 /* UserDefinedFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */; };
@@ -114,7 +115,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E40B24892D41254A00A16D4C /* RealmSwift in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -127,6 +127,8 @@
 		E40B24722D410B4500A16D4C /* splash.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = splash.png; sourceTree = "<group>"; };
 		E40B247D2D41156200A16D4C /* Database.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Database.swift; sourceTree = "<group>"; };
 		E40B247F2D411D3600A16D4C /* HeartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartTableViewCell.swift; sourceTree = "<group>"; };
+		E40B27192D426FEF00A16D4C /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
+		E40B271B2D42816E00A16D4C /* HeartCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartCustomView.swift; sourceTree = "<group>"; };
 		E43C7EAB2D3E3B7E009C81C2 /* Navigation + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Navigation + Extension.swift"; sourceTree = "<group>"; };
 		E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefinedFunction.swift; sourceTree = "<group>"; };
@@ -217,6 +219,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E40B27182D426F4700A16D4C /* Toast in Frameworks */,
 				E4F56AE42C5F4EAC00FE4DDF /* GoogleMobileAds in Frameworks */,
 				E4CAF4D72BB9AE0900CB18EC /* Kingfisher in Frameworks */,
 				E4DABECF2BBEB68E00AE9DFB /* iOSDropDown in Frameworks */,
@@ -225,7 +228,6 @@
 				E4CAF4B62BB982C600CB18EC /* SnapKit in Frameworks */,
 				E4CAF4B32BB982BD00CB18EC /* RxSwift in Frameworks */,
 				E4CAF4B92BB982F200CB18EC /* SwiftKeychainWrapper in Frameworks */,
-				E40B24882D41252500A16D4C /* RealmSwift in Frameworks */,
 				E4CAF4DF2BBBB6F800CB18EC /* DGCharts in Frameworks */,
 				E4CAF4B12BB982BD00CB18EC /* RxCocoa in Frameworks */,
 			);
@@ -260,6 +262,7 @@
 				E4CAF4C02BB9864100CB18EC /* Color + Extension.swift */,
 				E4DABF172BC2D46100AE9DFB /* String + Extension.swift */,
 				E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */,
+				E40B27192D426FEF00A16D4C /* UIView + Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -465,6 +468,7 @@
 				E4CAF4EC2BBBD04500CB18EC /* HeartViewController.swift */,
 				E4CAF4EE2BBBD04D00CB18EC /* HeartViewModel.swift */,
 				E40B247F2D411D3600A16D4C /* HeartTableViewCell.swift */,
+				E40B271B2D42816E00A16D4C /* HeartCustomView.swift */,
 			);
 			path = Heart;
 			sourceTree = "<group>";
@@ -684,7 +688,7 @@
 				E4DABEBB2BBC7A2200AE9DFB /* NVActivityIndicatorView */,
 				E4DABECE2BBEB68E00AE9DFB /* iOSDropDown */,
 				E4F56AE32C5F4EAC00FE4DDF /* GoogleMobileAds */,
-				E40B24872D41252500A16D4C /* RealmSwift */,
+				E40B27172D426F4700A16D4C /* Toast */,
 			);
 			productName = Beecher;
 			productReference = E4CAF4952BB9808300CB18EC /* FinancialApp.app */;
@@ -724,7 +728,7 @@
 				E4DABEBA2BBC7A2200AE9DFB /* XCRemoteSwiftPackageReference "NVActivityIndicatorView" */,
 				E4DABECD2BBEB68D00AE9DFB /* XCRemoteSwiftPackageReference "iOSDropDown" */,
 				E4F56AE22C5F4EAC00FE4DDF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
-				E40B24862D41252500A16D4C /* XCRemoteSwiftPackageReference "realm-swift" */,
+				E40B27162D426F4700A16D4C /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 			);
 			productRefGroup = E4CAF4962BB9808300CB18EC /* Products */;
 			projectDirPath = "";
@@ -773,6 +777,7 @@
 				E492F2C92C43BF560012B7F3 /* HomeViewModel.swift in Sources */,
 				E492F2C72C43BD5E0012B7F3 /* HomeViewController.swift in Sources */,
 				E4DABEE82BBFBDB800AE9DFB /* GetPaprikaModel.swift in Sources */,
+				E40B271C2D42816E00A16D4C /* HeartCustomView.swift in Sources */,
 				E4DABF1A2BC2D4DE00AE9DFB /* HIDEAPIKEY++Bundle.swift in Sources */,
 				E43C81F82D3FCA1A009C81C2 /* InfoCollectionViewCell.swift in Sources */,
 				E4DABEE42BBFB68700AE9DFB /* OrderBookDetailViewModel.swift in Sources */,
@@ -797,6 +802,7 @@
 				E4DABEE22BBFB67600AE9DFB /* OrderBookDetailViewController.swift in Sources */,
 				E4DC77E52C50ED6700B45001 /* FinancialResult.swift in Sources */,
 				E4DABF122BC2CBFA00AE9DFB /* NewsTableViewCell.swift in Sources */,
+				E40B271A2D426FEF00A16D4C /* UIView + Extension.swift in Sources */,
 				E4DABED52BBF0D3200AE9DFB /* TradesService.swift in Sources */,
 				E4DABF0E2BC2CBEC00AE9DFB /* NewsViewController.swift in Sources */,
 				E4DABF322BC2EDEA00AE9DFB /* ChatServiceModel.swift in Sources */,
@@ -1060,12 +1066,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E40B24862D41252500A16D4C /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+		E40B27162D426F4700A16D4C /* XCRemoteSwiftPackageReference "Toast-Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/realm/realm-swift.git";
+			repositoryURL = "https://github.com/scalessec/Toast-Swift.git";
 			requirement = {
-				branch = master;
-				kind = branch;
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.1;
 			};
 		};
 		E4CAF4AF2BB982BD00CB18EC /* XCRemoteSwiftPackageReference "RxSwift" */ = {
@@ -1143,10 +1149,10 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E40B24872D41252500A16D4C /* RealmSwift */ = {
+		E40B27172D426F4700A16D4C /* Toast */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E40B24862D41252500A16D4C /* XCRemoteSwiftPackageReference "realm-swift" */;
-			productName = RealmSwift;
+			package = E40B27162D426F4700A16D4C /* XCRemoteSwiftPackageReference "Toast-Swift" */;
+			productName = Toast;
 		};
 		E4CAF4B02BB982BD00CB18EC /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;

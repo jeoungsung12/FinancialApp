@@ -10,9 +10,9 @@ import Foundation
 enum HomeSection: Hashable {
     case banner
     case info
-    case category
+    case category(title: String)
     case horizotional
-    case vertical
+    case vertical(title: String)
 }
 
 enum HomeItem: Hashable {

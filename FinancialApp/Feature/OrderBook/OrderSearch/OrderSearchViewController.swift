@@ -189,14 +189,14 @@ extension OrderSearchViewController {
                 self.price.layer.borderColor = UIColor.white.cgColor
             }
             self.arrow.text = "📈매수"
-            self.arrow.textColor = .red
+            self.arrow.textColor = .red.withAlphaComponent(0.8)
         }else {
             self.price.layer.borderColor = UIColor.blue.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.price.layer.borderColor = UIColor.white.cgColor
             }
             self.arrow.text = "📉매도"
-            self.arrow.textColor = .blue
+            self.arrow.textColor = .blue.withAlphaComponent(0.8)
         }
         availLabel.text = "\(volume)"
     }

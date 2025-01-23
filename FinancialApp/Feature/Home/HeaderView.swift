@@ -9,18 +9,17 @@ import UIKit
 import RxSwift
 import RxCocoa
 import SnapKit
-import Foundation
 
-final class HeaderView : UICollectionReusableView {
-    static let id  : String = "HeaderView"
-    //MARK: - UI Componets
-    private let titleView : UITextView = {
+final class HeaderView: UICollectionReusableView {
+    static let id: String = "HeaderView"
+    private let titleView: UITextView = {
         let label = UITextView()
         label.isEditable = false
         label.isUserInteractionEnabled = false
-        label.font = UIFont.systemFont(ofSize: 20, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .heavy)
         return label
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setLayout()
@@ -34,7 +33,7 @@ extension HeaderView {
     private func setLayout() {
         self.addSubview(titleView)
         titleView.snp.makeConstraints { make in
-            make.height.equalTo(80)
+            make.height.equalTo(30)
             make.leading.trailing.top.equalToSuperview().inset(20)
         }
     }

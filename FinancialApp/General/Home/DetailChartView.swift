@@ -7,7 +7,7 @@
 
 import UIKit
 import SnapKit
-import RealmSwift
+import Toast
 
 final class DetailChartView: UIView {
     private let titleLabel = UILabel()
@@ -29,12 +29,12 @@ final class DetailChartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(_ title: String, _ row: Int,_ open_price: String ,_ highModel: [Double],_ lowModel: [Double]) {
-        titleLabel.text = title
+    func configure(_ title: String, _ row: Int,_ open_price: String ,_ model: [CandleModel]) {
+        titleLabel.text = cryptoData.filter( { $0.market == title }).first?.korean_name
         pageLabel.text = "  \(row)/6  "
         descriptionLabel.text = "시가 \(open_price)₩"
         chartHostingViewController?.view.removeFromSuperview()
-        chartHostingViewController = ChartHostingViewController(rootView: ChartView(chartData: [highModel, lowModel]))
+        chartHostingViewController = ChartHostingViewController(rootView: CandleChartView(chartData: model))
         configureView()
     }
        
@@ -73,12 +73,15 @@ extension DetailChartView {
         
         pageLabel.snp.makeConstraints { make in
             make.height.equalTo(20)
-            make.trailing.bottom.equalToSuperview().inset(24)
+            make.trailing.equalToSuperview().inset(24)
+            if let chartHostingViewController = chartHostingViewController {
+                make.top.equalTo(chartHostingViewController.view.snp.bottom).offset(12)
+            }
         }
         
         chartHostingViewController?.view.snp.makeConstraints { make in
             make.height.equalTo(150)
-            make.top.equalTo(titleLabel.snp.bottom).offset(12)
+            make.top.equalTo(titleLabel.snp.bottom).offset(24)
             make.leading.trailing.equalToSuperview().inset(24)
         }
     }
@@ -117,14 +120,15 @@ extension DetailChartView {
     private func heartButtonTapped(_ sender: UIButton) {
         selectedType.toggle()
         guard let text = titleLabel.text else { return }
+        guard let market = cryptoData.filter({ $0.korean_name == text }).first?.market else { return }
         if selectedType {
             var data = db.market
-            data.append(text)
+            data.append(market)
             db.market = data
-            print(db.market)
+            self.customMakeToast(ToastModel(title: nil, message: "찜하기 성공🎁, 목록을 확인하세요!"), HomeViewController())
         } else {
-            db.deleteData(market: text)
-            print(db.market)
+            db.deleteData(market: market)
+            self.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), HomeViewController())
         }
         heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
     }

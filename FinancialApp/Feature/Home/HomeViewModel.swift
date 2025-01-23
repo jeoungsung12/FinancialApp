@@ -30,7 +30,7 @@ final class HomeViewModel {
                     CoinService().getFearGreedIndex(),
                     FinancialNetwork().getLoan(),
                     FinancialNetwork().getExchange(),
-                    CandleService().getCandleList(markets: cryptoData.map { $0.market } , method: .days),
+                    CandleService().getCandleList(markets: cryptoData.map { $0.market } , method: .months),
                     NewsService().getNews(query: "암호화폐", display: 3),
                     OrderBookService().getTotal(totalData: Array(cryptoData))) { greed, loan, exchange, chart ,news, order -> Result<CoinResult, Error> in
                         return .success(CoinResult(greedData: greed, loanData: loan, exchange: exchange, chartData:  chart, newsData: news, orderBook: order))

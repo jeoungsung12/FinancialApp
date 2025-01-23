@@ -130,7 +130,7 @@ private extension HomeViewController {
                 let orderItems = data.orderBook.map { orderData in
                     return HomeItem.orderBook(orderData)
                 }
-                let cagtegorySection = HomeSection.category
+                let cagtegorySection = HomeSection.category(title: "실시간 거래대금")
                 snapShot.appendSections([cagtegorySection])
                 snapShot.appendItems(orderItems, toSection: cagtegorySection)
                 
@@ -142,7 +142,7 @@ private extension HomeViewController {
                 let newsItems = data.newsData.map { newsData in
                     return HomeItem.newsList(newsData)
                 }
-                let verticalSection = HomeSection.vertical
+                let verticalSection = HomeSection.vertical(title: "실시간 주요 뉴스")
                 snapShot.appendSections([verticalSection])
                 snapShot.appendItems(newsItems, toSection: verticalSection)
                 

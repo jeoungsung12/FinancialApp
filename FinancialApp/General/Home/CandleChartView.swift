@@ -19,7 +19,7 @@ struct CandleChartView: View {
                     x: .value("index", index),
                     yStart: .value("low", candle.low_price),
                     yEnd: .value("high", candle.high_price),
-                    width: 4
+                    width: 2
                 )
                 .foregroundStyle(.blue)
                 
@@ -27,11 +27,13 @@ struct CandleChartView: View {
                     x: .value("index", index),
                     yStart: .value("open", candle.opening_price),
                     yEnd: .value("close", candle.trade_price),
-                    width: 16
+                    width: 6
                 )
                 .foregroundStyle(.red)
             }
         }
+        .chartXAxis(.hidden)
+//        .chartYAxis(.hidden)
     }
 }
 
