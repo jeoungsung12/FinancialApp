@@ -4,30 +4,33 @@
 //
 //  Created by 정성윤 on 2024/04/02.
 //
-
-import Foundation
-import RxSwift
-import RxCocoa
-import SnapKit
 import UIKit
-import DGCharts
+import RxSwift
+import SnapKit
 import NVActivityIndicatorView
-import Kingfisher
 
 final class HeartViewController: UIViewController {
     private var disposeBag = DisposeBag()
     private let heartViewModel = HeartViewModel()
-    private var heartList: [DatabaseObject] = []
     private let inputTrigger = PublishSubject<Void>()
     private let tableView = UITableView()
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
     private let searchBar = UISearchBar()
     private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
     
-    
+    private var heartList: [String] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         configure()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        inputTrigger.onNext(())
     }
     
     private func configure() {
@@ -85,12 +88,12 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HeartTableViewCell.id, for: indexPath) as? HeartTableViewCell else { return UITableViewCell() }
-        cell.configure(with: [AddTradesModel(tradesData: TradesModel(market: "", trade_price: 0, trade_volume: 0, ask_bid: ""), coinName: heartList[indexPath.row].market, englishName: "")])
+        cell.configure(with: [AddTradesModel(tradesData: TradesModel(market: "", trade_price: 0, trade_volume: 0, ask_bid: ""), coinName: heartList[indexPath.row], englishName: "")])
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 200
+        return 80
     }
 }
 
@@ -101,7 +104,7 @@ extension HeartViewController {
         let input = HeartViewModel.Input(inputTrigger: inputTrigger.asObserver())
         let output = heartViewModel.transform(input: input)
         output.heartList
-            .bind(onNext: { [weak self] (list:[DatabaseObject]) in
+            .bind(onNext: { [weak self] (list:[String]) in
                 self?.heartList = list
                 self?.loadingIndicator.stopAnimating()
             })

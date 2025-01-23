@@ -11,3 +11,7 @@ class DatabaseObject: Object {
     @Persisted var market: String
 }
 
+class DeleteDatabaseObject: Object {
+    @Persisted var marketTrash: String
+}
+

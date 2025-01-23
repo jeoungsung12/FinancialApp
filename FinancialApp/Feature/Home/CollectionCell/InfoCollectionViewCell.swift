@@ -71,7 +71,7 @@ private extension InfoCollectionViewCell {
         }
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(decLabel.snp.bottom).offset(4)
-            make.trailing.equalToSuperview().inset(8)
+            make.trailing.leading.equalToSuperview().inset(8)
         }
     }
     

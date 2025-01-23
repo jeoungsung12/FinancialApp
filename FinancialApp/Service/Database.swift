@@ -6,33 +6,27 @@
 //
 
 import Foundation
-import RealmSwift
 
 final class Database {
     static let shared = Database()
     
     private init() { }
-    private let db = try! Realm()
+    private let db = UserDefaults.standard
     
-    func setData(_ market: String) {
-        let databaseObject = DatabaseObject()
-        databaseObject.market = market
-        try! db.write {
-            db.add(databaseObject)
+    var market: [String] {
+        get {
+            guard let result = db.array(forKey: "market") as? [String] else { return [] }
+            return result
+        }
+        set {
+            db.removeObject(forKey: "market")
+            db.setValue(newValue, forKey: "market")
         }
     }
     
-    func getData() -> Results<DatabaseObject> {
-        let result = db.objects(DatabaseObject.self)
-        return result
+    func deleteData(market: String) {
+        let data = self.market.filter({ $0 != market })
+        db.removeObject(forKey: "market")
+        self.market = data
     }
-    
-    func deleteData(_ market: String) {
-        let databaseObject = DatabaseObject()
-        databaseObject.market = market
-        try! db.write {
-            db.delete(databaseObject)
-        }
-    }
-    
 }

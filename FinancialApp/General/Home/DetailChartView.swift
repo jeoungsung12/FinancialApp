@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import RealmSwift
 
 final class DetailChartView: UIView {
     private let titleLabel = UILabel()
@@ -16,6 +17,7 @@ final class DetailChartView: UIView {
     private var chartHostingViewController: ChartHostingViewController?
     
     private var selectedType: Bool = false
+    private let db = Database.shared
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -106,8 +108,8 @@ extension DetailChartView {
     
     private func checkTapped() {
         guard let text = titleLabel.text else { return }
-        let data = Database.shared.getData().map { $0.market }
-        selectedType = data.contains(text) ? true : false
+        
+        selectedType = (db.market.contains(text)) ? true : false
         heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
     }
     
@@ -116,9 +118,13 @@ extension DetailChartView {
         selectedType.toggle()
         guard let text = titleLabel.text else { return }
         if selectedType {
-            Database.shared.setData(text)
+            var data = db.market
+            data.append(text)
+            db.market = data
+            print(db.market)
         } else {
-            Database.shared.deleteData(text)
+            db.deleteData(market: text)
+            print(db.market)
         }
         heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
     }

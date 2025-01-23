@@ -17,15 +17,18 @@ final class HeartViewModel {
     }
     
     struct Output {
-        let heartList: Observable<[DatabaseObject]>
+        let heartList: Observable<[String]>
     }
     
     func transform(input: Input) -> Output {
         let heartList = input.inputTrigger
             .map { _ in
-                Array(Database.shared.getData())
+                return Array(Database.shared.market)
             }
             .asObservable()
+        
         return Output(heartList: heartList)
     }
+    
+    
 }
