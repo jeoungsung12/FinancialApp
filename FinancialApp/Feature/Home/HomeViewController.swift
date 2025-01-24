@@ -76,8 +76,11 @@ extension HomeViewController {
     
     private func configureView() {
         searchBar.delegate = self
+        searchBar.searchBarStyle = .minimal
+        
         refresh.tintColor = .lightGray
         refresh.addTarget(self, action: #selector(refreshEnding), for: .valueChanged)
+        
         setCollectionView()
         configureHierarchy()
     }
