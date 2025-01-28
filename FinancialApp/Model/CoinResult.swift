@@ -8,10 +8,7 @@
 import Foundation
 
 struct CoinResult {
-    let greedData: GreedModel
-    let loanData: [LoanModel]
-    let exchange: [FinancialModel]
     let chartData: [[CandleModel]]
     let newsData: [NewsItems]
-    let orderBook: [[AddTradesModel]]
+    let ticksData: [[AddTradesModel]]
 }

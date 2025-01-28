@@ -13,7 +13,6 @@ final class DetailChartView: UIView {
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
     private let heartButton = UIButton()
-    private let pageLabel = UILabel()
     private var chartHostingViewController: ChartHostingViewController?
     
     private var selectedType: Bool = false
@@ -29,9 +28,8 @@ final class DetailChartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(_ title: String, _ row: Int,_ open_price: String ,_ model: [CandleModel]) {
+    func configure(_ title: String, _ open_price: String ,_ model: [CandleModel]) {
         titleLabel.text = cryptoData.filter( { $0.market == title }).first?.korean_name
-        pageLabel.text = "  \(row)/6  "
         descriptionLabel.text = "시가 \(open_price)₩"
         chartHostingViewController?.view.removeFromSuperview()
         chartHostingViewController = ChartHostingViewController(rootView: CandleChartView(chartData: model))
@@ -46,7 +44,6 @@ extension DetailChartView {
         self.addSubview(titleLabel)
         self.addSubview(descriptionLabel)
         self.addSubview(heartButton)
-        self.addSubview(pageLabel)
         if let chartHostingViewController = chartHostingViewController {
             self.addSubview(chartHostingViewController.view)
         }
@@ -71,14 +68,6 @@ extension DetailChartView {
             make.trailing.equalToSuperview().inset(24)
         }
         
-        pageLabel.snp.makeConstraints { make in
-            make.height.equalTo(20)
-            make.trailing.equalToSuperview().inset(24)
-            if let chartHostingViewController = chartHostingViewController {
-                make.top.equalTo(chartHostingViewController.view.snp.bottom).offset(12)
-            }
-        }
-        
         chartHostingViewController?.view.snp.makeConstraints { make in
             make.height.equalTo(150)
             make.top.equalTo(titleLabel.snp.bottom).offset(24)
@@ -98,14 +87,6 @@ extension DetailChartView {
         heartButton.tintColor = .white
         heartButton.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
         checkTapped()
-        
-        pageLabel.textColor = .white
-        pageLabel.clipsToBounds = true
-        pageLabel.backgroundColor = .gray
-        pageLabel.textAlignment = .left
-        pageLabel.layer.cornerRadius = 5
-        pageLabel.font = .boldSystemFont(ofSize: 10)
-        
         configureHierachy()
     }
     

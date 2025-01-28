@@ -11,22 +11,31 @@ final class Database {
     static let shared = Database()
     
     private init() { }
-    private let db = UserDefaults.standard
+    
+    private let ud = UserDefaults.standard
+    private enum Key: String {
+        case market = "market"
+    }
+    
+    private func get<T>(_ key: Key, binding: T) -> T {
+        return ud.value(forKey: key.rawValue) as? T ?? binding
+    }
+    
+    private func set<T>(_ key: Key, value: T) {
+        ud.setValue(value, forKey: key.rawValue)
+    }
     
     var market: [String] {
         get {
-            guard let result = db.array(forKey: "market") as? [String] else { return [] }
-            return result
+            return self.get(.market, binding: [])
         }
         set {
-            db.removeObject(forKey: "market")
-            db.setValue(newValue, forKey: "market")
+            self.set(.market, value: newValue)
         }
     }
     
     func deleteData(market: String) {
-        let data = self.market.filter({ $0 != market })
-        db.removeObject(forKey: "market")
-        self.market = data
+        self.market = self.market.filter({ $0 != market })
     }
+    
 }

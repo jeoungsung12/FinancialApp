@@ -8,7 +8,7 @@
 import UIKit
 import SnapKit
 
-final class NewsListCollectionViewCell : UICollectionViewCell {
+final class NewsListCell : UITableViewCell {
     static let id = "NewsListCollectionViewCell"
     private let titleLabel : UILabel = {
         let label = UILabel()
@@ -16,7 +16,7 @@ final class NewsListCollectionViewCell : UICollectionViewCell {
         label.numberOfLines = 1
         label.textAlignment = .left
         label.backgroundColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = UIFont.boldSystemFont(ofSize: 17)
         return label
     }()
     
@@ -40,16 +40,19 @@ final class NewsListCollectionViewCell : UICollectionViewCell {
         return label
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
+        self.contentView.isUserInteractionEnabled = false
         configureView()
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 //MARK: - UI Layout
-private extension NewsListCollectionViewCell {
+private extension NewsListCell {
     
     private func configureHierarchy() {
         self.addSubview(titleLabel)
@@ -62,16 +65,16 @@ private extension NewsListCollectionViewCell {
     private func configureLayout() {
         titleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(12)
         }
         decLabel.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(8)
-            make.leading.trailing.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(12)
             make.bottom.lessThanOrEqualToSuperview().offset(-4)
         }
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(decLabel.snp.bottom).offset(4)
-            make.trailing.equalToSuperview().inset(24)
+            make.trailing.equalToSuperview().inset(12)
         }
     }
     
@@ -80,11 +83,9 @@ private extension NewsListCollectionViewCell {
     }
 }
 //MARK: - Action
-extension NewsListCollectionViewCell {
+extension NewsListCell {
     
     func configure(with model: NewsItems) {
-        
-        
         let titleWithoutHTML = UserDefinedFunction.shared.replacingOccurrences(model.title)
         titleLabel.text = titleWithoutHTML
         

@@ -14,7 +14,7 @@ final class HeartViewController: UIViewController {
     private let heartViewModel = HeartViewModel()
     private let inputTrigger = PublishSubject<Void>()
     private let tableView = UITableView()
-    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.hideKeyboard))
+    private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapGesture))
     private let searchBar = UISearchBar()
     private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
     
@@ -96,7 +96,7 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HeartTableViewCell.id, for: indexPath) as? HeartTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-        cell.configure(with: heartList[indexPath.row])
+//        cell.configure(with: heartList[indexPath.row])
         return cell
     }
     

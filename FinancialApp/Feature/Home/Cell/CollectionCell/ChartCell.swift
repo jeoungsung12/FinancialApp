@@ -9,13 +9,11 @@ import SnapKit
 
 final class ChartCell : UICollectionViewCell {
     static let id = "ChartCell"
-    
     private let chartView = DetailChartView()
-    private var chartData: [[CandleModel]] = []
-    private var chartNum: Int = 0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.contentView.isUserInteractionEnabled = false
         configureView()
     }
     required init?(coder: NSCoder) {
@@ -33,6 +31,7 @@ private extension ChartCell {
     private func configureLayout() {
         chartView.snp.makeConstraints { make in
             make.edges.equalToSuperview()
+            make.height.equalToSuperview().dividedBy(1.8)
         }
     }
     
@@ -43,13 +42,8 @@ private extension ChartCell {
 //MARK: - Action
 extension ChartCell {
     
-    func configure(_ model: [[CandleModel]],_ row: Int) {
-        self.chartData = model
-        let model = model[chartNum]
-        let highPrices = model.compactMap { $0.high_price }
-        let lowPrices = model.compactMap { $0.low_price }
-//        let scale = UserDefinedFunction.shared.setScaleChart(highPrices: highPrices, lowPrices: lowPrices)
-        chartView.configure(model[0].market, row, model[0].opening_price.formatted(), model)
+    func configure(_ model: [CandleModel]) {
+        chartView.configure(model[0].market, model[0].opening_price.formatted(), model)
     }
     
 }

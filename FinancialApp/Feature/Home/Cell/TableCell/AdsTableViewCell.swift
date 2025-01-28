@@ -1,28 +1,26 @@
 //
-//  CoinCollectionViewCell.swift
-//  Beecher
+//  AdsTableViewCell.swift
+//  FinancialApp
 //
-//  Created by 정성윤 on 2024/07/18.
+//  Created by 정성윤 on 1/28/25.
 //
 
 import UIKit
-import RxSwift
-import RxCocoa
 import SnapKit
-import DGCharts
-import Foundation
 import GoogleMobileAds
 
-final class AdsCollectionViewCell : UICollectionViewCell, GADBannerViewDelegate {
-    static let id : String = "AdsCollectionViewCell"
-    //MARK: - UI Components
+final class AdsTableViewCell: UITableViewCell, GADBannerViewDelegate {
+    static let id: String = "AdsTableViewCell"
     private let AdsView : GADBannerView = {
         let view = GADBannerView()
         view.backgroundColor = .clear
         return view
     }()
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    
+    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
+        self.contentView.isUserInteractionEnabled = false
         configureView()
     }
     required init?(coder: NSCoder) {
@@ -31,7 +29,7 @@ final class AdsCollectionViewCell : UICollectionViewCell, GADBannerViewDelegate 
 }
 
 //MARK: - UI Layout
-private extension AdsCollectionViewCell {
+private extension AdsTableViewCell {
     private func configureHierarchy() {
         self.addSubview(AdsView)
         configureLayout()
@@ -39,9 +37,11 @@ private extension AdsCollectionViewCell {
     
     private func configureLayout() {
         AdsView.snp.makeConstraints { make in
-            make.verticalEdges.equalToSuperview()
-            make.horizontalEdges.equalToSuperview().inset(24)
+            make.height.equalTo(60)
+            make.verticalEdges.equalToSuperview().inset(24)
+            make.horizontalEdges.equalToSuperview().inset(12)
         }
+        configure()
     }
     
     private func configureView() {
@@ -52,8 +52,8 @@ private extension AdsCollectionViewCell {
     }
 }
 //MARK: - Configure
-extension AdsCollectionViewCell {
-    public func configure(_ AdsString : String) {
+extension AdsTableViewCell {
+    private func configure() {
         self.AdsView.adUnitID = "ca-app-pub-1155068737041268/1768586357"
         let request = GADRequest()
         self.AdsView.load(request)
