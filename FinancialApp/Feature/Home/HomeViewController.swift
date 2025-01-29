@@ -42,12 +42,6 @@ final class HomeViewController: UIViewController {
 
 extension HomeViewController {
     
-    private func setNavigation() {
-        self.setNavigation("")
-        self.view.backgroundColor = .black
-        self.navigationController?.navigationBar.isHidden = true
-    }
-    
     private func configureHierarchy() {
         self.view.addSubview(tableView)
         self.view.addSubview(loadingIndicator)
@@ -69,6 +63,7 @@ extension HomeViewController {
     }
     
     private func configureView() {
+        self.setNavigation("")
         self.view.backgroundColor = .black
         
         configureHierarchy()
@@ -114,11 +109,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeProfileTableViewCell.id, for: indexPath) as? HomeProfileTableViewCell else { return UITableViewCell() }
             let rate = homeData.rate
             cell.configure(rate)
-            cell.sheetProfile = {
-                //TODO: - Ai 바꾸기
-                let vc = SheetProfileViewController()
-                vc.dismissClosure = { cell.configure(rate) }
-                self.sheet(vc)
+            cell.sheetProfile = { [weak self] in
+                let vc = PortfolioViewController()
+                self?.push(vc)
             }
             return cell
             
@@ -127,17 +120,20 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.coinData = homeData.chartData
             cell.heartTapped = { [weak self] isAlert, title in
                 guard let self = self else { return }
+                //TODO: - 수정
                 if isAlert {
                     self.showInputDialog(for: title) {
                         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                        self.inputTrigger.onNext((self.db.heartList))
+                        cell.collectionView.reloadData()
                     }
                 } else {
                     self.db.removeHeartItem(title)
                     tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                     self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), self, .center)
+                    self.inputTrigger.onNext((db.heartList))
+                    cell.collectionView.reloadData()
                 }
-                self.inputTrigger.onNext((db.heartList))
-                cell.collectionView.reloadData()
             }
             return cell
             
@@ -160,4 +156,5 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
+    
 }

@@ -44,7 +44,7 @@ extension CryptoCell {
     private func configureLayout() {
         icon.snp.makeConstraints { make in
             make.size.equalTo(40)
-            make.centerY.equalToSuperview()
+            make.centerY.equalToSuperview().offset(5)
             make.leading.equalToSuperview().inset(24)
         }
         
@@ -60,6 +60,7 @@ extension CryptoCell {
         self.layer.masksToBounds = true
         self.backgroundColor = .darkGray
         
+        titleLabel.numberOfLines = 2
         titleLabel.textColor = .white
         titleLabel.textAlignment = .left
         titleLabel.font = .boldSystemFont(ofSize: 16)

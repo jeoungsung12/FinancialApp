@@ -83,7 +83,7 @@ extension MyProfileView {
     private func configureView() {
         self.clipsToBounds = true
         self.layer.cornerRadius = 15
-        self.backgroundColor = .darkGray
+        self.backgroundColor = UIColor.darkGray.withAlphaComponent(0.4)
         
         profileImage.containerView.isHidden = true
         profileImage.isUserInteractionEnabled = false
@@ -98,7 +98,7 @@ extension MyProfileView {
         
         saveButton.clipsToBounds = true
         saveButton.layer.cornerRadius = 10
-        saveButton.backgroundColor = .white
+        saveButton.backgroundColor = .white.withAlphaComponent(0.8)
         saveButton.setTitleColor(.black, for: .normal)
         saveButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         

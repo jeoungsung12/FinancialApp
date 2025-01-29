@@ -13,7 +13,7 @@ extension UIImageView {
         self.clipsToBounds = true
         self.layer.borderWidth = itemSelected ? 3 : 1
         self.layer.cornerRadius = radius
-        self.layer.borderColor = itemSelected ? UIColor.white.cgColor : UIColor.darkGray.cgColor
+        self.layer.borderColor = itemSelected ? UIColor.white.withAlphaComponent(0.8).cgColor : UIColor.darkGray.cgColor
     }
     
 }
