@@ -80,7 +80,9 @@ extension Database {
     }
     
     func removeHeartItem(_ name: String) {
-        heartList = heartList.filter { $0.name != name }
+        if let market = cryptoData.filter({$0.korean_name == name}).first {
+            heartList = heartList.filter { $0.name != market.market }
+        }
     }
     
     func removeUserInfo() {

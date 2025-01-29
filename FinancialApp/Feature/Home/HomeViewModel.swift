@@ -12,10 +12,9 @@ import Foundation
 final class HomeViewModel {
     
     private let disposeBag = DisposeBag()
-    private let db = Database.shared.heartList
     
     struct Input {
-        let chartInput : Observable<Void>
+        let chartInput : Observable<[HeartItem]>
     }
     
     struct Output {
@@ -24,17 +23,18 @@ final class HomeViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let data = cryptoData.prefix(6)
-        let cryptoData: [String] = (db.isEmpty) ? data.map { $0.market } : db.map ({ $0.name })
         //TODO: - DispatchGroup
         let chartOutput = input.chartInput
-            .flatMapLatest { [weak self] _ -> Observable<CoinResult> in
+            .flatMapLatest { [weak self] db -> Observable<CoinResult> in
+                let data = cryptoData.prefix(6)
+                let cryptoData: [String] = (db.isEmpty) ? data.map { $0.market } : db.map ({ $0.name })
+                
                 guard self != nil else { return Observable.empty() }
                 let coinResult = CandleService().getCandleList(markets: cryptoData , method: .months)
                 let ticksResult = OrderBookService().getTotal(totalData: Array(data))
                 let newsResult = NewsService().getNews(query: "암호화폐", display: 3)
                 return Observable.zip(coinResult, ticksResult, newsResult) { coinResult, ticksResult, newsResult in
-                    let rateResult = self?.calculateRate(coinResult[0].map { $0.opening_price })
+                    let rateResult = self?.calculateRate(coinResult[0].map { $0.opening_price }, db)
                     return CoinResult(chartData: coinResult, newsData: newsResult, ticksData: ticksResult, rate: rateResult ?? 0)
                 }
             }
@@ -42,7 +42,7 @@ final class HomeViewModel {
         return Output(chartOutput: chartOutput)
     }
     
-    private func calculateRate(_ openingPrices: [Double]) -> Double {
+    private func calculateRate(_ openingPrices: [Double],_ db: [HeartItem]) -> Double {
         let heartList = db
         guard !heartList.isEmpty, !openingPrices.isEmpty else { return 0 }
 

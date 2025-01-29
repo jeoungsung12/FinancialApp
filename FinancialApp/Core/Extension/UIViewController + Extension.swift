@@ -78,7 +78,7 @@ extension UIViewController {
         self.present(alertVC, animated: true)
     }
     
-    func showInputDialog(for crypto: String) {
+    func showInputDialog(for crypto: String, completion: @escaping () -> Void) {
         let alert = UIAlertController(title: "\(crypto) 정보 입력", message: nil, preferredStyle: .alert)
         alert.addTextField { textField in
             textField.placeholder = "수량 입력"
@@ -90,11 +90,15 @@ extension UIViewController {
         }
         
         let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
-            let quantity = alert.textFields?[0].text ?? "0"
-            let price = alert.textFields?[1].text ?? "0"
-            if let market = cryptoData.filter({$0.korean_name == crypto}).first {
-                Database.shared.removeHeartItem(market.market)
-                Database.shared.addHeartItem(name: market.market, quantity: quantity, price: price)
+            if let quantity = alert.textFields?[0].text, let price = alert.textFields?[1].text, (quantity != "" && price != "") {
+                if let market = cryptoData.filter({$0.korean_name == crypto}).first {
+                    Database.shared.removeHeartItem(market.market)
+                    Database.shared.addHeartItem(name: market.market, quantity: quantity, price: price)
+                    self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 성공🎁, 목록을 확인하세요!"), self, .center)
+                    completion()
+                }
+            } else {
+                self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 실패! 가격/수량 모두 입력하세요"), self, .center)
             }
         }
         let cancelAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)

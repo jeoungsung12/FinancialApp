@@ -94,7 +94,7 @@ extension CryptoInputViewController: UICollectionViewDataSource, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCrypto = filteredCryptos[indexPath.item]
-        self.showInputDialog(for: selectedCrypto.korean_name)
+        self.showInputDialog(for: selectedCrypto.korean_name) { }
     }
 }
 

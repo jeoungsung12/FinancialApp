@@ -14,7 +14,7 @@ import NVActivityIndicatorView
 final class HomeViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let homeViewModel = HomeViewModel()
-    private let inputTrigger = PublishSubject<Void>()
+    private let inputTrigger = PublishSubject<[HeartItem]>()
     
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapGesture))
     private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
@@ -36,8 +36,7 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-//        self.inputTrigger.onNext(())
-//        self.setBinding()
+        inputTrigger.onNext((db.heartList))
     }
 }
 
@@ -66,7 +65,7 @@ extension HomeViewController {
         }
         
         setBinding()
-        inputTrigger.onNext(())
+        inputTrigger.onNext((db.heartList))
     }
     
     private func configureView() {
@@ -116,6 +115,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             let rate = homeData.rate
             cell.configure(rate)
             cell.sheetProfile = {
+                //TODO: - Ai 바꾸기
                 let vc = SheetProfileViewController()
                 vc.dismissClosure = { cell.configure(rate) }
                 self.sheet(vc)
@@ -128,13 +128,16 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             cell.heartTapped = { [weak self] isAlert, title in
                 guard let self = self else { return }
                 if isAlert {
-                    self.showInputDialog(for: title)
-                    self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 성공🎁, 목록을 확인하세요!"), self, .center)
+                    self.showInputDialog(for: title) {
+                        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                    }
                 } else {
                     self.db.removeHeartItem(title)
-                    self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), HomeViewController(), .center)
+                    tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                    self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), self, .center)
                 }
-                tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                self.inputTrigger.onNext((db.heartList))
+                cell.collectionView.reloadData()
             }
             return cell
             

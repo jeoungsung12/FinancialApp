@@ -10,7 +10,7 @@ import SnapKit
 import Toast
 
 final class ChartTableViewCell: UITableViewCell {
-    private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.setcollectionViewLayout())
+    lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.setcollectionViewLayout())
     static let id: String = "ChartTableViewCell"
     private let pageLabel = UILabel()
     private var currentPage: Int = 1
@@ -57,7 +57,7 @@ extension ChartTableViewCell {
         }
     }
     
-    private func configureView() {
+    func configureView() {
         self.backgroundColor = .black
         pageLabel.textColor = .white
         pageLabel.clipsToBounds = true
