@@ -15,7 +15,7 @@ struct ToastModel {
 
 extension UIView {
     
-    func customMakeToast(_ text: ToastModel,_ vc: UIViewController) {
-        self.makeToast(text.message, duration: 1.5, position: .bottom, title: text.title, image: nil) { didTap in }
+    func customMakeToast(_ text: ToastModel,_ vc: UIViewController,_ position: ToastPosition = .bottom) {
+        self.makeToast(text.message, duration: 1.5, position: position, title: text.title, image: nil) { didTap in }
     }
 }

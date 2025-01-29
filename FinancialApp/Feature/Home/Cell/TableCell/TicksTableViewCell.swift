@@ -11,6 +11,8 @@ import SnapKit
 final class TicksTableViewCell: UITableViewCell {
     static let id: String = "TicksTableViewCell"
     private let titleLabel = UILabel()
+    private let pageLabel = UILabel()
+    private var currentPage: Int = 1
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.setcollectionViewLayout())
 
     var ticksData: [[AddTradesModel]] = [] {
@@ -37,19 +39,29 @@ extension TicksTableViewCell {
     private func configureHierarchy() {
         self.addSubview(titleLabel)
         self.addSubview(collectionView)
+        self.addSubview(pageLabel)
         configureLayout()
     }
     
     private func configureLayout() {
         
         titleLabel.snp.makeConstraints { make in
-            make.top.horizontalEdges.equalToSuperview().inset(12)
+            make.top.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(12)
         }
         
         collectionView.snp.makeConstraints { make in
             make.height.equalTo(160)
-            make.horizontalEdges.bottom.equalToSuperview()
+            make.horizontalEdges.equalToSuperview()
+            make.bottom.equalToSuperview().offset(-48)
             make.top.equalTo(titleLabel.snp.bottom).offset(12)
+        }
+        
+        pageLabel.snp.makeConstraints { make in
+            make.width.equalTo(50)
+            make.height.equalTo(20)
+            make.bottom.equalToSuperview().offset(-12)
+            make.trailing.equalToSuperview().offset(-24)
         }
     }
     
@@ -62,13 +74,20 @@ extension TicksTableViewCell {
         titleLabel.textAlignment = .left
         titleLabel.font = .boldSystemFont(ofSize: 18)
         
+        pageLabel.textColor = .white
+        pageLabel.clipsToBounds = true
+        pageLabel.layer.cornerRadius = 5
+        pageLabel.textAlignment = .center
+        pageLabel.backgroundColor = .darkGray
+        pageLabel.font = .boldSystemFont(ofSize: 15)
+        
         configureCollectionView()
         configureHierarchy()
     }
     
 }
 
-extension TicksTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource {
+extension TicksTableViewCell: UICollectionViewDelegate, UICollectionViewDataSource, UIScrollViewDelegate {
     
     private func configureCollectionView() {
         collectionView.delegate = self
@@ -81,7 +100,7 @@ extension TicksTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     
     private func setcollectionViewLayout() -> UICollectionViewLayout {
         let layout = UICollectionViewFlowLayout()
-        let width = UIScreen.main.bounds.width - 12
+        let width = UIScreen.main.bounds.width
         layout.scrollDirection = .horizontal
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
@@ -96,7 +115,19 @@ extension TicksTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: TicksCollectionViewCell.id, for: indexPath) as? TicksCollectionViewCell else { return UICollectionViewCell() }
+        configurePage()
         cell.configure(with: ticksData[indexPath.row])
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let pageWidth = scrollView.frame.width
+        let page = Int(scrollView.contentOffset.x / pageWidth)
+        currentPage = page + 1
+        configurePage()
+    }
+    
+    private func configurePage() {
+        pageLabel.text = "\(currentPage)/\(ticksData.count/2)"
     }
 }

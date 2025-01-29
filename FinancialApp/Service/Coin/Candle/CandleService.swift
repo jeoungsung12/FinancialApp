@@ -21,7 +21,6 @@ enum CandleType: String {
 
 class CandleService {
     
-    //TODO: - 비동기 Concurrency
     func getCandleList(markets : [String], method : CandleType) -> Observable<[[CandleModel]]> {
         let returnObserver = markets.map { market in
             return self.getCandle(market: market, method: method)

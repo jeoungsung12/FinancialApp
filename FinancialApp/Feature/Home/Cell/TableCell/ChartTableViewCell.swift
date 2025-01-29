@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Toast
 
 final class ChartTableViewCell: UITableViewCell {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.setcollectionViewLayout())
@@ -20,6 +21,7 @@ final class ChartTableViewCell: UITableViewCell {
         }
     }
     
+    var heartTapped: (()->Void)?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -43,14 +45,15 @@ extension ChartTableViewCell {
     
     private func configureLayout() {
         collectionView.snp.makeConstraints { make in
-            make.height.equalTo(UIScreen.main.bounds.height / 3)
+            make.height.equalTo(280)
             make.verticalEdges.horizontalEdges.equalToSuperview()
         }
         
         pageLabel.snp.makeConstraints { make in
+            make.width.equalTo(50)
             make.height.equalTo(20)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalTo(collectionView.snp.bottom).offset(-12)
+            make.bottom.equalTo(collectionView.snp.bottom).offset(-24)
         }
     }
     
@@ -99,6 +102,17 @@ extension ChartTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartCell.id, for: indexPath) as? ChartCell else { return UICollectionViewCell() }
         configurePage()
         cell.configure(coinData[indexPath.item])
+        cell.heartTapped = { [weak self] type in
+            guard let self = self else { return }
+            self.heartTapped?()
+            switch type {
+            case .success:
+                self.customMakeToast(ToastModel(title: nil, message: "찜하기 성공🎁, 목록을 확인하세요!"), HomeViewController(), .center)
+            case .failure:
+                self.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), HomeViewController(), .center)
+            }
+            collectionView.reloadItems(at: [indexPath])
+        }
         return cell
     }
     
@@ -110,7 +124,7 @@ extension ChartTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     private func configurePage() {
-        pageLabel.text = " \(currentPage)/\(coinData.count)  "
+        pageLabel.text = "\(currentPage)/\(coinData.count)"
     }
     
 }

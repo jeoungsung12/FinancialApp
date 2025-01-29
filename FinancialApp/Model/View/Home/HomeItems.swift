@@ -8,6 +8,7 @@
 import Foundation
 
 enum HomeItems: CaseIterable {
+    case profile
     case chart
     case ticks
     case ads

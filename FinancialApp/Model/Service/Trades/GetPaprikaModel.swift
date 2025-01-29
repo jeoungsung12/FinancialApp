@@ -6,16 +6,11 @@
 //
 
 import Foundation
-struct GetPaprikaModel : Codable {
-    let id : String?
-    let name : String?
-    let symbol : String?
-    let rank : Int?
-    let is_new : Bool?
-    let is_active : Bool?
-    let type : String?
+struct GetPaprikaModel : Decodable {
+    let id : String
+    let name : String
 }
-struct GetImageModel : Codable {
+struct GetImageModel : Decodable {
     let id, name, symbol: String?
     let parent: Parent?
     let rank: Int?

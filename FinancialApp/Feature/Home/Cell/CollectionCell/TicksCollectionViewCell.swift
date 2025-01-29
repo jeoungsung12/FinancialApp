@@ -89,16 +89,16 @@ private extension TicksCollectionViewCell {
             make.leading.equalTo(icon.snp.trailing).offset(8)
         }
         availLabel.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().offset(-12)
+            make.trailing.equalTo(price).offset(-12)
             make.top.equalTo(titleLabel.snp.bottom).offset(4)
             make.leading.equalTo(icon.snp.trailing).offset(8)
         }
         price.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(24)
             make.top.trailing.equalToSuperview().inset(24)
         }
         arrow.snp.makeConstraints { make in
-            make.trailing.equalToSuperview().inset(10)
+            make.trailing.equalToSuperview().inset(24)
             make.top.equalTo(price.snp.bottom).offset(5)
         }
         

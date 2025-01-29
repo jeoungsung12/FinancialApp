@@ -11,6 +11,7 @@ final class ChartCell : UICollectionViewCell {
     static let id = "ChartCell"
     private let chartView = DetailChartView()
     
+    var heartTapped: ((ToastType)->Void)?
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.contentView.isUserInteractionEnabled = false
@@ -36,10 +37,13 @@ private extension ChartCell {
     }
     
     private func configureView() {
+        chartView.heartTapped = { [weak self] type in
+            self?.heartTapped?(type)
+        }
         configureHierarchy()
     }
 }
-//MARK: - Action
+
 extension ChartCell {
     
     func configure(_ model: [CandleModel]) {

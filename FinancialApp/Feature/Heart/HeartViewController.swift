@@ -80,7 +80,7 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func setNavigation() {
         self.view.backgroundColor = .black
-        self.navigationController?.setNaviagtion(vc: self, title: "", backTitle: "", color: .white)
+        self.setNavigation("")
     }
     
     private func setTableView() {

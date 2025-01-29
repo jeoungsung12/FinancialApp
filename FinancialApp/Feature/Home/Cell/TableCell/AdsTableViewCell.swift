@@ -29,7 +29,7 @@ final class AdsTableViewCell: UITableViewCell, GADBannerViewDelegate {
 }
 
 //MARK: - UI Layout
-private extension AdsTableViewCell {
+extension AdsTableViewCell {
     private func configureHierarchy() {
         self.addSubview(AdsView)
         configureLayout()
@@ -38,7 +38,7 @@ private extension AdsTableViewCell {
     private func configureLayout() {
         AdsView.snp.makeConstraints { make in
             make.height.equalTo(60)
-            make.verticalEdges.equalToSuperview().inset(24)
+            make.top.bottom.equalToSuperview().inset(24)
             make.horizontalEdges.equalToSuperview().inset(12)
         }
         configure()

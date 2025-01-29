@@ -21,7 +21,7 @@ final class HeartViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let database = Database.shared.market
+        let database = Database.shared.heartList
         let model = changeToModel(database)
         let heartList = input.inputTrigger.flatMapLatest { result in
             return OrderBookService().getTotal(totalData: model)

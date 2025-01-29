@@ -9,6 +9,11 @@ import UIKit
 import SnapKit
 import Toast
 
+enum ToastType {
+    case success
+    case failure
+}
+
 final class DetailChartView: UIView {
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
@@ -18,6 +23,7 @@ final class DetailChartView: UIView {
     private var selectedType: Bool = false
     private let db = Database.shared
     
+    var heartTapped: ((ToastType)->Void)?
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()
@@ -29,8 +35,11 @@ final class DetailChartView: UIView {
     }
     
     func configure(_ title: String, _ open_price: String ,_ model: [CandleModel]) {
-        titleLabel.text = cryptoData.filter( { $0.market == title }).first?.korean_name
         descriptionLabel.text = "시가 \(open_price)₩"
+        selectedType = (db.heartList.contains(title)) ? true : false
+        titleLabel.text = cryptoData.filter( { $0.market == title }).first?.korean_name
+        heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
+        
         chartHostingViewController?.view.removeFromSuperview()
         chartHostingViewController = ChartHostingViewController(rootView: CandleChartView(chartData: model))
         configureView()
@@ -53,19 +62,17 @@ extension DetailChartView {
     private func configureLayout() {
         titleLabel.snp.makeConstraints { make in
             make.height.equalTo(25)
-            make.top.equalToSuperview()
-            make.leading.equalToSuperview().offset(24)
+            make.top.leading.equalToSuperview().inset(24)
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(10)
+            make.top.equalToSuperview().offset(24)
             make.leading.equalTo(titleLabel.snp.trailing).offset(12)
         }
         
         heartButton.snp.makeConstraints { make in
             make.size.equalTo(40)
-            make.top.equalToSuperview()
-            make.trailing.equalToSuperview().inset(24)
+            make.top.trailing.equalToSuperview().inset(24)
         }
         
         chartHostingViewController?.view.snp.makeConstraints { make in
@@ -86,31 +93,21 @@ extension DetailChartView {
         
         heartButton.tintColor = .white
         heartButton.addTarget(self, action: #selector(heartButtonTapped), for: .touchUpInside)
-        checkTapped()
         configureHierachy()
-    }
-    
-    private func checkTapped() {
-        guard let text = titleLabel.text else { return }
-        
-        selectedType = (db.market.contains(text)) ? true : false
-        heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
     }
     
     @objc
     private func heartButtonTapped(_ sender: UIButton) {
+        print(#function)
+        guard let text = titleLabel.text, let market = cryptoData.filter({ $0.korean_name == text }).first?.market else { return }
         selectedType.toggle()
-        guard let text = titleLabel.text else { return }
-        guard let market = cryptoData.filter({ $0.korean_name == text }).first?.market else { return }
         if selectedType {
-            var data = db.market
-            data.append(market)
-            db.market = data
-            self.customMakeToast(ToastModel(title: nil, message: "찜하기 성공🎁, 목록을 확인하세요!"), HomeViewController())
+            db.removeHeartButton(market)
+            db.heartList.append(market)
+            heartTapped?(.success)
         } else {
-            db.deleteData(market: market)
-            self.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), HomeViewController())
+            db.deleteData(market)
+            heartTapped?(.failure)
         }
-        heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
     }
 }

@@ -23,7 +23,9 @@ final class HomeViewController: UIViewController {
     
     private var homeData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: []) {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -34,15 +36,15 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //TODO: - 데이터 리로딩
+        tableView.reloadData()
     }
 }
 
 extension HomeViewController {
     
     private func setNavigation() {
+        self.setNavigation("")
         self.view.backgroundColor = .black
-        self.navigationController?.setNaviagtion(vc: self, title: "", backTitle: "", color: .white)
         self.navigationController?.navigationBar.isHidden = true
     }
     
@@ -95,6 +97,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
+        tableView.register(HomeProfileTableViewCell.self, forCellReuseIdentifier: HomeProfileTableViewCell.id)
         tableView.register(ChartTableViewCell.self, forCellReuseIdentifier: ChartTableViewCell.id)
         tableView.register(TicksTableViewCell.self, forCellReuseIdentifier: TicksTableViewCell.id)
         tableView.register(AdsTableViewCell.self, forCellReuseIdentifier: AdsTableViewCell.id)
@@ -102,14 +105,22 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 5
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch HomeItems.allCases[indexPath.row] {
+        case .profile:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeProfileTableViewCell.id, for: indexPath) as? HomeProfileTableViewCell else { return UITableViewCell() }
+            cell.configure()
+            return cell
+            
         case .chart:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ChartTableViewCell.id, for: indexPath) as? ChartTableViewCell else { return UITableViewCell() }
             cell.coinData = homeData.chartData
+            cell.heartTapped = {
+                tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+            }
             return cell
             
         case .ticks:
