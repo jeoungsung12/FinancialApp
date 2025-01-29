@@ -45,6 +45,7 @@ extension CryptoInputViewController {
     }
     
     private func configureView() {
+        self.setNavigation("관심등록")
         self.view.backgroundColor = .black
         searchBar.delegate = self
         searchBar.searchBarStyle = .minimal

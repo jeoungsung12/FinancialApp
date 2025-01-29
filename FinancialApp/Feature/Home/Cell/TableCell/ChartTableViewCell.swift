@@ -53,7 +53,7 @@ extension ChartTableViewCell {
             make.width.equalTo(50)
             make.height.equalTo(20)
             make.trailing.equalToSuperview().offset(-24)
-            make.bottom.equalTo(collectionView.snp.bottom).offset(-24)
+            make.bottom.equalTo(collectionView.snp.bottom).offset(-20)
         }
     }
     

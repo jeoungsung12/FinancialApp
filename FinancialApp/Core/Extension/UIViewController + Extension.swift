@@ -46,12 +46,10 @@ extension UIViewController {
         self.navigationItem.backBarButtonItem = back
         
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
         appearance.backgroundColor = .black
         appearance.titleTextAttributes = [.foregroundColor: UIColor.white]
         
         navigationBar.tintColor = color
-        navigationBar.compactAppearance = appearance
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance
     }

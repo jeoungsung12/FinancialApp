@@ -44,7 +44,7 @@ extension CryptoCell {
     private func configureLayout() {
         icon.snp.makeConstraints { make in
             make.size.equalTo(40)
-            make.centerY.equalToSuperview().offset(5)
+            make.centerY.equalToSuperview()
             make.leading.equalToSuperview().inset(24)
         }
         

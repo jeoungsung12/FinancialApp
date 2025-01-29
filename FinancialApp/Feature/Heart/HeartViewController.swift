@@ -73,6 +73,7 @@ extension HeartViewController {
     }
     
     private func configureView() {
+        self.setNavigation("관심 리스트")
         setTableView()
         configureHierarchy()
     }

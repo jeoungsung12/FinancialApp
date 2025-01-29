@@ -36,7 +36,7 @@ extension MyPageViewController {
     private func configureLayout() {
         
         myProfileView.snp.makeConstraints { make in
-            make.height.equalToSuperview().dividedBy(6)
+            make.height.equalTo(150)
             make.horizontalEdges.equalToSuperview().inset(12)
             make.top.equalTo(self.view.safeAreaLayoutGuide).offset(12)
         }

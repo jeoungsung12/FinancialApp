@@ -44,6 +44,7 @@ final class PortfolioViewController: UIViewController {
 extension PortfolioViewController {
     
     private func configureView() {
+        self.setNavigation("포트폴리오")
         self.view.backgroundColor = .black
         configureHierarchy()
     }
@@ -57,14 +58,15 @@ extension PortfolioViewController {
     
     private func configureLayout() {
         summaryView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide)
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(8)
             make.leading.trailing.equalToSuperview().inset(16)
             make.height.equalTo(120)
         }
         
         tableView.snp.makeConstraints { make in
-            make.top.equalTo(summaryView.snp.bottom).offset(10)
-            make.leading.trailing.bottom.equalToSuperview()
+            make.bottom.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(12)
+            make.top.equalTo(summaryView.snp.bottom).offset(12)
         }
         
         loadingIndicator.snp.makeConstraints { make in

@@ -18,6 +18,7 @@ final class HomeViewController: UIViewController {
     
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapGesture))
     private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
+    private let appLogo = UIBarButtonItem(image: UIImage(named: "logo"), style: .plain, target: nil, action: nil)
     private let tableView = UITableView()
     private let db = Database.shared
     
@@ -64,6 +65,7 @@ extension HomeViewController {
     
     private func configureView() {
         self.setNavigation("")
+        self.navigationItem.leftBarButtonItem = appLogo
         self.view.backgroundColor = .black
         
         configureHierarchy()
