@@ -12,9 +12,8 @@ final class MyProfileView: UIButton {
     private let profileImage = CustomProfileButton(60, true)
     private let nameLabel = UILabel()
     private let dateLabel = UILabel()
-    private let arrow = UIButton()
+    private let rateLabel = UILabel()
     private let saveButton = UIButton()
-    private let userInfo = Database.shared.getUser()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -25,11 +24,13 @@ final class MyProfileView: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(_ userInfo: UserInfo) {
+    func configure(_ userInfo: UserInfo,_ rate: Double) {
         dateLabel.text = userInfo.date
         nameLabel.text = userInfo.nickname
         profileImage.profileImage.image = userInfo.profile
         saveButton.setTitle("\(userInfo.coinCount) 개의 가상화폐 보관중", for: .normal)
+        rateLabel.text = (rate != 0) ? String(format: "수익률 %.2f%%", rate) : ""
+        rateLabel.textColor = (rate <= 0) ? .lightGray : .systemGreen
     }
     
 }
@@ -38,7 +39,7 @@ extension MyProfileView {
     
     private func configureHierarchy() {
         self.addSubview(profileImage)
-        self.addSubview(arrow)
+        self.addSubview(rateLabel)
         self.addSubview(nameLabel)
         self.addSubview(dateLabel)
         self.addSubview(saveButton)
@@ -52,21 +53,21 @@ extension MyProfileView {
             make.top.leading.equalToSuperview().inset(12)
         }
         
-        arrow.snp.makeConstraints { make in
-            make.size.equalTo(40)
+        rateLabel.snp.makeConstraints { make in
             make.centerY.equalTo(profileImage)
-            make.trailing.equalToSuperview().inset(12)
+            make.trailing.equalToSuperview().inset(24)
+            make.leading.equalTo(nameLabel.snp.trailing).offset(12)
         }
         
         nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(24)
-            make.trailing.equalTo(arrow.snp.leading).offset(-4)
+            make.trailing.equalTo(rateLabel.snp.leading).offset(-4)
             make.leading.equalTo(profileImage.snp.trailing).offset(8)
         }
         
         dateLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(4)
-            make.trailing.equalTo(arrow.snp.leading).offset(-4)
+            make.trailing.equalTo(rateLabel.snp.leading).offset(-4)
             make.leading.equalTo(profileImage.snp.trailing).offset(8)
         }
         
@@ -101,9 +102,8 @@ extension MyProfileView {
         saveButton.setTitleColor(.black, for: .normal)
         saveButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
         
-        arrow.isEnabled = false
-        arrow.tintColor = .lightGray
-        arrow.setImage(UIImage(systemName: "greaterthan"), for: .normal)
+        rateLabel.textAlignment = .right
+        rateLabel.font = .boldSystemFont(ofSize: 20)
         
         configureHierarchy()
     }

@@ -31,7 +31,7 @@ private extension HeartTableViewCell {
 }
 //MARK: - Configure
 extension HeartTableViewCell {
-    public func configure(with model: [AddTradesModel]) {
+    func configure(with model: [AddTradesModel]) {
         view.configure(with: model)
     }
 }

@@ -78,4 +78,30 @@ extension UIViewController {
         self.present(alertVC, animated: true)
     }
     
+    func showInputDialog(for crypto: String) {
+        let alert = UIAlertController(title: "\(crypto) 정보 입력", message: nil, preferredStyle: .alert)
+        alert.addTextField { textField in
+            textField.placeholder = "수량 입력"
+            textField.keyboardType = .decimalPad
+        }
+        alert.addTextField { textField in
+            textField.placeholder = "매수가 입력"
+            textField.keyboardType = .decimalPad
+        }
+        
+        let saveAction = UIAlertAction(title: "저장", style: .default) { _ in
+            let quantity = alert.textFields?[0].text ?? "0"
+            let price = alert.textFields?[1].text ?? "0"
+            if let market = cryptoData.filter({$0.korean_name == crypto}).first {
+                Database.shared.removeHeartItem(market.market)
+                Database.shared.addHeartItem(name: market.market, quantity: quantity, price: price)
+            }
+        }
+        let cancelAction = UIAlertAction(title: "취소", style: .destructive, handler: nil)
+        
+        alert.addAction(saveAction)
+        alert.addAction(cancelAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }

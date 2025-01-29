@@ -11,7 +11,7 @@ import RxCocoa
 import Alamofire
 
 class GetImageService {
-    func getCoin(englishName : String) -> Observable<GetImageModel> {
+    func getCoin(englishName: String) -> Observable<GetImageModel> {
         return Observable.create { observer in
             let url = "https://api.coinpaprika.com/v1/coins"
             let headers: HTTPHeaders = ["accept" : "application/json"]

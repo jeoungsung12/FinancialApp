@@ -20,7 +20,7 @@ final class MyPageViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        myProfileView.configure(db.getUser())
+        myProfileView.configure(db.getUser(), 0)
     }
     
 }
@@ -80,7 +80,7 @@ extension MyPageViewController {
         print(#function)
         let vc = SheetProfileViewController()
         vc.dismissClosure = {
-            self.myProfileView.configure(self.db.getUser())
+            self.myProfileView.configure(self.db.getUser(), 0)
         }
         self.sheet(vc)
     }

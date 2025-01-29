@@ -10,8 +10,8 @@ import SnapKit
 import Toast
 
 enum ToastType {
-    case success
-    case failure
+    case add(title: String)
+    case remove(title: String)
 }
 
 final class DetailChartView: UIView {
@@ -36,10 +36,9 @@ final class DetailChartView: UIView {
     
     func configure(_ title: String, _ open_price: String ,_ model: [CandleModel]) {
         descriptionLabel.text = "시가 \(open_price)₩"
-        selectedType = (db.heartList.contains(title)) ? true : false
+        selectedType = (db.heartList.map{ $0.name }.contains(title)) ? true : false
         titleLabel.text = cryptoData.filter( { $0.market == title }).first?.korean_name
         heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
-        
         chartHostingViewController?.view.removeFromSuperview()
         chartHostingViewController = ChartHostingViewController(rootView: CandleChartView(chartData: model))
         configureView()
@@ -66,7 +65,7 @@ extension DetailChartView {
         }
         
         descriptionLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(24)
+            make.bottom.equalTo(titleLabel.snp.bottom)
             make.leading.equalTo(titleLabel.snp.trailing).offset(12)
         }
         
@@ -99,15 +98,13 @@ extension DetailChartView {
     @objc
     private func heartButtonTapped(_ sender: UIButton) {
         print(#function)
-        guard let text = titleLabel.text, let market = cryptoData.filter({ $0.korean_name == text }).first?.market else { return }
+        guard let text = titleLabel.text else { return }
         selectedType.toggle()
         if selectedType {
-            db.removeHeartButton(market)
-            db.heartList.append(market)
-            heartTapped?(.success)
+            heartTapped?(.add(title: text))
         } else {
-            db.deleteData(market)
-            heartTapped?(.failure)
+            heartTapped?(.remove(title: text))
         }
+        heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
     }
 }

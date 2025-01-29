@@ -57,7 +57,7 @@ final class TicksCollectionViewCell : UICollectionViewCell {
         label.clipsToBounds = true
         label.textAlignment = .center
         label.layer.cornerRadius = 20
-        label.backgroundColor = .clear.randomColor()
+        label.backgroundColor = .randomColor()
         label.font = .systemFont(ofSize: 20, weight: .heavy)
         return label
     }()
@@ -129,14 +129,14 @@ extension TicksCollectionViewCell {
                 self.price.layer.borderColor = UIColor.black.cgColor
             }
             self.arrow.text = "📈매수"
-            self.arrow.textColor = .red.withAlphaComponent(0.8)
+            self.arrow.textColor = .red
         }else {
-            self.price.layer.borderColor = UIColor.blue.cgColor
+            self.price.layer.borderColor = UIColor.systemGreen.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.price.layer.borderColor = UIColor.black.cgColor
             }
             self.arrow.text = "📉매도"
-            self.arrow.textColor = .blue.withAlphaComponent(0.8)
+            self.arrow.textColor = .systemGreen
         }
     }
 }

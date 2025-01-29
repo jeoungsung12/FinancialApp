@@ -128,6 +128,6 @@ extension TicksTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     }
     
     private func configurePage() {
-        pageLabel.text = "\(currentPage)/\(ticksData.count/2)"
+        pageLabel.text = "\(currentPage)/\(ticksData.count/2 + ticksData.count%2)"
     }
 }

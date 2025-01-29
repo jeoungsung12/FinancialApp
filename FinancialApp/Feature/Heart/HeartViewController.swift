@@ -20,7 +20,9 @@ final class HeartViewController: UIViewController {
     
     private var heartList: [[AddTradesModel]] = [] {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     private var timer: Timer?
@@ -37,7 +39,8 @@ final class HeartViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        timer?.fire()
+        timer?.invalidate()
+        timer = nil
     }
     
     private func configure() {
@@ -64,10 +67,9 @@ extension HeartViewController {
         loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
-        
         setBinding()
+        inputTrigger.onNext(())
         setupTimer()
-        self.inputTrigger.onNext(())
     }
     
     private func configureView() {
@@ -96,7 +98,7 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: HeartTableViewCell.id, for: indexPath) as? HeartTableViewCell else { return UITableViewCell() }
         cell.selectionStyle = .none
-//        cell.configure(with: heartList[indexPath.row])
+        cell.configure(with: heartList[indexPath.row])
         return cell
     }
     
@@ -120,10 +122,10 @@ extension HeartViewController {
     }
     
     private func setupTimer() {
-        timer = Timer.scheduledTimer(timeInterval: 3, target: self, selector: #selector(updateData), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reloadData), userInfo: nil, repeats: true)
         timer?.fire()
     }
-    @objc private func updateData() {
+    @objc private func reloadData() {
         inputTrigger.onNext(())
     }
     

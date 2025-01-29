@@ -21,7 +21,7 @@ final class HomeViewController: UIViewController {
     private let tableView = UITableView()
     private let db = Database.shared
     
-    private var homeData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: []) {
+    private var homeData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: [], rate: 0) {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -36,7 +36,8 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
+//        self.inputTrigger.onNext(())
+//        self.setBinding()
     }
 }
 
@@ -112,13 +113,27 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         switch HomeItems.allCases[indexPath.row] {
         case .profile:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeProfileTableViewCell.id, for: indexPath) as? HomeProfileTableViewCell else { return UITableViewCell() }
-            cell.configure()
+            let rate = homeData.rate
+            cell.configure(rate)
+            cell.sheetProfile = {
+                let vc = SheetProfileViewController()
+                vc.dismissClosure = { cell.configure(rate) }
+                self.sheet(vc)
+            }
             return cell
             
         case .chart:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: ChartTableViewCell.id, for: indexPath) as? ChartTableViewCell else { return UITableViewCell() }
             cell.coinData = homeData.chartData
-            cell.heartTapped = {
+            cell.heartTapped = { [weak self] isAlert, title in
+                guard let self = self else { return }
+                if isAlert {
+                    self.showInputDialog(for: title)
+                    self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 성공🎁, 목록을 확인하세요!"), self, .center)
+                } else {
+                    self.db.removeHeartItem(title)
+                    self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), HomeViewController(), .center)
+                }
                 tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
             }
             return cell

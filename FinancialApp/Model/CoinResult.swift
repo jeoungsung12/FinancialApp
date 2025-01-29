@@ -11,4 +11,5 @@ struct CoinResult {
     let chartData: [[CandleModel]]
     let newsData: [NewsItems]
     let ticksData: [[AddTradesModel]]
+    let rate: Double
 }

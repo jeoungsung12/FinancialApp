@@ -51,9 +51,10 @@ final class HeartCustomView: UIView {
         let label = UILabel()
         label.textColor = .white
         label.clipsToBounds = true
+        label.layer.borderWidth = 1
         label.textAlignment = .center
         label.layer.cornerRadius = 20
-        label.backgroundColor = .clear.randomColor()
+        label.layer.borderColor = UIColor.white.cgColor
         label.font = .systemFont(ofSize: 20, weight: .heavy)
         return label
     }()
@@ -100,7 +101,7 @@ extension HeartCustomView {
         }
     }
     
-    public func configure(with model: [AddTradesModel]) {
+    func configure(with model: [AddTradesModel]) {
         //TODO: - 수정
         guard let model = model.first else { return }
         let name = model.coinName
@@ -110,27 +111,27 @@ extension HeartCustomView {
         let volume = model.tradesData.trade_volume
         
         self.titleLabel.text = name
-        self.price.text = "\(price.formatted())₩"
         self.availLabel.text = "체결량: \(volume)"
         if let text = englishName.first {
             icon.text = String(text)
         }
         
         //TODO: - 빼내기
+        self.price.text = "\(price.formatted())₩"
         if ask_bid == "ASK" {
             self.price.layer.borderColor = UIColor.red.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.price.layer.borderColor = UIColor.black.cgColor
             }
             self.arrow.text = "📈매수"
-            self.arrow.textColor = .red.withAlphaComponent(0.8)
+            self.arrow.textColor = .red
         }else {
-            self.price.layer.borderColor = UIColor.blue.cgColor
+            self.price.layer.borderColor = UIColor.systemGreen.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.price.layer.borderColor = UIColor.black.cgColor
             }
             self.arrow.text = "📉매도"
-            self.arrow.textColor = .blue.withAlphaComponent(0.8)
+            self.arrow.textColor = .systemGreen
         }
     }
     

@@ -36,12 +36,18 @@ final class Database {
         }
     }
     
-    var heartList: [String] {
+    var heartList: [HeartItem] {
         get {
-            return self.get(.heartList, binding: [])
+            if let data = ud.data(forKey: Key.heartList.rawValue),
+               let decoded = try? JSONDecoder().decode([HeartItem].self, from: data) {
+                return decoded
+            }
+            return []
         }
         set {
-            self.set(.heartList, value: newValue)
+            if let encoded = try? JSONEncoder().encode(newValue) {
+                ud.set(encoded, forKey: Key.heartList.rawValue)
+            }
         }
     }
     
@@ -59,20 +65,22 @@ final class Database {
         }
     }
     
-    func deleteData(_ market: String) {
-        self.heartList = self.heartList.filter({ $0 != market })
-    }
-    
-    
 }
 
 extension Database {
+    
+    func addHeartItem(name: String, quantity: String, price: String) {
+        var list = heartList
+        list.append(HeartItem(name: name, quantity: quantity, price: price))
+        heartList = list
+    }
+    
     func removeAll(_ model: String) {
         UserDefaults.standard.removeObject(forKey: model)
     }
     
-    func removeHeartButton(_ remove: String) {
-        self.heartList = heartList.filter { $0 != remove }
+    func removeHeartItem(_ name: String) {
+        heartList = heartList.filter { $0.name != name }
     }
     
     func removeUserInfo() {

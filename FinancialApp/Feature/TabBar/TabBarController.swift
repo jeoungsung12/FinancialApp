@@ -20,14 +20,14 @@ extension TabBarController {
     
     private func configure() {
         let vc1 = UINavigationController(rootViewController: HomeViewController())
-        let vc2 = UINavigationController(rootViewController: HeartViewController())
+        let vc2 = UINavigationController(rootViewController: CryptoInputViewController())
         let vc3 = UINavigationController(rootViewController: HeartViewController())
         let vc4 = UINavigationController(rootViewController: MyPageViewController())
         
         self.setViewControllers([vc1, vc2, vc3, vc4], animated: true)
         guard let items = self.tabBar.items else { return }
         items[0].image = UIImage(systemName: "chart.xyaxis.line")
-        items[1].image = UIImage(systemName: "homekit")
+        items[1].image = UIImage(systemName: "list.bullet")
         items[2].image = UIImage(systemName: "heart")
         items[3].image = UIImage(systemName: "person")
         

@@ -13,6 +13,7 @@ final class HomeProfileTableViewCell: UITableViewCell {
     private var profileView = MyProfileView()
     private let db = Database.shared
     
+    var sheetProfile: (()->Void)?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -23,8 +24,8 @@ final class HomeProfileTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure() {
-        profileView.configure(db.getUser())
+    func configure(_ rate: Double) {
+        profileView.configure(db.getUser(), rate)
     }
 }
 
@@ -46,6 +47,13 @@ extension HomeProfileTableViewCell {
     
     private func configureView() {
         self.backgroundColor = .black
+        profileView.addTarget(self, action: #selector(myProfileTapped), for: .touchUpInside)
         configureHierarchy()
+    }
+    
+    @objc
+    private func myProfileTapped(_ sender: UIButton) {
+        print(#function)
+        sheetProfile?()
     }
 }

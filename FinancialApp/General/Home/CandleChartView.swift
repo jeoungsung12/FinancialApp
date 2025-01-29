@@ -21,7 +21,7 @@ struct CandleChartView: View {
                     yEnd: .value("high", candle.high_price),
                     width: 2
                 )
-                .foregroundStyle(.blue)
+                .foregroundStyle(.green)
                 
                 RectangleMark(
                     x: .value("index", index),

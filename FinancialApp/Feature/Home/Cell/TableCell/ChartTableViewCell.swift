@@ -21,7 +21,7 @@ final class ChartTableViewCell: UITableViewCell {
         }
     }
     
-    var heartTapped: (()->Void)?
+    var heartTapped: ((Bool, String)->Void)?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -104,12 +104,11 @@ extension ChartTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
         cell.configure(coinData[indexPath.item])
         cell.heartTapped = { [weak self] type in
             guard let self = self else { return }
-            self.heartTapped?()
             switch type {
-            case .success:
-                self.customMakeToast(ToastModel(title: nil, message: "찜하기 성공🎁, 목록을 확인하세요!"), HomeViewController(), .center)
-            case .failure:
-                self.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), HomeViewController(), .center)
+            case let .add(title):
+                self.heartTapped?(true, title)
+            case let .remove(title):
+                self.heartTapped?(false, title)
             }
             collectionView.reloadItems(at: [indexPath])
         }
