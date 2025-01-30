@@ -31,9 +31,9 @@ final class PortfolioViewModel {
                 let ticksObservable = OrderBookService().getTotal(totalData: Array(filteredData))
                 
                 return ticksObservable.flatMap { ticksData -> Observable<[PortfolioModel]> in
-                    guard let self = self, let tradePrice = ticksData.first else { return Observable.empty() }
+                    guard let self = self else { return Observable.empty() }
                     
-                    let priceList = tradePrice.map { $0.tradesData.trade_price }
+                    let priceList = ticksData.flatMap { $0 }.map { $0.tradesData.trade_price }
                     let rateList = self.calculateRate(priceList, db)
                     
                     let portfolioModels = zip(db, priceList).compactMap { (dbItem, openPrice) -> PortfolioModel? in
