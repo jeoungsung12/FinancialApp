@@ -13,7 +13,7 @@ final class HeartViewModel {
     private let disposeBag = DisposeBag()
     
     struct Input {
-        let inputTrigger : Observable<Void>
+        let inputTrigger : Observable<[HeartItem]>
     }
     
     struct Output {
@@ -21,9 +21,9 @@ final class HeartViewModel {
     }
     
     func transform(input: Input) -> Output {
-        let database = Database.shared.heartList.map { $0.name }
-        let model = database.isEmpty ? [] : changeToModel(database)
         let heartList = input.inputTrigger.flatMapLatest { result in
+            let database = result.map { $0.name }
+            let model = database.isEmpty ? [] : self.changeToModel(database)
             return OrderBookService().getTotal(totalData: model)
         }
         

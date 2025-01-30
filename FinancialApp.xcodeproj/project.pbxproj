@@ -65,6 +65,9 @@
 		E4788FAB2D4A8ACA008D4B3A /* PortfolioSummaryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FAA2D4A8ACA008D4B3A /* PortfolioSummaryView.swift */; };
 		E4788FAD2D4A8AE8008D4B3A /* PortfolioTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FAC2D4A8AE8008D4B3A /* PortfolioTableViewCell.swift */; };
 		E4788FB12D4A8B37008D4B3A /* PortfolioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FB02D4A8B37008D4B3A /* PortfolioModel.swift */; };
+		E4788FB32D4B3AA4008D4B3A /* HomeCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FB22D4B3AA4008D4B3A /* HomeCoin.swift */; };
+		E4788FB72D4B3D1B008D4B3A /* RecommandTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FB62D4B3D1A008D4B3A /* RecommandTableViewCell.swift */; };
+		E4788FB92D4B3D4B008D4B3A /* RecommandCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FB82D4B3D4B008D4B3A /* RecommandCollectionViewCell.swift */; };
 		E483068A2C4914F90017F6B2 /* CoinResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48306892C4914F90017F6B2 /* CoinResult.swift */; };
 		E483068E2C49651C0017F6B2 /* TicksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */; };
 		E492F2C72C43BD5E0012B7F3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */; };
@@ -180,6 +183,9 @@
 		E4788FAA2D4A8ACA008D4B3A /* PortfolioSummaryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioSummaryView.swift; sourceTree = "<group>"; };
 		E4788FAC2D4A8AE8008D4B3A /* PortfolioTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioTableViewCell.swift; sourceTree = "<group>"; };
 		E4788FB02D4A8B37008D4B3A /* PortfolioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioModel.swift; sourceTree = "<group>"; };
+		E4788FB22D4B3AA4008D4B3A /* HomeCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoin.swift; sourceTree = "<group>"; };
+		E4788FB62D4B3D1A008D4B3A /* RecommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandTableViewCell.swift; sourceTree = "<group>"; };
+		E4788FB82D4B3D4B008D4B3A /* RecommandCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandCollectionViewCell.swift; sourceTree = "<group>"; };
 		E48306892C4914F90017F6B2 /* CoinResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinResult.swift; sourceTree = "<group>"; };
 		E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicksCollectionViewCell.swift; sourceTree = "<group>"; };
 		E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -292,6 +298,7 @@
 				E43C81812D3FC25A009C81C2 /* GreedModel.swift */,
 				E43C7EC62D3E489F009C81C2 /* ChartData.swift */,
 				E4788FA22D4A4E85008D4B3A /* HeartItem.swift */,
+				E4788FB22D4B3AA4008D4B3A /* HomeCoin.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -333,6 +340,7 @@
 				E4788D032D491CA7008D4B3A /* AdsTableViewCell.swift */,
 				E4788D052D491CD2008D4B3A /* ChartTableViewCell.swift */,
 				E4788F952D4A060E008D4B3A /* HomeProfileTableViewCell.swift */,
+				E4788FB62D4B3D1A008D4B3A /* RecommandTableViewCell.swift */,
 			);
 			path = TableCell;
 			sourceTree = "<group>";
@@ -458,6 +466,7 @@
 				E492F2CE2C46D6E80012B7F3 /* NewsListCollectionViewCell.swift */,
 				E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */,
 				E43C7EC82D3E4D76009C81C2 /* ChartCell.swift */,
+				E4788FB82D4B3D4B008D4B3A /* RecommandCollectionViewCell.swift */,
 			);
 			path = CollectionCell;
 			sourceTree = "<group>";
@@ -820,6 +829,7 @@
 				E4DC77E32C50E34D00B45001 /* FinancialModel.swift in Sources */,
 				E492F2C92C43BF560012B7F3 /* HomeViewModel.swift in Sources */,
 				E492F2C72C43BD5E0012B7F3 /* HomeViewController.swift in Sources */,
+				E4788FB92D4B3D4B008D4B3A /* RecommandCollectionViewCell.swift in Sources */,
 				E4DABEE82BBFBDB800AE9DFB /* GetPaprikaModel.swift in Sources */,
 				E40B271C2D42816E00A16D4C /* HeartCustomView.swift in Sources */,
 				E4DABF1A2BC2D4DE00AE9DFB /* HIDEAPIKEY++Bundle.swift in Sources */,
@@ -854,6 +864,7 @@
 				E4788F9B2D4A189D008D4B3A /* CryptoCell.swift in Sources */,
 				E4788E392D49E8B5008D4B3A /* Color + Extension.swift in Sources */,
 				E4CAF4ED2BBBD04600CB18EC /* HeartViewController.swift in Sources */,
+				E4788FB72D4B3D1B008D4B3A /* RecommandTableViewCell.swift in Sources */,
 				E4788E3B2D49E97B008D4B3A /* TabBarController.swift in Sources */,
 				E43C7EB52D3E3CB6009C81C2 /* HomeItems.swift in Sources */,
 				E4788F922D49FC1A008D4B3A /* ProfileImageCollectionViewCell.swift in Sources */,
@@ -876,6 +887,7 @@
 				E4788EE12D49F5E9008D4B3A /* NickName.swift in Sources */,
 				E4788EE92D49F720008D4B3A /* ProfileData.swift in Sources */,
 				E4788F962D4A060F008D4B3A /* HomeProfileTableViewCell.swift in Sources */,
+				E4788FB32D4B3AA4008D4B3A /* HomeCoin.swift in Sources */,
 				E43C7EBB2D3E45F4009C81C2 /* NetworkManager.swift in Sources */,
 				E4DABF162BC2CECB00AE9DFB /* NewsService.swift in Sources */,
 				E4788D022D491C82008D4B3A /* TicksTableViewCell.swift in Sources */,

@@ -10,6 +10,7 @@ import Foundation
 enum HomeItems: CaseIterable {
     case profile
     case chart
+    case recommand
     case ticks
     case ads
     case news

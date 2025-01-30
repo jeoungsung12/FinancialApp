@@ -32,7 +32,7 @@ final class HomeViewModel {
                 guard self != nil else { return Observable.empty() }
                 let coinResult = CandleService().getCandleList(markets: cryptoData , method: .months)
                 let ticksResult = OrderBookService().getTotal(totalData: Array(data))
-                let newsResult = NewsService().getNews(query: "암호화폐", display: 3)
+                let newsResult = NewsService().getNews(query: "암호화폐", display: 5)
                 return Observable.zip(coinResult, ticksResult, newsResult) { coinResult, ticksResult, newsResult in
                     let rateResult = self?.calculateRate(coinResult[0].map { $0.opening_price }, db)
                     return CoinResult(chartData: coinResult, newsData: newsResult, ticksData: ticksResult, rate: rateResult ?? 0)

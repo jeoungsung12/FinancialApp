@@ -12,7 +12,9 @@ import NVActivityIndicatorView
 final class HeartViewController: UIViewController {
     private var disposeBag = DisposeBag()
     private let heartViewModel = HeartViewModel()
-    private let inputTrigger = PublishSubject<Void>()
+    private let inputTrigger = PublishSubject<[HeartItem]>()
+    private let db = Database.shared
+    
     private let tableView = UITableView()
     private lazy var tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.tapGesture))
     private let searchBar = UISearchBar()
@@ -33,7 +35,7 @@ final class HeartViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        inputTrigger.onNext(())
+        inputTrigger.onNext((db.heartList))
         setupTimer()
     }
     
@@ -68,7 +70,7 @@ extension HeartViewController {
             make.center.equalToSuperview()
         }
         setBinding()
-        inputTrigger.onNext(())
+        inputTrigger.onNext((db.heartList))
         setupTimer()
     }
     
@@ -126,8 +128,9 @@ extension HeartViewController {
         timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reloadData), userInfo: nil, repeats: true)
         timer?.fire()
     }
+    
     @objc private func reloadData() {
-        inputTrigger.onNext(())
+        inputTrigger.onNext((db.heartList))
     }
     
 }

@@ -47,7 +47,7 @@ extension NewsListTableViewCell {
         }
         
         tableView.snp.makeConstraints { make in
-            make.height.equalTo(300)
+            make.height.equalTo(500)
             make.top.equalTo(titleLabel.snp.bottom).offset(24)
             make.horizontalEdges.bottom.equalToSuperview().inset(12)
         }

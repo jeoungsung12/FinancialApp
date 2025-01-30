@@ -95,6 +95,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.register(HomeProfileTableViewCell.self, forCellReuseIdentifier: HomeProfileTableViewCell.id)
+        tableView.register(RecommandTableViewCell.self, forCellReuseIdentifier: RecommandTableViewCell.id)
         tableView.register(ChartTableViewCell.self, forCellReuseIdentifier: ChartTableViewCell.id)
         tableView.register(TicksTableViewCell.self, forCellReuseIdentifier: TicksTableViewCell.id)
         tableView.register(AdsTableViewCell.self, forCellReuseIdentifier: AdsTableViewCell.id)
@@ -102,7 +103,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -137,6 +138,10 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
                     cell.collectionView.reloadData()
                 }
             }
+            return cell
+            
+        case .recommand:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecommandTableViewCell.id, for: indexPath) as? RecommandTableViewCell else { return UITableViewCell() }
             return cell
             
         case .ticks:
