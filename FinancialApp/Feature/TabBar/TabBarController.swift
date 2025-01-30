@@ -45,7 +45,7 @@ extension TabBarController {
         self.tabBar.clipsToBounds = true
         self.tabBar.layer.borderWidth = 0.5
         self.tabBar.layer.cornerRadius = 20
-        self.tabBar.layer.borderColor = UIColor.lightGray.cgColor
+        self.tabBar.layer.borderColor = UIColor.darkGray.withAlphaComponent(0.5).cgColor
         self.tabBar.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         
         self.selectedIndex = 0

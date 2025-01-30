@@ -87,8 +87,8 @@ final class PortfolioSummaryView: UIView {
         let totalInvestment = data.reduce(0) { $0 + ($1.purchasePrice * $1.quantity) }
         let totalReturn = ((totalAsset - totalInvestment) / totalInvestment) * 100
         
-        totalAssetLabel.attributedText = makeAttributedText(title: "총 자산", value: totalAsset)
-        totalInvestmentLabel.attributedText = makeAttributedText(title: "총 투자금", value: totalInvestment)
+        totalAssetLabel.attributedText = makeAttributedText(title: "총 자산", value: totalAsset.formatted())
+        totalInvestmentLabel.attributedText = makeAttributedText(title: "총 투자금", value: totalInvestment.formatted())
         
         let returnColor: UIColor = (totalReturn >= 0) ? .systemGreen : .lightGray
         let returnText = String(format: "%.2f%%", totalReturn)

@@ -24,9 +24,8 @@ final class HeartViewModel {
         let heartList = input.inputTrigger.flatMapLatest { result in
             let database = result.map { $0.name }
             let model = database.isEmpty ? [] : self.changeToModel(database)
-            return OrderBookService().getTotal(totalData: model)
+            return model.isEmpty ? Observable.empty() : OrderBookService().getTotal(totalData: model)
         }
-        
         return Output(heartList: heartList)
     }
     

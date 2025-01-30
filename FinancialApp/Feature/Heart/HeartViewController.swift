@@ -22,7 +22,9 @@ final class HeartViewController: UIViewController {
     
     private var heartList: [[AddTradesModel]] = [] {
         didSet {
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     private var timer: Timer?
@@ -35,6 +37,7 @@ final class HeartViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         inputTrigger.onNext((db.heartList))
         setupTimer()
+        setBinding()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -109,15 +112,21 @@ extension HeartViewController: UITableViewDelegate, UITableViewDataSource {
 extension HeartViewController {
     
     private func setBinding() {
-        loadingIndicator.startAnimating()
-        let input = HeartViewModel.Input(inputTrigger: inputTrigger.asObserver())
-        let output = heartViewModel.transform(input: input)
-        output.heartList
-            .bind(onNext: { [weak self] (list:[[AddTradesModel]]) in
-                self?.heartList = list
-                self?.loadingIndicator.stopAnimating()
-            })
-            .disposed(by: disposeBag)
+        if db.heartList.isEmpty {
+            heartList = []
+            timer?.invalidate()
+            timer = nil
+        } else {
+            loadingIndicator.startAnimating()
+            let input = HeartViewModel.Input(inputTrigger: inputTrigger.asObserver())
+            let output = heartViewModel.transform(input: input)
+            output.heartList
+                .bind(onNext: { [weak self] (list:[[AddTradesModel]]) in
+                    self?.heartList = list
+                    self?.loadingIndicator.stopAnimating()
+                })
+                .disposed(by: disposeBag)
+        }
     }
     
     private func setupTimer() {

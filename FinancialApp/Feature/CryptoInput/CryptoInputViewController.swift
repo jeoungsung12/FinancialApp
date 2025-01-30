@@ -112,7 +112,9 @@ extension CryptoInputViewController: UISearchBarDelegate {
         } else {
             filteredCryptos = cryptos.filter { $0.korean_name.lowercased().contains(searchText.lowercased()) }
         }
-        collectionView.reloadData()
+        DispatchQueue.main.async {
+            self.collectionView.reloadData()
+        }
     }
     
 }

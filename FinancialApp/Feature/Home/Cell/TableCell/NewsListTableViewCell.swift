@@ -15,7 +15,9 @@ final class NewsListTableViewCell: UITableViewCell {
 
     var newsData: [NewsItems] = [] {
         didSet {
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     
@@ -77,6 +79,7 @@ extension NewsListTableViewCell: UITableViewDelegate, UITableViewDataSource {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.separatorStyle = .none
         tableView.isScrollEnabled = false
         tableView.backgroundColor = .black
         tableView.register(NewsListCell.self, forCellReuseIdentifier: NewsListCell.id)

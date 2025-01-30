@@ -23,7 +23,9 @@ final class HomeViewController: UIViewController {
     
     private var homeData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: [], rate: 0) {
         didSet {
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     

@@ -17,7 +17,9 @@ final class TicksTableViewCell: UITableViewCell {
 
     private var ticksData: [[AddTradesModel]] = [] {
         didSet {
-            collectionView.reloadData()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
     }
     

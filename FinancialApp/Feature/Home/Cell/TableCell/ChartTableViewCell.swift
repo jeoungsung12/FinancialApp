@@ -17,7 +17,9 @@ final class ChartTableViewCell: UITableViewCell {
     
     private var coinData: [[CandleModel]] = [] {
         didSet {
-            collectionView.reloadData()
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
         }
     }
     

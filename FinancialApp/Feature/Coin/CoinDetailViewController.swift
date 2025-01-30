@@ -22,7 +22,9 @@ final class CoinDetailViewController: UIViewController {
     
     private var coinData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: [], rate: 0) {
         didSet {
-            self.tableView.reloadData()
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
         }
     }
     private var timer: Timer?
