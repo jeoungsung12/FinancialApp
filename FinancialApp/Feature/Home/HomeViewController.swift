@@ -143,9 +143,7 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: RecommandTableViewCell.id, for: indexPath) as? RecommandTableViewCell else { return UITableViewCell() }
             cell.showDialog = { [weak self] image in
                 if let coin = HomeCoin.allCases.filter( { $0.image == image }).first {
-                    let vc = CoinDetailViewController()
-                    vc.coinName = coin.rawValue
-                    self?.push(vc)
+                    self?.pushDetail(coin.rawValue)
                 }
             }
             return cell
@@ -153,6 +151,11 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         case .ticks:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: TicksTableViewCell.id, for: indexPath) as? TicksTableViewCell else { return UITableViewCell() }
             cell.configure(homeData.ticksData)
+            cell.showDialog = { [weak self] name in
+                if let market = cryptoData.filter({ $0.korean_name == name }).first?.english_name {
+                    self?.pushDetail(market)
+                }
+            }
             return cell
             
         case .ads:
@@ -170,4 +173,9 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
         return UITableView.automaticDimension
     }
     
+    private func pushDetail(_ name: String) {
+        let vc = CoinDetailViewController()
+        vc.coinName = name
+        self.push(vc)
+    }
 }

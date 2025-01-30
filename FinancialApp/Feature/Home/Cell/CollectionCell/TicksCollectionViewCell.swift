@@ -14,7 +14,7 @@ import Foundation
 final class TicksCollectionViewCell : UICollectionViewCell {
     static let id : String = "OrderBookCollectionViewCell"
     //MARK: - UI Components
-    private let titleLabel : UILabel = {
+    let titleLabel : UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.backgroundColor = .black

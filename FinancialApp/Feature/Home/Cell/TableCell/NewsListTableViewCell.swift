@@ -98,4 +98,10 @@ extension NewsListTableViewCell: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if let url = URL(string: newsData[indexPath.row].originallink) {
+            UIApplication.shared.open(url)
+        }
+    }
 }

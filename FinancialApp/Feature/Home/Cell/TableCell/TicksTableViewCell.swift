@@ -22,7 +22,7 @@ final class TicksTableViewCell: UITableViewCell {
             }
         }
     }
-    
+    var showDialog: ((String?)->Void)?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -123,6 +123,11 @@ extension TicksTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
         configurePage()
         cell.configure(with: ticksData[indexPath.row])
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TicksCollectionViewCell else { return }
+        showDialog?(cell.titleLabel.text)
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
