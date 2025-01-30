@@ -10,6 +10,7 @@
 
 ApiKeyList.plist
 CryptoData.swift
+Tuning.swift
 
 .DS_Store
 

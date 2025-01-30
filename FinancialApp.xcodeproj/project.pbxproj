@@ -104,7 +104,6 @@
 		E4DABF1A2BC2D4DE00AE9DFB /* HIDEAPIKEY++Bundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABF192BC2D4DE00AE9DFB /* HIDEAPIKEY++Bundle.swift */; };
 		E4DABF2F2BC2EDC500AE9DFB /* ChatGPTService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABF2E2BC2EDC500AE9DFB /* ChatGPTService.swift */; };
 		E4DABF322BC2EDEA00AE9DFB /* ChatServiceModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABF312BC2EDEA00AE9DFB /* ChatServiceModel.swift */; };
-		E4DABF362BC2FB9500AE9DFB /* GetNameService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABF352BC2FB9500AE9DFB /* GetNameService.swift */; };
 		E4DC77D12C4FA3B600B45001 /* SearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DC77D02C4FA3B600B45001 /* SearchResult.swift */; };
 		E4DC77DB2C50199700B45001 /* ChartInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DC77DA2C50199700B45001 /* ChartInfo.swift */; };
 		E4DC77E32C50E34D00B45001 /* FinancialModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DC77E22C50E34C00B45001 /* FinancialModel.swift */; };
@@ -215,7 +214,6 @@
 		E4DABF192BC2D4DE00AE9DFB /* HIDEAPIKEY++Bundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HIDEAPIKEY++Bundle.swift"; sourceTree = "<group>"; };
 		E4DABF2E2BC2EDC500AE9DFB /* ChatGPTService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatGPTService.swift; sourceTree = "<group>"; };
 		E4DABF312BC2EDEA00AE9DFB /* ChatServiceModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatServiceModel.swift; sourceTree = "<group>"; };
-		E4DABF352BC2FB9500AE9DFB /* GetNameService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetNameService.swift; sourceTree = "<group>"; };
 		E4DC77D02C4FA3B600B45001 /* SearchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResult.swift; sourceTree = "<group>"; };
 		E4DC77DA2C50199700B45001 /* ChartInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartInfo.swift; sourceTree = "<group>"; };
 		E4DC77E22C50E34C00B45001 /* FinancialModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FinancialModel.swift; sourceTree = "<group>"; };
@@ -706,7 +704,6 @@
 			isa = PBXGroup;
 			children = (
 				E4DABF2E2BC2EDC500AE9DFB /* ChatGPTService.swift */,
-				E4DABF352BC2FB9500AE9DFB /* GetNameService.swift */,
 			);
 			path = Ai;
 			sourceTree = "<group>";
@@ -876,7 +873,6 @@
 				E4788E3B2D49E97B008D4B3A /* TabBarController.swift in Sources */,
 				E43C7EB52D3E3CB6009C81C2 /* HomeItems.swift in Sources */,
 				E4788F922D49FC1A008D4B3A /* ProfileImageCollectionViewCell.swift in Sources */,
-				E4DABF362BC2FB9500AE9DFB /* GetNameService.swift in Sources */,
 				E4788FA82D4A8A7C008D4B3A /* PortfolioViewModel.swift in Sources */,
 				E43C7EC92D3E4D76009C81C2 /* ChartCell.swift in Sources */,
 				E4788F862D49FACC008D4B3A /* MyPageSectionButton.swift in Sources */,

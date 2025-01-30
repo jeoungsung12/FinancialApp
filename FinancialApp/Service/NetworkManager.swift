@@ -35,4 +35,24 @@ final class NetworkManager {
         }
     }
     
+    func postData<T: Decodable>(_ url: String, headers: HTTPHeaders?, params: Parameters) -> Observable<T> {
+        return Observable.create { observer in
+            AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+                .validate()
+                .responseDecodable(of: T.self) { response in
+//                    print(response.debugDescription)
+                    switch response.result {
+                    case let .success(data):
+                        observer.onNext(data)
+                        observer.onCompleted()
+                    case let .failure(error):
+                        //TODO: - 에러 처리
+                        print(error)
+                    }
+                }
+            return Disposables.create()
+        }
+    }
+    
+    
 }

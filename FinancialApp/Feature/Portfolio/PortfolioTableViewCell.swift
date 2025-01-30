@@ -12,11 +12,12 @@ import RxSwift
 final class PortfolioTableViewCell: UITableViewCell {
     static let id = "PortfolioTableViewCell"
     
-    private let nameLabel = UILabel()
+    let nameLabel = UILabel()
     private let quantityLabel = UILabel()
     private let purchasePriceLabel = UILabel()
     private let currentPriceLabel = UILabel()
     private let returnLabel = UILabel()
+    private let arrowLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -35,19 +36,14 @@ final class PortfolioTableViewCell: UITableViewCell {
         purchasePriceLabel.font = UIFont.systemFont(ofSize: 14)
         currentPriceLabel.font = UIFont.systemFont(ofSize: 14)
         returnLabel.font = UIFont.boldSystemFont(ofSize: 14)
+        arrowLabel.font = UIFont.boldSystemFont(ofSize: 12)
         
         nameLabel.textColor = .white
         quantityLabel.textColor = .white
         purchasePriceLabel.textColor = .lightGray
         currentPriceLabel.textColor = .lightGray
         returnLabel.textColor = .lightGray
-        
-        [nameLabel, quantityLabel, purchasePriceLabel, currentPriceLabel, returnLabel].forEach {
-            $0.layer.shadowColor = UIColor.black.cgColor
-            $0.layer.shadowOpacity = 0.1
-            $0.layer.shadowOffset = CGSize(width: 0, height: 2)
-            $0.layer.shadowRadius = 2
-        }
+        arrowLabel.textColor = .lightGray
         
         configureHierarchy()
     }
@@ -59,9 +55,16 @@ final class PortfolioTableViewCell: UITableViewCell {
         stackView.alignment = .leading
         stackView.distribution = .fillProportionally
         
+        self.addSubview(arrowLabel)
         self.addSubview(stackView)
         stackView.snp.makeConstraints { make in
-            make.edges.equalToSuperview().inset(16)
+            make.width.equalToSuperview().dividedBy(2)
+            make.leading.verticalEdges.equalToSuperview().inset(12)
+        }
+        
+        arrowLabel.snp.makeConstraints { make in
+            make.leading.equalTo(stackView.snp.trailing)
+            make.verticalEdges.equalToSuperview().inset(12)
         }
     }
     
@@ -75,5 +78,6 @@ final class PortfolioTableViewCell: UITableViewCell {
         returnLabel.text = String(format: "수익률 %.2f%%", profit)
         
         returnLabel.textColor = profit > 0 ? .green : .lightGray
+        arrowLabel.text = "상세 보기 >"
     }
 }

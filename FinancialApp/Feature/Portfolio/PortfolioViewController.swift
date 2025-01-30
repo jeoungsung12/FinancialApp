@@ -122,4 +122,13 @@ extension PortfolioViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 180
     }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? PortfolioTableViewCell else { return }
+        if let name = cell.nameLabel.text, let market = cryptoData.filter({$0.korean_name == name}).first?.english_name {
+            let vc = CoinDetailViewController()
+            vc.coinName = market
+            self.push(vc)
+        }
+    }
 }
