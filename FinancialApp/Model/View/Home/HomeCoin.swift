@@ -7,31 +7,31 @@
 
 import UIKit
 
-enum HomeCoin: CaseIterable {
-    case bitcoin
-    case doge
-    case ethereum
-    case riple
-    case shiba
-    case solona
-    case tether
+enum HomeCoin: String, CaseIterable {
+    case bitcoin = "Bitcoin"
+    case doge = "Dogecoin"
+    case ethereum = "Ethereum"
+    case riple = "Ripple"
+    case shiba = "Shiba Inu"
+    case solona = "Solana"
+    case tether = "Tether"
     
     var image: UIImage? {
         switch self {
         case .bitcoin:
-            UIImage(named: "bitcoin")
+            UIImage(named: "Bitcoin")
         case .doge:
-            UIImage(named: "doge")
+            UIImage(named: "Dogecoin")
         case .ethereum:
-            UIImage(named: "ethereum")
+            UIImage(named: "Ethereum")
         case .riple:
-            UIImage(named: "riple")
+            UIImage(named: "Ripple")
         case .shiba:
-            UIImage(named: "shiba")
+            UIImage(named: "ShibaInu")
         case .solona:
-            UIImage(named: "solona")
+            UIImage(named: "Solana")
         case .tether:
-            UIImage(named: "tether")
+            UIImage(named: "Tether")
         }
     }
 }

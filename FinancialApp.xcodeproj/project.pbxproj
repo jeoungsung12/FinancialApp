@@ -68,6 +68,10 @@
 		E4788FB32D4B3AA4008D4B3A /* HomeCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FB22D4B3AA4008D4B3A /* HomeCoin.swift */; };
 		E4788FB72D4B3D1B008D4B3A /* RecommandTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FB62D4B3D1A008D4B3A /* RecommandTableViewCell.swift */; };
 		E4788FB92D4B3D4B008D4B3A /* RecommandCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FB82D4B3D4B008D4B3A /* RecommandCollectionViewCell.swift */; };
+		E4788FBC2D4B4A55008D4B3A /* CoinDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FBB2D4B4A55008D4B3A /* CoinDetailViewController.swift */; };
+		E4788FBE2D4B5215008D4B3A /* CoinDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FBD2D4B5215008D4B3A /* CoinDetailViewModel.swift */; };
+		E4788FC22D4B5393008D4B3A /* CoinItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FC12D4B5393008D4B3A /* CoinItems.swift */; };
+		E4788FC42D4B5D8C008D4B3A /* DetailChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FC32D4B5D8C008D4B3A /* DetailChartTableViewCell.swift */; };
 		E483068A2C4914F90017F6B2 /* CoinResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48306892C4914F90017F6B2 /* CoinResult.swift */; };
 		E483068E2C49651C0017F6B2 /* TicksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */; };
 		E492F2C72C43BD5E0012B7F3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */; };
@@ -186,6 +190,10 @@
 		E4788FB22D4B3AA4008D4B3A /* HomeCoin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoin.swift; sourceTree = "<group>"; };
 		E4788FB62D4B3D1A008D4B3A /* RecommandTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandTableViewCell.swift; sourceTree = "<group>"; };
 		E4788FB82D4B3D4B008D4B3A /* RecommandCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecommandCollectionViewCell.swift; sourceTree = "<group>"; };
+		E4788FBB2D4B4A55008D4B3A /* CoinDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewController.swift; sourceTree = "<group>"; };
+		E4788FBD2D4B5215008D4B3A /* CoinDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDetailViewModel.swift; sourceTree = "<group>"; };
+		E4788FC12D4B5393008D4B3A /* CoinItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinItems.swift; sourceTree = "<group>"; };
+		E4788FC32D4B5D8C008D4B3A /* DetailChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChartTableViewCell.swift; sourceTree = "<group>"; };
 		E48306892C4914F90017F6B2 /* CoinResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinResult.swift; sourceTree = "<group>"; };
 		E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicksCollectionViewCell.swift; sourceTree = "<group>"; };
 		E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -282,6 +290,7 @@
 		E43C7EB22D3E3C9B009C81C2 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E4788FC02D4B5389008D4B3A /* Coin */,
 				E4788FAF2D4A8B21008D4B3A /* Portfolio */,
 				E4788F9F2D4A1F2C008D4B3A /* CryptoInput */,
 				E4788F8C2D49FB40008D4B3A /* MyPage */,
@@ -450,6 +459,32 @@
 			path = Portfolio;
 			sourceTree = "<group>";
 		};
+		E4788FBA2D4B4A48008D4B3A /* Coin */ = {
+			isa = PBXGroup;
+			children = (
+				E4788FBF2D4B5330008D4B3A /* Cell */,
+				E4788FBB2D4B4A55008D4B3A /* CoinDetailViewController.swift */,
+				E4788FBD2D4B5215008D4B3A /* CoinDetailViewModel.swift */,
+			);
+			path = Coin;
+			sourceTree = "<group>";
+		};
+		E4788FBF2D4B5330008D4B3A /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				E4788FC32D4B5D8C008D4B3A /* DetailChartTableViewCell.swift */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		E4788FC02D4B5389008D4B3A /* Coin */ = {
+			isa = PBXGroup;
+			children = (
+				E4788FC12D4B5393008D4B3A /* CoinItems.swift */,
+			);
+			path = Coin;
+			sourceTree = "<group>";
+		};
 		E492F2C52C43BD4C0012B7F3 /* Home */ = {
 			isa = PBXGroup;
 			children = (
@@ -506,6 +541,7 @@
 		E4CAF4AE2BB980C600CB18EC /* Feature */ = {
 			isa = PBXGroup;
 			children = (
+				E4788FBA2D4B4A48008D4B3A /* Coin */,
 				E4788FA42D4A8A61008D4B3A /* Portfolio */,
 				E4788F9C2D4A1F01008D4B3A /* CryptoInput */,
 				E4788F822D49FAB0008D4B3A /* MyPage */,
@@ -861,6 +897,7 @@
 				E4CAF4DC2BB9B61C00CB18EC /* GetAllCoinModel.swift in Sources */,
 				E4DABF2F2BC2EDC500AE9DFB /* ChatGPTService.swift in Sources */,
 				E483068A2C4914F90017F6B2 /* CoinResult.swift in Sources */,
+				E4788FC42D4B5D8C008D4B3A /* DetailChartTableViewCell.swift in Sources */,
 				E4788F9B2D4A189D008D4B3A /* CryptoCell.swift in Sources */,
 				E4788E392D49E8B5008D4B3A /* Color + Extension.swift in Sources */,
 				E4CAF4ED2BBBD04600CB18EC /* HeartViewController.swift in Sources */,
@@ -893,6 +930,7 @@
 				E4788D022D491C82008D4B3A /* TicksTableViewCell.swift in Sources */,
 				E483068E2C49651C0017F6B2 /* TicksCollectionViewCell.swift in Sources */,
 				E43C7EC72D3E489F009C81C2 /* ChartData.swift in Sources */,
+				E4788FBE2D4B5215008D4B3A /* CoinDetailViewModel.swift in Sources */,
 				E4DC77D12C4FA3B600B45001 /* SearchResult.swift in Sources */,
 				E4788D062D491CD2008D4B3A /* ChartTableViewCell.swift in Sources */,
 				E4788F892D49FAED008D4B3A /* MyProfileView.swift in Sources */,
@@ -903,6 +941,8 @@
 				E4CAF4D92BB9B2AD00CB18EC /* CoinService.swift in Sources */,
 				E4788CFE2D491961008D4B3A /* NetworkError.swift in Sources */,
 				E4788D042D491CA7008D4B3A /* AdsTableViewCell.swift in Sources */,
+				E4788FC22D4B5393008D4B3A /* CoinItems.swift in Sources */,
+				E4788FBC2D4B4A55008D4B3A /* CoinDetailViewController.swift in Sources */,
 				E4788EDD2D49F5B2008D4B3A /* ProfileViewController.swift in Sources */,
 				E45B49BE2D38C518008803B6 /* SceneDelegate.swift in Sources */,
 				E45B49BF2D38C518008803B6 /* AppDelegate.swift in Sources */,

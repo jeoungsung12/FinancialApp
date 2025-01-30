@@ -16,7 +16,7 @@ final class NewsListCell : UITableViewCell {
         label.numberOfLines = 1
         label.textAlignment = .left
         label.backgroundColor = .black
-        label.font = UIFont.boldSystemFont(ofSize: 17)
+        label.font = UIFont.boldSystemFont(ofSize: 16)
         return label
     }()
     
@@ -26,7 +26,7 @@ final class NewsListCell : UITableViewCell {
         label.textColor = .lightGray
         label.textAlignment = .left
         label.backgroundColor = .black
-        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.font = UIFont.systemFont(ofSize: 14, weight: .semibold)
         return label
     }()
     
@@ -39,6 +39,8 @@ final class NewsListCell : UITableViewCell {
         label.font = UIFont.systemFont(ofSize: 13, weight: .regular)
         return label
     }()
+    
+    
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)

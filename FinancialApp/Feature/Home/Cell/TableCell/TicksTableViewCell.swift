@@ -15,7 +15,7 @@ final class TicksTableViewCell: UITableViewCell {
     private var currentPage: Int = 1
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.setcollectionViewLayout())
 
-    var ticksData: [[AddTradesModel]] = [] {
+    private var ticksData: [[AddTradesModel]] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -32,6 +32,9 @@ final class TicksTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    func configure(_ data: [[AddTradesModel]]) {
+        self.ticksData = data
+    }
 }
 
 extension TicksTableViewCell {

@@ -15,7 +15,7 @@ final class ChartTableViewCell: UITableViewCell {
     private let pageLabel = UILabel()
     private var currentPage: Int = 1
     
-    var coinData: [[CandleModel]] = [] {
+    private var coinData: [[CandleModel]] = [] {
         didSet {
             collectionView.reloadData()
         }
@@ -31,6 +31,10 @@ final class ChartTableViewCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func configure(_ data: [[CandleModel]]) {
+        self.coinData = data
     }
     
 }

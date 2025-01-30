@@ -11,8 +11,6 @@ import RxCocoa
 import Alamofire
 
 enum CandleType: String {
-    case seconds = "seconds?market="
-    case minutes = "minutes?market="
     case days = "days?market="
     case weeks = "weeks?market="
     case months = "months?market="

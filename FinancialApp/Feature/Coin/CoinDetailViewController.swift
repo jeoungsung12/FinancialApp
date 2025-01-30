@@ -1,8 +1,8 @@
 //
-//  HomeViewController.swift
-//  Beecher
+//  CoinDetailViewController.swift
+//  FinancialApp
 //
-//  Created by 정성윤 on 2024/07/14.
+//  Created by 정성윤 on 1/30/25.
 //
 
 import UIKit
@@ -11,22 +11,23 @@ import RxCocoa
 import SnapKit
 import NVActivityIndicatorView
 
-final class HomeViewController: UIViewController {
+final class CoinDetailViewController: UIViewController {
     private let disposeBag = DisposeBag()
-    private let homeViewModel = HomeViewModel()
-    private let inputTrigger = PublishSubject<[HeartItem]>()
+    private let viewModel = CoinDetailViewModel()
+    private let inputTrigger = PublishSubject<String?>()
     
     private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
-    private let appLogo = UIBarButtonItem(image: UIImage(named: "logo"), style: .plain, target: nil, action: nil)
     private let tableView = UITableView()
     private let db = Database.shared
     
-    private var homeData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: [], rate: 0) {
+    private var coinData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: [], rate: 0) {
         didSet {
             self.tableView.reloadData()
         }
     }
+    private var timer: Timer?
     
+    var coinName: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
@@ -34,11 +35,18 @@ final class HomeViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        inputTrigger.onNext((db.heartList))
+        inputTrigger.onNext((self.coinName))
+        setupTimer()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        timer?.invalidate()
+        timer = nil
     }
 }
 
-extension HomeViewController {
+extension CoinDetailViewController {
     
     private func configureHierarchy() {
         self.view.addSubview(tableView)
@@ -61,23 +69,22 @@ extension HomeViewController {
     
     private func configureView() {
         self.setNavigation("")
-        self.navigationItem.leftBarButtonItem = appLogo
         self.view.backgroundColor = .black
         
         configureHierarchy()
     }
 }
 
-extension HomeViewController {
+extension CoinDetailViewController {
     
     private func setBinding() {
         loadingIndicator.startAnimating()
-        let input = HomeViewModel.Input(chartInput: inputTrigger.asObserver())
-        let output = homeViewModel.transform(input: input)
+        let input = CoinDetailViewModel.Input(chartInput: inputTrigger.asObserver())
+        let output = viewModel.transform(input: input)
         
         output.chartOutput.bind { [weak self] data in
             guard let self = self else { return }
-            self.homeData = data
+            self.coinData = data
             self.configureTableView()
             self.loadingIndicator.stopAnimating()
         }.disposed(by: disposeBag)
@@ -85,72 +92,41 @@ extension HomeViewController {
     
 }
 
-extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
     
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.register(HomeProfileTableViewCell.self, forCellReuseIdentifier: HomeProfileTableViewCell.id)
-        tableView.register(RecommandTableViewCell.self, forCellReuseIdentifier: RecommandTableViewCell.id)
-        tableView.register(ChartTableViewCell.self, forCellReuseIdentifier: ChartTableViewCell.id)
-        tableView.register(TicksTableViewCell.self, forCellReuseIdentifier: TicksTableViewCell.id)
+        tableView.register(DetailChartTableViewCell.self, forCellReuseIdentifier: DetailChartTableViewCell.id)
         tableView.register(AdsTableViewCell.self, forCellReuseIdentifier: AdsTableViewCell.id)
         tableView.register(NewsListTableViewCell.self, forCellReuseIdentifier: NewsListTableViewCell.id)
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch HomeItems.allCases[indexPath.row] {
-        case .profile:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeProfileTableViewCell.id, for: indexPath) as? HomeProfileTableViewCell else { return UITableViewCell() }
-            let rate = homeData.rate
-            cell.configure(rate)
-            cell.sheetProfile = { [weak self] in
-                let vc = PortfolioViewController()
-                self?.push(vc)
-            }
-            return cell
-            
+        switch CoinItems.allCases[indexPath.row] {
         case .chart:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: ChartTableViewCell.id, for: indexPath) as? ChartTableViewCell else { return UITableViewCell() }
-            cell.configure(homeData.chartData)
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailChartTableViewCell.id, for: indexPath) as? DetailChartTableViewCell else { return UITableViewCell() }
+            cell.configure(coinData.chartData[0], coinData.ticksData[0][0])
             cell.heartTapped = { [weak self] isAlert, title in
                 guard let self = self else { return }
                 //TODO: - 수정
                 if isAlert {
                     self.showInputDialog(for: title) {
                         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-                        self.inputTrigger.onNext((self.db.heartList))
-                        cell.collectionView.reloadData()
+                        self.inputTrigger.onNext((self.coinName))
                     }
                 } else {
                     self.db.removeHeartItem(title)
                     tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                     self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), self, .center)
-                    self.inputTrigger.onNext((db.heartList))
-                    cell.collectionView.reloadData()
+                    self.inputTrigger.onNext((self.coinName))
                 }
             }
-            return cell
-            
-        case .recommand:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecommandTableViewCell.id, for: indexPath) as? RecommandTableViewCell else { return UITableViewCell() }
-            cell.showDialog = { [weak self] image in
-                if let coin = HomeCoin.allCases.filter( { $0.image == image }).first {
-                    let vc = CoinDetailViewController()
-                    vc.coinName = coin.rawValue
-                    self?.push(vc)
-                }
-            }
-            return cell
-            
-        case .ticks:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: TicksTableViewCell.id, for: indexPath) as? TicksTableViewCell else { return UITableViewCell() }
-            cell.configure(homeData.ticksData)
             return cell
             
         case .ads:
@@ -159,13 +135,22 @@ extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .news:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsListTableViewCell.id, for: indexPath) as? NewsListTableViewCell else { return UITableViewCell() }
-            cell.configure(homeData.newsData)
+            cell.configure(coinData.newsData)
             return cell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
+    }
+    
+    private func setupTimer() {
+        timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(reloadData), userInfo: nil, repeats: true)
+        timer?.fire()
+    }
+    
+    @objc private func reloadData() {
+        inputTrigger.onNext((self.coinName))
     }
     
 }

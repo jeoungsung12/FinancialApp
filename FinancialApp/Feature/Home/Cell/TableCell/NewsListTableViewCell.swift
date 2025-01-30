@@ -29,6 +29,10 @@ final class NewsListTableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    func configure(_ data: [NewsItems]) {
+        self.newsData = data
+    }
 
 }
 

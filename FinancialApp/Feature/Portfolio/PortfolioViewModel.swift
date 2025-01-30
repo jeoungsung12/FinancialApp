@@ -24,16 +24,16 @@ final class PortfolioViewModel {
         //TODO: - DispatchGroup
         let chartOutput = input.portfolioInput
             .flatMapLatest { [weak self] db -> Observable<[PortfolioModel]> in
-                let data = cryptoData.prefix(6)
-                let cryptoArray: [String] = (db.isEmpty) ? data.map { $0.market } : db.map ({ $0.name })
+                let cryptoArray: [String] = (db.isEmpty) ? [] : db.map ({ $0.name })
+                let filteredData = cryptoData.filter { cryptoArray.contains($0.market) }
                 
                 guard self != nil else { return Observable.empty() }
-                let candleObservable = CandleService().getCandleList(markets: cryptoArray, method: .months)
+                let ticksObservable = OrderBookService().getTotal(totalData: Array(filteredData))
                 
-                return candleObservable.flatMap { candleData -> Observable<[PortfolioModel]> in
-                    guard let self = self, let firstCandle = candleData.first else { return Observable.empty() }
+                return ticksObservable.flatMap { ticksData -> Observable<[PortfolioModel]> in
+                    guard let self = self, let tradePrice = ticksData.first else { return Observable.empty() }
                     
-                    let priceList = firstCandle.map { $0.opening_price }
+                    let priceList = tradePrice.map { $0.tradesData.trade_price }
                     let rateList = self.calculateRate(priceList, db)
                     
                     let portfolioModels = zip(db, priceList).compactMap { (dbItem, openPrice) -> PortfolioModel? in

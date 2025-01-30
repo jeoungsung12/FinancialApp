@@ -22,9 +22,7 @@ final class HeartViewController: UIViewController {
     
     private var heartList: [[AddTradesModel]] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
         }
     }
     private var timer: Timer?
@@ -70,8 +68,6 @@ extension HeartViewController {
             make.center.equalToSuperview()
         }
         setBinding()
-        inputTrigger.onNext((db.heartList))
-        setupTimer()
     }
     
     private func configureView() {

@@ -10,8 +10,7 @@ import SnapKit
 
 final class RecommandCollectionViewCell: UICollectionViewCell {
     static let id: String = "RecommandCollectionViewCell"
-    
-    private var imageView = UIImageView()
+    var imageView = UIImageView()
     override init(frame: CGRect) {
         super.init(frame: frame)
         configureView()

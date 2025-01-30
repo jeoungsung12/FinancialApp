@@ -23,9 +23,7 @@ final class PortfolioViewController: UIViewController {
     
     private var portfolioData: [PortfolioModel] = [] {
         didSet {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
+            self.tableView.reloadData()
         }
     }
     

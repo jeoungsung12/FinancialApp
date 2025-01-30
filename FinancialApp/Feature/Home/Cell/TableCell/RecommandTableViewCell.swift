@@ -16,7 +16,7 @@ final class RecommandTableViewCell: UITableViewCell {
     private lazy var collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.setcollectionViewLayout())
 
     var coinData: [HomeCoin] = HomeCoin.allCases
-    
+    var showDialog: ((UIImage?)->Void)?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
@@ -120,5 +120,10 @@ extension RecommandTableViewCell: UICollectionViewDelegate, UICollectionViewData
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecommandCollectionViewCell.id, for: indexPath) as? RecommandCollectionViewCell else { return UICollectionViewCell() }
         cell.configure(coinData[indexPath.row].image)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? RecommandCollectionViewCell else { return }
+        showDialog?(cell.imageView.image)
     }
 }
