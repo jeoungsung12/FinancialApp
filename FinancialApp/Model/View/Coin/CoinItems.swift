@@ -12,3 +12,10 @@ enum CoinItems: CaseIterable {
     case ads
     case news
 }
+
+struct CoinDetailModel {
+    let chartData: [[CandleModel]]
+    let newsData: [NewsItems]
+    let ticksData: [[AddTradesModel]]
+    let greedIndex: GreedModel?
+}

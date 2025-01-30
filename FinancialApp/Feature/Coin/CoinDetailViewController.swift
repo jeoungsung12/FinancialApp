@@ -20,7 +20,7 @@ final class CoinDetailViewController: UIViewController {
     private let tableView = UITableView()
     private let db = Database.shared
     
-    private var coinData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: [], rate: 0) {
+    private var coinData: CoinDetailModel = CoinDetailModel(chartData: [], newsData: [], ticksData: [], greedIndex: nil) {
         didSet {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -113,7 +113,7 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
         switch CoinItems.allCases[indexPath.row] {
         case .chart:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailChartTableViewCell.id, for: indexPath) as? DetailChartTableViewCell else { return UITableViewCell() }
-            cell.configure(coinData.chartData[0], coinData.ticksData[0][0])
+            cell.configure(coinData.chartData[0], coinData.ticksData[0][0], greed: coinData.greedIndex?.data.first)
             cell.heartTapped = { [weak self] isAlert, title in
                 guard let self = self else { return }
                 //TODO: - 수정
@@ -128,6 +128,11 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
                     self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), self, .center)
                     self.inputTrigger.onNext((self.coinName))
                 }
+            }
+            cell.aiTapped = { [weak self] in
+                let vc = AiViewController()
+                vc.coinData = self?.coinData
+                self?.push(vc)
             }
             return cell
             

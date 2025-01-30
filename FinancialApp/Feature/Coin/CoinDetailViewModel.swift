@@ -17,19 +17,19 @@ final class CoinDetailViewModel {
     
     struct Output {
         //TODO: - 에러 처리
-        let chartOutput : Observable<CoinResult>
+        let chartOutput : Observable<CoinDetailModel>
     }
     
     func transform(input: Input) -> Output {
-        //TODO: - DispatchGroup
         let chartOutput = input.chartInput
-            .flatMapLatest { [weak self] englishName -> Observable<CoinResult> in
+            .flatMapLatest { [weak self] englishName -> Observable<CoinDetailModel> in
                 guard self != nil, let englishName = englishName, let data = cryptoData.filter({ $0.english_name == englishName }).first else { return Observable.empty() }
                 let coinResult = CandleService().getCandle(market: data.market, method: .days)
                 let ticksResult = OrderBookService().getDetail(coinModel: data)
                 let newsResult = NewsService().getNews(query: data.korean_name, display: 5)
-                return Observable.zip(coinResult, ticksResult, newsResult) { coinResult, ticksResult, newsResult in
-                    return CoinResult(chartData: [coinResult], newsData: newsResult, ticksData: [ticksResult], rate: 0)
+                let greedResult = CoinService().getFearGreedIndex()
+                return Observable.zip(coinResult, ticksResult, newsResult, greedResult) { coinResult, ticksResult, newsResult, greedResult in
+                    return CoinDetailModel(chartData: [coinResult], newsData: newsResult, ticksData: [ticksResult], greedIndex: greedResult)
                 }
             }
         return Output(chartOutput: chartOutput)

@@ -13,14 +13,7 @@ final class PortfolioSummaryView: UIView {
     private let totalAssetLabel = UILabel()
     private let totalInvestmentLabel = UILabel()
     private let totalReturnLabel = UILabel()
-    
-    private let blurEffectView: UIVisualEffectView = {
-        let blurEffect = UIBlurEffect(style: .systemMaterialDark)
-        let view = UIVisualEffectView(effect: blurEffect)
-        view.layer.cornerRadius = 15
-        view.layer.masksToBounds = true
-        return view
-    }()
+    private var piechartHostingViewController: ProfileHostingViewController?
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,45 +24,49 @@ final class PortfolioSummaryView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     private func configureHierarchy() {
-        blurEffectView.contentView.addSubview(totalAssetLabel)
-        blurEffectView.contentView.addSubview(totalInvestmentLabel)
-        blurEffectView.contentView.addSubview(totalReturnLabel)
-        self.addSubview(blurEffectView)
-        
+        self.addSubview(totalAssetLabel)
+        self.addSubview(totalInvestmentLabel)
+        self.addSubview(totalReturnLabel)
+        if let piechartHostingViewController = piechartHostingViewController {
+            piechartHostingViewController.view.backgroundColor = .clear
+            self.addSubview(piechartHostingViewController.view)
+        }
         configureLayout()
     }
     
     private func configureLayout() {
-        blurEffectView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
-        }
         
         totalAssetLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(12)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(16)
         }
         
         totalInvestmentLabel.snp.makeConstraints { make in
             make.top.equalTo(totalAssetLabel.snp.bottom).offset(12)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(16)
         }
         
         totalReturnLabel.snp.makeConstraints { make in
             make.top.equalTo(totalInvestmentLabel.snp.bottom).offset(12)
-            make.leading.trailing.equalToSuperview().inset(20)
+            make.leading.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(12)
         }
+        
+        piechartHostingViewController?.view.snp.makeConstraints({ make in
+            make.height.equalTo(200)
+            make.verticalEdges.trailing.equalToSuperview().inset(12)
+            make.leading.equalTo(totalInvestmentLabel.snp.trailing).offset(12)
+        })
     }
     
     private func configureView() {
-        self.backgroundColor = .clear
+        self.clipsToBounds = true
+        self.layer.cornerRadius = 15
+        self.backgroundColor = .darkGray.withAlphaComponent(0.4)
         
-        blurEffectView.layer.cornerRadius = 20
-        blurEffectView.layer.masksToBounds = true
-        
-        totalAssetLabel.font = UIFont.boldSystemFont(ofSize: 15)
-        totalReturnLabel.font = UIFont.boldSystemFont(ofSize: 15)
-        totalInvestmentLabel.font = UIFont.boldSystemFont(ofSize: 15)
+        totalAssetLabel.font = UIFont.boldSystemFont(ofSize: 13)
+        totalReturnLabel.font = UIFont.boldSystemFont(ofSize: 13)
+        totalInvestmentLabel.font = UIFont.boldSystemFont(ofSize: 13)
         
         totalAssetLabel.textColor = .white
         totalReturnLabel.textColor = .white
@@ -93,6 +90,10 @@ final class PortfolioSummaryView: UIView {
         let returnColor: UIColor = (totalReturn >= 0) ? .systemGreen : .lightGray
         let returnText = String(format: "%.2f%%", totalReturn)
         totalReturnLabel.attributedText = makeAttributedText(title: "수익률", value: returnText, color: returnColor)
+        
+        piechartHostingViewController?.view.removeFromSuperview()
+        piechartHostingViewController = ProfileHostingViewController(rootView: PieChartView(chartData: data.map { $0.pieModel }))
+        configureView()
     }
     
     private func makeAttributedText(title: String, value: Any, color: UIColor = .white) -> NSAttributedString {

@@ -20,6 +20,7 @@ final class PortfolioViewController: UIViewController {
     private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
     private let tableView = UITableView()
     private let summaryView = PortfolioSummaryView()
+    private lazy var analyzeButton = UIBarButtonItem(title: "Ai분석", style: .plain, target: self, action: #selector(barbuttonTapped))
     
     private var portfolioData: [PortfolioModel] = [] {
         didSet {
@@ -46,6 +47,7 @@ extension PortfolioViewController {
     private func configureView() {
         self.setNavigation("포트폴리오")
         self.view.backgroundColor = .black
+        self.navigationItem.rightBarButtonItem = analyzeButton
         configureHierarchy()
     }
     
@@ -92,6 +94,13 @@ extension PortfolioViewController {
                 self.configureTableView()
             }
             .disposed(by: disposeBag)
+    }
+    
+    @objc
+    private func barbuttonTapped() {
+        let vc = AiPortfolioViewController()
+        vc.potfolioData = self.portfolioData
+        self.present(vc, animated: true)
     }
 }
 

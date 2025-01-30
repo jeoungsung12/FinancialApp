@@ -31,7 +31,7 @@ class OrderBookService {
     }
     
     //호가 정보조회
-    static func getOrderBook(market : String) -> Observable<[OrderBookModel]> {
+    func getOrderBook(market : String) -> Observable<[OrderBookModel]> {
         return Observable.create { observer in
             let url = "https://api.upbit.com/v1/orderbook?markets=\(market)"
             AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])

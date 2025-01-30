@@ -44,6 +44,7 @@ final class PortfolioTableViewCell: UITableViewCell {
         currentPriceLabel.textColor = .lightGray
         returnLabel.textColor = .lightGray
         arrowLabel.textColor = .lightGray
+        arrowLabel.textAlignment = .right
         
         configureHierarchy()
     }
@@ -64,6 +65,7 @@ final class PortfolioTableViewCell: UITableViewCell {
         
         arrowLabel.snp.makeConstraints { make in
             make.leading.equalTo(stackView.snp.trailing)
+            make.trailing.equalToSuperview().offset(-12)
             make.verticalEdges.equalToSuperview().inset(12)
         }
     }
