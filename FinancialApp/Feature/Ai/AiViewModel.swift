@@ -1,53 +1,42 @@
 //
-//  AiViewModel.swift
-//  Beecher
+//  DetailAiViewModel.swift
+//  FinancialApp
 //
-//  Created by 정성윤 on 2024/04/07.
+//  Created by 정성윤 on 1/30/25.
 //
 
-import Foundation
+import RxSwift
 import RxSwift
 import RxCocoa
 
-class AiViewModel {
+final class AiViewModel {
     private let disposeBag = DisposeBag()
-    let inputTrigger = PublishSubject<Void>()
-    let outputResult : PublishSubject<[GetAllCoinModel]> = PublishSubject()
     
-    let WMTrigger = PublishSubject<[String]>()
-    let WMResult : PublishSubject<[CandleWMModel]> = PublishSubject()
+    struct Input {
+        let coinDetail: Observable<CoinDetailModel>
+    }
     
-    let newsTrigger = PublishSubject<String>()
-    let newsResult: PublishSubject<[NewsItems]> = PublishSubject()
+    struct Output {
+        let aiPrediction: Observable<String>
+    }
     
-    let chatTrigger = PublishSubject<ChatModel>()
-    let chatResult : PublishSubject<ChatServiceModel> = PublishSubject()
-    
-    init() {
-        //MARK: - GetCoinInfo
-        inputTrigger
-            .flatMapLatest { _ in
-                return GetNameService.getAllCoin()
+    func transform(input: Input) -> Output {
+        let aiPrediction = input.coinDetail
+            .flatMapLatest { coinDetail in
+                let name = coinDetail.ticksData[0].map({$0.coinName})
+                let prompt = """
+                다음은 \(name) 코인에 대한 정보입니다:
+                - 최근 뉴스: \(coinDetail.newsData.map { $0.title }.joined(separator: ", "))
+                - 1년 캔들 차트 데이터: \(coinDetail.chartData)
+                - 현재 호가 데이터: \(coinDetail.ticksData)
+                
+                \(ModelTuning.TuningType.detail.message)
+                """
+                
+                return AiService().requestChat(search: "코인 분석", info: prompt)
+                    .map { $0.choices.first?.message.content ?? "분석 결과 없음" }
             }
-            .bind(to: outputResult)
-            .disposed(by: disposeBag)
         
-        WMTrigger.flatMapLatest { requestInfo in
-            return CandleService.WMCandle(market: requestInfo[0], method: requestInfo[1])
-        }
-        .bind(to: WMResult)
-        .disposed(by: disposeBag)
-        
-        newsTrigger.flatMapLatest { news in
-            return NewsService.getNews(query: news, start: 1)
-        }
-        .bind(to: newsResult)
-        .disposed(by: disposeBag)
-        
-        self.chatTrigger.flatMapLatest { chat in
-            return ChatGPTService.requestChat(searchTitle: chat)
-        }
-        .bind(to: self.chatResult)
-        .disposed(by: self.disposeBag)
+        return Output(aiPrediction: aiPrediction)
     }
 }

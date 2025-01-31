@@ -6,333 +6,176 @@
 //
 
 import UIKit
-import SnapKit
 import RxSwift
 import RxCocoa
-import Foundation
+import SnapKit
 import NVActivityIndicatorView
-//Collection View Enum
-enum Section : Hashable {
-    case banner(String)
-    case category
-    case horizotional
-    case vertical
-}
-enum Item : Hashable {
-    case newsList(NewsItems)
-    case category(CategoryList)
-    case Ads(String)
-    case orderBook([AddTradesModel])
-}
 
-final class HomeViewController : UIViewController, UICollectionViewDelegate {
+final class HomeViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private let homeViewModel = HomeViewModel()
-    private var currentPage: [Section: Int] = [:]
-    private let inputTrigger = PublishSubject<Void>()
-    //MARK: - UI Components
-    //refresh
-    private lazy var refresh : UIRefreshControl = {
-        let control = UIRefreshControl()
-        control.tintColor = .lightGray
-        control.addTarget(self, action: #selector(refreshEnding), for: .valueChanged)
-        return control
-    }()
-    //pageControl
-    private let pageControl : UIPageControl = {
-        let control = UIPageControl()
-        control.pageIndicatorTintColor = .lightGray
-        control.currentPageIndicatorTintColor = .darkGray
-        return control
-    }()
-    private let loadingIndicator : NVActivityIndicatorView = {
-        let view = NVActivityIndicatorView(frame: CGRect(x: 0, y: 0, width: 40, height: 40), type: .ballBeat, color: .keyColor)
-        return view
-    }()
-    //타이틀
-    private let titleLabel : UILabel = {
-        let label = UILabel()
-        label.text = "Bitcher"
-        label.textColor = .keyColor
-        label.font = UIFont.boldSystemFont(ofSize: 20)
-        label.textAlignment = .center
-        return label
-    }()
-    //horizontal Layer page
-    private let verticalLabel : UILabel = {
-        let label = UILabel()
-        label.textColor = .gray
-        label.textAlignment = .right
-        label.font = UIFont.systemFont(ofSize: 12, weight: .regular)
-        return label
-    }()
-    lazy var collectionView : UICollectionView = {
-        let view = UICollectionView(frame: .zero, collectionViewLayout: self.createLayout())
-        view.clipsToBounds = true
-        view.backgroundColor = .white
-        view.register(NewsListCollectionViewCell.self, forCellWithReuseIdentifier: NewsListCollectionViewCell.id)
-        view.register(HeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HeaderView.id)
-        view.register(CategoryCollectionViewCell.self, forCellWithReuseIdentifier: CategoryCollectionViewCell.id)
-        view.register(AdsCollectionViewCell.self, forCellWithReuseIdentifier: AdsCollectionViewCell.id)
-        view.register(OrderBookCollectionViewCell.self, forCellWithReuseIdentifier: OrderBookCollectionViewCell.id)
-        return view
-    }()
-    private var dataSource : UICollectionViewDiffableDataSource<Section, Item>?
+    private let inputTrigger = PublishSubject<[HeartItem]>()
+    
+    private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
+    private let appLogo = UIBarButtonItem(image: UIImage(named: "logo"), style: .plain, target: nil, action: nil)
+    private let tableView = UITableView()
+    private let db = Database.shared
+    
+    private var homeData: CoinResult = CoinResult(chartData: [], newsData: [], ticksData: [], rate: 0) {
+        didSet {
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setLayout()
-        setBinding()
-        setBindView()
-        setDataSource()
-        setNavigation()
-        
-        //초기 데이터 로딩
-        self.inputTrigger.onNext(())
+        configureView()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        inputTrigger.onNext((db.heartList))
     }
 }
-//MARK: - UI Navigation
-private extension HomeViewController {
-    private func setNavigation() {
-        self.title = "메인"
-        self.view.clipsToBounds = true
-        self.view.backgroundColor = .white
-        self.navigationItem.hidesBackButton = true
-        self.navigationItem.titleView = titleLabel
-    }
-}
-//MARK: - UI Layout
-private extension HomeViewController {
-    private func setLayout() {
-        self.collectionView.delegate = self
-        self.collectionView.refreshControl = refresh
-        self.view.addSubview(collectionView)
-        self.view.addSubview(pageControl)
+
+extension HomeViewController {
+    
+    private func configureHierarchy() {
+        self.view.addSubview(tableView)
         self.view.addSubview(loadingIndicator)
-        self.view.addSubview(verticalLabel)
-        collectionView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+        configureLayout()
+    }
+    
+    private func configureLayout() {
+        tableView.snp.makeConstraints { make in
+            make.horizontalEdges.equalToSuperview()
+            make.verticalEdges.equalTo(self.view.safeAreaInsets)
         }
+        
         loadingIndicator.snp.makeConstraints { make in
-            make.height.equalTo(40)
             make.center.equalToSuperview()
         }
-        self.loadingIndicator.startAnimating()
-    }
-    //Set Collection View
-    private func createLayout() -> UICollectionViewCompositionalLayout {
-        let config = UICollectionViewCompositionalLayoutConfiguration()
-        config.interSectionSpacing = 14
-        return UICollectionViewCompositionalLayout(sectionProvider: { [weak self] sectionIndex, _ in
-            let section = self?.dataSource?.sectionIdentifier(for: sectionIndex)
-            
-            switch section {
-            case .banner:
-                return self?.createBannerSection()
-            case .category:
-                return self?.createCategorySection()
-            case .horizotional:
-                return self?.createHorizontalSection()
-            case .vertical:
-                return self?.createVerticalSection()
-            default:
-                return self?.createBannerSection()
-            }
-        }, configuration: config)
-    }
-    private func createBannerSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 60, leading: 20, bottom: 40, trailing: 20)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.4))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        section.visibleItemsInvalidationHandler = { items, contentOffset, environment in
-            let currentPage = Int(max(0, round(contentOffset.x / environment.container.contentSize.width)))
-            self.pageControl.currentPage = currentPage
-        }
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(44))
-        let header = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: headerSize, elementKind: UICollectionView.elementKindSectionHeader, alignment: .topLeading)
-        section.boundarySupplementaryItems = [header]
-        
-        return section
+        setBinding()
     }
-    private func createCategorySection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.25), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 10, leading: 10, bottom: 0, trailing: 10)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(80))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 4)
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .none
-        return section
-    }
-    private func createVerticalSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(0.35))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        item.contentInsets = NSDirectionalEdgeInsets(top: 20, leading: 20, bottom: 20, trailing: 20)
+    
+    private func configureView() {
+        self.setNavigation("")
+        self.navigationItem.leftBarButtonItem = appLogo
+        self.view.backgroundColor = .black
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(270))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, repeatingSubitem: item, count: 3)
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        section.visibleItemsInvalidationHandler = { items, contentOffset, environment in
-            let currentPage = Int(max(0, round(contentOffset.x / environment.container.contentSize.width)))
-            if currentPage + 1 == 5 {
-                self.verticalLabel.text = "🔚 \(currentPage+1) / 5"
-            }else{
-                self.verticalLabel.text = "🔜 \(currentPage+1) / 5"
-            }
-        }
-        
-        return section
-    }
-    private func createHorizontalSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(60))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, repeatingSubitem: item, count: 1)
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .none
-        
-        return section
-    }
-    private func setDataSource() {
-        dataSource = UICollectionViewDiffableDataSource<Section,Item>(collectionView: collectionView, cellProvider: { collectionView, indexPath, itemIdentifier in
-            switch itemIdentifier {
-            case .newsList(let newsData):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: NewsListCollectionViewCell.id, for: indexPath) as? NewsListCollectionViewCell
-                cell?.configure(with: newsData)
-                return cell ?? nil
-            case .category(let categoryList):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CategoryCollectionViewCell.id, for: indexPath) as? CategoryCollectionViewCell
-                cell?.configure(btnImage: categoryList.btnImage, btnLabel: categoryList.btnLabel)
-                return cell ?? nil
-            case .Ads(let AdsString):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: AdsCollectionViewCell.id, for: indexPath) as? AdsCollectionViewCell
-                cell?.configure(AdsString)
-                return cell ?? nil
-            case .orderBook(let orderData):
-                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: OrderBookCollectionViewCell.id, for: indexPath) as? OrderBookCollectionViewCell
-                cell?.configure(with: orderData)
-                return cell ?? nil
-            }
-        })
-        dataSource?.supplementaryViewProvider = {[weak self] collectionView, kind, indexPath -> UICollectionReusableView in
-            let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: HeaderView.id, for: indexPath)
-            let section = self?.dataSource?.sectionIdentifier(for: indexPath.section)
-            
-            switch section {
-            case .banner(let title):
-                (header as? HeaderView)?.configure(title: title)
-            case .category:
-                print("category")
-            case .horizotional:
-                print("horizontinal")
-            case .vertical:
-                print("vertical")
-            default:
-                print("Default")
-            }
-            return header
-        }
+        configureHierarchy()
     }
 }
-//MARK: - Binding
-private extension HomeViewController {
+
+extension HomeViewController {
+    
     private func setBinding() {
-        let input = HomeViewModel.Input(inputTrigger: inputTrigger.asObserver())
+        loadingIndicator.startAnimating()
+        let input = HomeViewModel.Input(chartInput: inputTrigger.asObserver())
         let output = homeViewModel.transform(input: input)
-        output.mainList.bind { Data in
-            switch Data {
-            case .success(let data):
-                var snapShot = NSDiffableDataSourceSnapshot<Section, Item>()
-                //뉴스 데이터
-                let newsItems = data.newsData.map { newsData in
-                    return Item.newsList(newsData)
-                }
-                let bannerSection = Section.banner("Welcome,\n 코인에 대한 정보를 확인해 보세요!")
-                snapShot.appendSections([bannerSection])
-                snapShot.appendItems(newsItems, toSection: bannerSection)
-                //카테고리
-                let categoryItems = data.category.map { categoryData in
-                    return Item.category(categoryData)
-                }
-                let categorySection = Section.category
-                snapShot.appendSections([categorySection])
-                snapShot.appendItems(categoryItems, toSection: categorySection)
-                
-                //MARK: - 구글 광고
-                let AdsItems = Item.Ads("")
-                let AdsSection = Section.horizotional
-                snapShot.appendSections([AdsSection])
-                snapShot.appendItems([AdsItems], toSection: AdsSection)
-                
-                //코인 호가
-                let orderItems = data.orderBook.map { orderData in
-                    return Item.orderBook(orderData)
-                }
-                let orderSection = Section.vertical
-                snapShot.appendSections([orderSection])
-                snapShot.appendItems(orderItems, toSection: orderSection)
-                
-                self.pageControl.numberOfPages = newsItems.count
-                self.dataSource?.apply(snapShot)
-                self.loadingIndicator.stopAnimating()
-            case .failure(let error):
-                print(error)
-            }
+        
+        output.chartOutput.bind { [weak self] data in
+            guard let self = self else { return }
+            self.homeData = data
+            self.configureTableView()
+            self.loadingIndicator.stopAnimating()
         }.disposed(by: disposeBag)
     }
-    private func setBindView() {
-        //컬렉션 뷰 선택
-        collectionView.rx.itemSelected.bind(onNext: { [weak self] indexPath in
-            guard let self = self else { return }
-            let item = self.dataSource?.itemIdentifier(for: indexPath)
-            switch item {
-            case .newsList(let content):
-                if let url = URL(string: content.originallink ?? "") {
-                    UIApplication.shared.open(url)
-                }
-            case .category(let category):
-                switch category.btnLabel {
-                case "Ai분석":
-                    self.navigationController?.pushViewController(AiViewController(), animated: true)
-                case "호가":
-                    self.navigationController?.pushViewController(OrderBookViewController(), animated: true)
-                case "차트":
-                    self.navigationController?.pushViewController(MainViewController(), animated: true)
-                case "뉴스":
-                    self.navigationController?.pushViewController(NewsViewController(), animated: true)
-                default:
-                    print("Category - default")
-                }
-            case .Ads(_):
-                print("GooleAdsMob")
-            case .orderBook(let orderData):
-                self.navigationController?.pushViewController(OrderBookDetailViewController(coinData: orderData), animated: true)
-            default:
-                print("default")
-            }
-        }).disposed(by: disposeBag)
-    }
+    
 }
-//MARK: - Action
-extension HomeViewController {
-    @objc private func refreshEnding() {
-        self.inputTrigger.onNext(())
-        self.refresh.endRefreshing()
+
+extension HomeViewController: UITableViewDelegate, UITableViewDataSource {
+    
+    private func configureTableView() {
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.separatorStyle = .none
+        tableView.register(HomeProfileTableViewCell.self, forCellReuseIdentifier: HomeProfileTableViewCell.id)
+        tableView.register(RecommandTableViewCell.self, forCellReuseIdentifier: RecommandTableViewCell.id)
+        tableView.register(ChartTableViewCell.self, forCellReuseIdentifier: ChartTableViewCell.id)
+        tableView.register(TicksTableViewCell.self, forCellReuseIdentifier: TicksTableViewCell.id)
+        tableView.register(AdsTableViewCell.self, forCellReuseIdentifier: AdsTableViewCell.id)
+        tableView.register(NewsListTableViewCell.self, forCellReuseIdentifier: NewsListTableViewCell.id)
     }
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        self.pageControl.snp.remakeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().inset(-scrollView.contentOffset.y+UIScreen.main.bounds.width-40)
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 6
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        switch HomeItems.allCases[indexPath.row] {
+        case .profile:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: HomeProfileTableViewCell.id, for: indexPath) as? HomeProfileTableViewCell else { return UITableViewCell() }
+            let rate = homeData.rate
+            cell.configure(rate)
+            cell.sheetProfile = { [weak self] in
+                let vc = PortfolioViewController()
+                self?.push(vc)
+            }
+            return cell
+            
+        case .chart:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ChartTableViewCell.id, for: indexPath) as? ChartTableViewCell else { return UITableViewCell() }
+            cell.configure(homeData.chartData)
+            cell.heartTapped = { [weak self] isAlert, title in
+                guard let self = self else { return }
+                //TODO: - 수정
+                if isAlert {
+                    self.showInputDialog(for: title) {
+                        tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                        self.inputTrigger.onNext((self.db.heartList))
+                        cell.collectionView.reloadData()
+                    }
+                } else {
+                    self.db.removeHeartItem(title)
+                    tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+                    self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), self, .center)
+                    self.inputTrigger.onNext((db.heartList))
+                    cell.collectionView.reloadData()
+                }
+            }
+            return cell
+            
+        case .recommand:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: RecommandTableViewCell.id, for: indexPath) as? RecommandTableViewCell else { return UITableViewCell() }
+            cell.showDialog = { [weak self] image in
+                if let coin = HomeCoin.allCases.filter( { $0.image == image }).first {
+                    self?.pushDetail(coin.rawValue)
+                }
+            }
+            return cell
+            
+        case .ticks:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TicksTableViewCell.id, for: indexPath) as? TicksTableViewCell else { return UITableViewCell() }
+            cell.configure(homeData.ticksData)
+            cell.showDialog = { [weak self] name in
+                if let market = cryptoData.filter({ $0.korean_name == name }).first?.english_name {
+                    self?.pushDetail(market)
+                }
+            }
+            return cell
+            
+        case .ads:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AdsTableViewCell.id, for: indexPath) as? AdsTableViewCell else { return UITableViewCell() }
+            return cell
+            
+        case .news:
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsListTableViewCell.id, for: indexPath) as? NewsListTableViewCell else { return UITableViewCell() }
+            cell.configure(homeData.newsData)
+            return cell
         }
-        self.verticalLabel.snp.remakeConstraints { make in
-            make.trailing.equalToSuperview().inset(30)
-            make.top.equalToSuperview().inset(-scrollView.contentOffset.y+UIScreen.main.bounds.width+170)
-        }
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
+    private func pushDetail(_ name: String) {
+        let vc = CoinDetailViewController()
+        vc.coinName = name
+        self.push(vc)
     }
 }

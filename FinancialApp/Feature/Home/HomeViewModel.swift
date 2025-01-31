@@ -10,43 +10,63 @@ import RxCocoa
 import Foundation
 
 final class HomeViewModel {
+    
     private let disposeBag = DisposeBag()
     
-    lazy var categoryList: Observable<[CategoryList]> = {
-        return setCategory()
-    }()
-    
     struct Input {
-        let inputTrigger : Observable<Void>
+        let chartInput : Observable<[HeartItem]>
     }
+    
     struct Output {
-        let mainList : Observable<Result<CoinResult,Error>>
+        //TODO: - 에러 처리
+        let chartOutput : Observable<CoinResult>
     }
+    
     func transform(input: Input) -> Output {
-        let categoryListObservable = categoryList.asObservable()
-        let mainResult = input.inputTrigger
-            .flatMapLatest { [weak self] _ -> Observable<Result<CoinResult, Error>> in
+        //TODO: - DispatchGroup
+        let chartOutput = input.chartInput
+            .flatMapLatest { [weak self] db -> Observable<CoinResult> in
+                let data = cryptoData.prefix(6)
+                let cryptoData: [String] = (db.isEmpty) ? data.map { $0.market } : db.map ({ $0.name })
+                
                 guard self != nil else { return Observable.empty() }
-                return Observable.combineLatest(
-                    categoryListObservable,
-                    NewsService.getNews(query: "암호화폐", start: 1), CoinService.getAllCoin(start: 0, limit: 15), OrderBookService.getAllCoin(start: 0, limit: 15)) { category, news, coin, order -> Result<CoinResult, Error> in
-                        return .success(CoinResult(category: category, newsData: news, coinData: coin, orderBook: order))
-                    }.catch { error in
-                        return Observable.just(.failure(error))
-                    }
+                let coinResult = CandleService().getCandleList(markets: cryptoData , method: .months)
+                let ticksResult = OrderBookService().getTotal(totalData: Array(data))
+                let newsResult = NewsService().getNews(query: "암호화폐", display: 5)
+                
+                return Observable.zip(coinResult, ticksResult, newsResult) { coinResult, ticksResult, newsResult in
+                    let priceList = coinResult.map { $0[0].opening_price }
+                    let rateResult = self?.calculateRate(priceList, db)
+                    return CoinResult(chartData: coinResult, newsData: newsResult, ticksData: ticksResult, rate: rateResult ?? 0)
+                }
             }
         
-        return Output(mainList: mainResult)
+        return Output(chartOutput: chartOutput)
     }
-}
-extension HomeViewModel {
-    private func setCategory() -> BehaviorSubject<[CategoryList]> {
-        let category = [
-            CategoryList(btnImage: "AiIcon", btnLabel: "Ai분석"),
-            CategoryList(btnImage: "ChartIcon", btnLabel: "차트"),
-            CategoryList(btnImage: "NewsIcon", btnLabel: "뉴스"),
-            CategoryList(btnImage: "OrderBookIcon", btnLabel: "호가")
-        ]
-        return BehaviorSubject(value: category)
+    
+    private func calculateRate(_ openingPrices: [Double],_ db: [HeartItem]) -> Double {
+        let heartList = db
+        guard !heartList.isEmpty, !openingPrices.isEmpty else { return 0 }
+
+        var totalInvested: Double = 0
+        var totalCurrentValue: Double = 0
+        
+        for (index, heartItem) in heartList.enumerated() {
+            guard let quantity = Double(heartItem.quantity), let price = Double(heartItem.price) else { return 0 }
+            if quantity > 0 && price > 0, index < openingPrices.count {
+                let buyPrice = price
+                let quantity = quantity
+                let currentPrice = openingPrices[index]
+                
+                totalInvested += buyPrice * quantity
+                totalCurrentValue += currentPrice * quantity
+            }
+        }
+        
+        guard totalInvested > 0 else { return 0 }
+        
+        let rate = ((totalCurrentValue - totalInvested) / totalInvested) * 100
+        return rate
     }
+
 }

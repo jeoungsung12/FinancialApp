@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct ChatServiceModel : Codable {
-    let choices : [Choice]
+struct ChatServiceModel: Decodable {
+    let choices: [ChatChoice]
 }
-struct Choice : Codable {
-    let message: Message
+struct ChatChoice: Decodable {
+    let message: ChatMessage
 }
-struct Message: Codable {
+struct ChatMessage: Decodable {
     let content: String
 }
