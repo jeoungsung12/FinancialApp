@@ -89,7 +89,7 @@ final class PortfolioSummaryView: UIView {
         
         let returnColor: UIColor = (totalReturn >= 0) ? .systemGreen : .lightGray
         let returnText = String(format: "%.2f%%", totalReturn)
-        totalReturnLabel.attributedText = makeAttributedText(title: "수익률", value: returnText, color: returnColor)
+        totalReturnLabel.attributedText = makeAttributedText(title: "현재가 수익률", value: returnText, color: returnColor)
         
         piechartHostingViewController?.view.removeFromSuperview()
         piechartHostingViewController = ProfileHostingViewController(rootView: PieChartView(chartData: data.map { $0.pieModel }))

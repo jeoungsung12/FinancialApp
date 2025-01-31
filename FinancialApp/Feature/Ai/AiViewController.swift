@@ -137,7 +137,7 @@ extension AiViewController {
     
     private func extractConfidence(from text: String) -> Float {
         let numbers = text.components(separatedBy: CharacterSet.decimalDigits.inverted).compactMap { Float($0) }
-        return numbers.first ?? 50
+        return numbers.last ?? 50
     }
 }
 
