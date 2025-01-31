@@ -8,9 +8,9 @@
 import UIKit
 import SnapKit
 
-final class HeartCustomView: UIView {
+final class HeartCustomView: UIButton {
     //MARK: - UI Components
-    private let titleLabel : UILabel = {
+    private let nameLabel : UILabel = {
         let label = UILabel()
         label.textColor = .white
         label.backgroundColor = .black
@@ -73,7 +73,7 @@ final class HeartCustomView: UIView {
 extension HeartCustomView {
     private func setLayout() {
         self.addSubview(icon)
-        self.addSubview(titleLabel)
+        self.addSubview(nameLabel)
         self.addSubview(availLabel)
         self.addSubview(price)
         self.addSubview(arrow)
@@ -82,13 +82,13 @@ extension HeartCustomView {
             make.size.equalTo(40)
             make.leading.equalToSuperview()
         }
-        titleLabel.snp.makeConstraints { make in
+        nameLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().inset(8)
             make.height.equalTo(15)
             make.leading.equalTo(icon.snp.trailing).offset(12)
         }
         availLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(4)
+            make.top.equalTo(nameLabel.snp.bottom).offset(4)
             make.leading.equalTo(icon.snp.trailing).offset(12)
         }
         price.snp.makeConstraints { make in
@@ -110,7 +110,7 @@ extension HeartCustomView {
         let ask_bid = model.tradesData.ask_bid
         let volume = model.tradesData.trade_volume
         
-        self.titleLabel.text = name
+        self.nameLabel.text = name
         self.availLabel.text = "체결량: \(volume)"
         if let text = englishName.first {
             icon.text = String(text)

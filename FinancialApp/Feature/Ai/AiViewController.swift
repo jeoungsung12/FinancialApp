@@ -14,8 +14,9 @@ final class AiViewController: UIViewController {
     private let viewModel = AiViewModel()
     private var disposeBag = DisposeBag()
     private let inputTrigger = PublishSubject<CoinDetailModel>()
-    private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
+    private let rewardHelper = RewardedHelper()
     
+    private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
     private let trendLabel = UILabel()
     private let confidenceLabel = UILabel()
     private let progressView = UIProgressView()
@@ -25,6 +26,7 @@ final class AiViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureView()
+        rewardHelper.loadRewardedAd()
     }
     
 }
@@ -97,13 +99,14 @@ extension AiViewController {
     private func setBinding() {
         let input = AiViewModel.Input(coinDetail: inputTrigger.asObservable())
         let output = viewModel.transform(input: input)
-        
         loadingIndicator.startAnimating()
         output.aiPrediction
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] resultText in
-                self?.updateUI(with: resultText)
-                self?.loadingIndicator.stopAnimating()
+                guard let self = self else { return }
+                self.updateUI(with: resultText)
+                self.loadingIndicator.stopAnimating()
+                self.rewardHelper.showRewardedAd(viewController: self)
             })
             .disposed(by: disposeBag)
     }

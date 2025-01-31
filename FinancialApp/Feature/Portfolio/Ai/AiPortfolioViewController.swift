@@ -14,8 +14,9 @@ final class AiPortfolioViewController: UIViewController {
     private let viewModel = AiPortfolioViewModel()
     private var disposeBag = DisposeBag()
     private let inputTrigger = PublishSubject<[PortfolioModel]>()
-    private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
+    private let rewardHelper = RewardedHelper()
     
+    private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
     var potfolioData: [PortfolioModel]?
     private let titleLabel: UILabel = {
         let label = UILabel()
@@ -29,25 +30,23 @@ final class AiPortfolioViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupUI()
-        setBinding()
-        
-        inputTrigger.onNext(potfolioData!)
+        configureView()
+        rewardHelper.loadRewardedAd()
     }
     
-    private func setupUI() {
-        view.backgroundColor = .black
-        
-        textView.isScrollEnabled = true
-        textView.isEditable = false
-        textView.backgroundColor = .black
-        textView.textColor = .lightGray
-        textView.font = .boldSystemFont(ofSize: 16)
-        
+}
+
+extension AiPortfolioViewController {
+    
+    private func configureHierarchy() {
         view.addSubview(titleLabel)
         view.addSubview(textView)
         view.addSubview(loadingIndicator)
         
+        configureLayout()
+    }
+    
+    private func configureLayout() {
         titleLabel.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
             make.top.equalTo(view.safeAreaLayoutGuide).offset(24)
@@ -61,7 +60,23 @@ final class AiPortfolioViewController: UIViewController {
         loadingIndicator.snp.makeConstraints { make in
             make.center.equalToSuperview()
         }
+        setBinding()
+        inputTrigger.onNext(potfolioData!)
     }
+    
+    private func configureView() {
+        view.backgroundColor = .black
+        
+        textView.isScrollEnabled = true
+        textView.isEditable = false
+        textView.backgroundColor = .black
+        textView.textColor = .lightGray
+        textView.font = .boldSystemFont(ofSize: 16)
+        configureHierarchy()
+    }
+}
+
+extension AiPortfolioViewController {
     
     private func setBinding() {
         let input = AiPortfolioViewModel.Input(portfolio: inputTrigger.asObservable())
@@ -72,7 +87,8 @@ final class AiPortfolioViewController: UIViewController {
             .subscribe(onNext: { [weak self] prediction in
                 guard let self = self else { return }
                 self.textView.text = prediction
-                loadingIndicator.stopAnimating()
+                self.loadingIndicator.stopAnimating()
+                self.rewardHelper.showRewardedAd(viewController: self)
             })
             .disposed(by: disposeBag)
     }
