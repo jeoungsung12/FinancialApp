@@ -23,8 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     private func requestIDEA() {
-        ATTrackingManager.requestTrackingAuthorization { status in
-            print("앱 추적 허용 : \(status)")
+        DispatchQueue.main.async {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                print("앱 추적 허용 : \(status.rawValue)")
+            }
         }
     }
     // MARK: UISceneSession Lifecycle

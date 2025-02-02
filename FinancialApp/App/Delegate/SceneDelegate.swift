@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AppTrackingTransparency
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,11 +21,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.makeKeyAndVisible()
     }
     
-    func sceneDidDisconnect(_ scene: UIScene) {
-        
-    }
-
     func sceneDidBecomeActive(_ scene: UIScene) {
+        requestTrackingPermission()
+    }
+    
+    private func requestTrackingPermission() {
+        ATTrackingManager.requestTrackingAuthorization { status in
+            print("App Tracking Transparency Status: \(status.rawValue)")
+        }
+    }
+    
+    func sceneDidDisconnect(_ scene: UIScene) {
         
     }
 
