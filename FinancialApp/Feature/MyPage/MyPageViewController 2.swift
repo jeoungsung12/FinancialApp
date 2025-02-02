@@ -42,7 +42,7 @@ extension MyPageViewController {
         }
         
         buttonStackView.snp.makeConstraints { make in
-            make.horizontalEdges.equalToSuperview().inset(12)
+            make.horizontalEdges.equalToSuperview()
             make.bottom.lessThanOrEqualToSuperview().offset(-24)
             make.top.equalTo(myProfileView.snp.bottom).offset(24)
         }
@@ -55,19 +55,12 @@ extension MyPageViewController {
         
         myProfileView.addTarget(self, action: #selector(myProfileTapped), for: .touchUpInside)
         
-        buttonStackView.spacing = 15
+        buttonStackView.spacing = 10
         buttonStackView.axis = .vertical
         buttonStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         for (type) in MyPageType.allCases {
             let button = MyPageSectionButton()
-            switch type {
-            case .oftenQS:
-                button.addTarget(self, action: #selector(FAQTapped), for: .touchUpInside)
-            case .profile:
-                button.addTarget(self, action: #selector(profileTapped), for: .touchUpInside)
-            case .feedback:
-                button.addTarget(self, action: #selector(feedbackTapped), for: .touchUpInside)
-            case .withdraw:
+            if type == .withdraw {
                 button.addTarget(self, action: #selector(withdrawTapped), for: .touchUpInside)
             }
             button.configure(type.rawValue)
@@ -90,29 +83,6 @@ extension MyPageViewController {
             self.myProfileView.configure(self.db.getUser(), 0)
         }
         self.sheet(vc)
-    }
-    
-    @objc
-    private func FAQTapped(_ sender: UIButton) {
-        print(#function)
-        let vc = FAQViewController()
-        self.push(vc)
-    }
-    
-    @objc
-    private func profileTapped(_ sender: UIButton) {
-        print(#function)
-        let vc = SheetProfileViewController()
-        vc.dismissClosure = {
-            self.myProfileView.configure(self.db.getUser(), 0)
-        }
-        self.sheet(vc)
-    }
-    
-    @objc
-    private func feedbackTapped(_ sender: UIButton) {
-        print(#function)
-        UIApplication.shared.open(URL(string: APIEndpoint.feedback.rawValue)!)
     }
     
     @objc

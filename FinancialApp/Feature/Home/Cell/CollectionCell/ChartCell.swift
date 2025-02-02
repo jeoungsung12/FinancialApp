@@ -9,7 +9,7 @@ import SnapKit
 
 final class ChartCell : UICollectionViewCell {
     static let id = "ChartCell"
-    private let chartView = DetailChartView()
+    private let chartView = DetailChartView(false)
     
     var heartTapped: ((ToastType)->Void)?
     override init(frame: CGRect) {

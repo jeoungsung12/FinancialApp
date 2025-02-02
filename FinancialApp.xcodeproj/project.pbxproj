@@ -79,6 +79,7 @@
 		E4788FC22D4B5393008D4B3A /* CoinItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FC12D4B5393008D4B3A /* CoinItems.swift */; };
 		E4788FC42D4B5D8C008D4B3A /* DetailChartTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4788FC32D4B5D8C008D4B3A /* DetailChartTableViewCell.swift */; };
 		E47B10242D4CEDFE0071CE59 /* RewardedHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47B10232D4CEDFE0071CE59 /* RewardedHelper.swift */; };
+		E47B10262D4CF9340071CE59 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47B10252D4CF9340071CE59 /* FAQViewController.swift */; };
 		E483068A2C4914F90017F6B2 /* CoinResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48306892C4914F90017F6B2 /* CoinResult.swift */; };
 		E483068E2C49651C0017F6B2 /* TicksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */; };
 		E492F2C72C43BD5E0012B7F3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */; };
@@ -202,6 +203,7 @@
 		E4788FC12D4B5393008D4B3A /* CoinItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinItems.swift; sourceTree = "<group>"; };
 		E4788FC32D4B5D8C008D4B3A /* DetailChartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChartTableViewCell.swift; sourceTree = "<group>"; };
 		E47B10232D4CEDFE0071CE59 /* RewardedHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedHelper.swift; sourceTree = "<group>"; };
+		E47B10252D4CF9340071CE59 /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		E48306892C4914F90017F6B2 /* CoinResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinResult.swift; sourceTree = "<group>"; };
 		E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicksCollectionViewCell.swift; sourceTree = "<group>"; };
 		E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 			children = (
 				E4788F832D49FABB008D4B3A /* MyPageViewController.swift */,
 				E4788F852D49FACC008D4B3A /* MyPageSectionButton.swift */,
+				E47B10252D4CF9340071CE59 /* FAQViewController.swift */,
 			);
 			path = MyPage;
 			sourceTree = "<group>";
@@ -885,6 +888,7 @@
 				E43C81822D3FC25A009C81C2 /* GreedModel.swift in Sources */,
 				E4788FA62D4A8A76008D4B3A /* PortfolioViewController.swift in Sources */,
 				E4DABF142BC2CEC200AE9DFB /* NewsServiceModel.swift in Sources */,
+				E47B10262D4CF9340071CE59 /* FAQViewController.swift in Sources */,
 				E4788F982D4A1853008D4B3A /* CryptoInputViewController.swift in Sources */,
 				E40B246D2D41008D00A16D4C /* CandleChartView.swift in Sources */,
 				E4DABF182BC2D46100AE9DFB /* String + Extension.swift in Sources */,
