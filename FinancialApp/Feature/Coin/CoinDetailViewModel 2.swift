@@ -12,7 +12,7 @@ final class CoinDetailViewModel {
     private let disposeBag = DisposeBag()
     
     struct Input {
-        let chartInput : Observable<CoinDetailInput>
+        let chartInput : Observable<String?>
     }
     
     struct Output {
@@ -22,9 +22,9 @@ final class CoinDetailViewModel {
     
     func transform(input: Input) -> Output {
         let chartOutput = input.chartInput
-            .flatMapLatest { [weak self] input -> Observable<CoinDetailModel> in
-                guard self != nil, let englishName = input.name, let data = cryptoData.filter({ $0.english_name == englishName }).first else { return Observable.empty() }
-                let coinResult = CandleService().getCandle(market: data.market, method: input.type)
+            .flatMapLatest { [weak self] englishName -> Observable<CoinDetailModel> in
+                guard self != nil, let englishName = englishName, let data = cryptoData.filter({ $0.english_name == englishName }).first else { return Observable.empty() }
+                let coinResult = CandleService().getCandle(market: data.market, method: .days)
                 let ticksResult = OrderBookService().getDetail(coinModel: data)
                 let newsResult = NewsService().getNews(query: data.korean_name, display: 5)
                 let greedResult = CoinService().getFearGreedIndex()

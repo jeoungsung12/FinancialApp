@@ -19,3 +19,8 @@ struct CoinDetailModel {
     let ticksData: [[AddTradesModel]]
     let greedIndex: GreedModel?
 }
+
+struct CoinDetailInput {
+    var name: String?
+    var type: CandleType
+}

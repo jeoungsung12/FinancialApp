@@ -54,8 +54,9 @@ final class PortfolioSummaryView: UIView {
         
         piechartHostingViewController?.view.snp.makeConstraints({ make in
             make.height.equalTo(200)
-            make.verticalEdges.trailing.equalToSuperview().inset(12)
-            make.leading.equalTo(totalInvestmentLabel.snp.trailing).offset(12)
+            make.trailing.equalToSuperview().offset(-16)
+            make.verticalEdges.equalToSuperview().inset(8)
+            make.leading.greaterThanOrEqualTo(totalInvestmentLabel.snp.trailing).offset(12)
         })
     }
     

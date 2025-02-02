@@ -8,7 +8,7 @@ import Foundation
 
 enum MyPageType: String, CaseIterable {
     case oftenQS = "자주 묻는 질문"
-    case inquiry = "1:1 문의"
-    case alert = "알림 설정"
+    case profile = "프로필 재설정"
+    case feedback = "피드백 보내기"
     case withdraw = "탈퇴하기"
 }

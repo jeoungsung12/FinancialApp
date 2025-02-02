@@ -14,6 +14,7 @@ enum APIEndpoint: String {
     case getCandle = "https://api.upbit.com/v1/candles/"
     case news = "https://openapi.naver.com/v1/search/news.json?query="
     case ai = "https://api.openai.com/v1/chat/completions"
+    case feedback = "https://forms.gle/72cpe7pXSgqNTDQWA"
     
     var endPoing: String {
         return ""

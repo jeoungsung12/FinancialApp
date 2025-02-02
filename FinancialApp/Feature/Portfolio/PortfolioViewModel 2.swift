@@ -25,20 +25,15 @@ final class PortfolioViewModel {
         let chartOutput = input.portfolioInput
             .flatMapLatest { [weak self] db -> Observable<[PortfolioModel]> in
                 let cryptoArray: [String] = (db.isEmpty) ? [] : db.map ({ $0.name })
-                let fillteredData = cryptoData.filter { cryptoArray.contains($0.market) }
+                let filteredData = cryptoData.filter { cryptoArray.contains($0.market) }
+                
                 guard self != nil else { return Observable.empty() }
-                let ticksObservable = OrderBookService().getTotal(totalData: Array(fillteredData))
+                let ticksObservable = OrderBookService().getTotal(totalData: Array(filteredData))
                 
                 return ticksObservable.flatMap { ticksData -> Observable<[PortfolioModel]> in
                     guard let self = self else { return Observable.empty() }
-                    let priceDict: [String: Double] = ticksData
-                        .map { $0 }
-                        .reduce(into: [String: Double]()) { dict, tick in
-                            guard let tickData = tick.first else { return }
-                            dict[tickData.tradesData.market] = tickData.tradesData.trade_price
-                        }
                     
-                    let priceList = db.compactMap { priceDict[$0.name] }
+                    let priceList = ticksData.flatMap { $0 }.map { $0.tradesData.trade_price }
                     let rateList = self.calculateRate(priceList, db)
                     
                     let portfolioModels = zip(db, priceList).compactMap { (dbItem, openPrice) -> PortfolioModel? in

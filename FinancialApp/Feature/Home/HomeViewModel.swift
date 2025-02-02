@@ -35,7 +35,14 @@ final class HomeViewModel {
                 let newsResult = NewsService().getNews(query: "암호화폐", display: 5)
                 
                 return Observable.zip(coinResult, ticksResult, newsResult) { coinResult, ticksResult, newsResult in
-                    let priceList = coinResult.map { $0[0].opening_price }
+                    let priceDict: [String: Double] = coinResult
+                        .map { $0 }
+                        .reduce(into: [String: Double]()) { dict, coin in
+                            guard let coinData = coin.first else { return }
+                            dict[coinData.market] = coinData.opening_price
+                        }
+                    
+                    let priceList = db.compactMap { priceDict[$0.name] }
                     let rateResult = self?.calculateRate(priceList, db)
                     return CoinResult(chartData: coinResult, newsData: newsResult, ticksData: ticksResult, rate: rateResult ?? 0)
                 }

@@ -8,10 +8,12 @@
 import UIKit
 import SnapKit
 import Toast
+import iOSDropDown
 
 final class DetailChartTableViewCell: UITableViewCell {
     static let id: String = "ChartTableViewCell"
-    private let chartView = DetailChartView()
+    private let chartView = DetailChartView(true)
+    
     private let price: UILabel = {
         let label = UILabel()
         label.backgroundColor = .black
@@ -29,6 +31,7 @@ final class DetailChartTableViewCell: UITableViewCell {
         label.font = UIFont.boldSystemFont(ofSize: 12)
         return label
     }()
+    
     private let greedLabel: UILabel = {
         let label = UILabel()
         label.textColor = .white
@@ -39,6 +42,7 @@ final class DetailChartTableViewCell: UITableViewCell {
         label.backgroundColor = .darkGray.withAlphaComponent(0.4)
         return label
     }()
+    
     private let aiButton: UIButton = {
         let button = UIButton()
         button.clipsToBounds = true
@@ -51,6 +55,7 @@ final class DetailChartTableViewCell: UITableViewCell {
     }()
     
     var aiTapped: (()->Void)?
+    var dropdownTapped: ((String)->Void)?
     var heartTapped: ((Bool, String)->Void)?
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -105,7 +110,7 @@ extension DetailChartTableViewCell {
     
     private func configureLayout() {
         chartView.snp.makeConstraints { make in
-            make.height.equalTo(200)
+            make.height.equalTo(250)
             make.top.horizontalEdges.equalToSuperview()
         }
         price.snp.makeConstraints { make in
@@ -132,6 +137,10 @@ extension DetailChartTableViewCell {
     private func configureView() {
         aiButton.addTarget(self, action: #selector(aiButtonTapped), for: .touchUpInside)
         
+        chartView.dropdownTapped = { [weak self] title in
+            self?.dropdownTapped?(title)
+        }
+        
         chartView.heartTapped = { [weak self] type in
             guard let self = self else { return }
             switch type {
@@ -143,6 +152,7 @@ extension DetailChartTableViewCell {
         }
         configureHierarchy()
     }
+    
     @objc private func aiButtonTapped() {
         aiTapped?()
     }
