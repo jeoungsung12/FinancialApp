@@ -20,7 +20,7 @@ final class AiPortfolioViewController: UIViewController {
     var potfolioData: [PortfolioModel]?
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "📊 AI 포트폴리오 분석"
+        label.text = "📊 Ai 포트폴리오 분석"
         label.font = .boldSystemFont(ofSize: 20)
         label.textAlignment = .center
         label.textColor = .white
