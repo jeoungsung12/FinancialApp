@@ -70,14 +70,14 @@ extension DetailChartView {
         }
         
         heartButton.snp.makeConstraints { make in
-            make.size.equalTo(40)
+            make.size.equalTo(25)
             make.top.trailing.equalToSuperview().inset(24)
         }
         
         descriptionLabel.snp.makeConstraints { make in
             make.bottom.equalTo(titleLabel.snp.bottom)
             make.leading.equalTo(titleLabel.snp.trailing).offset(12)
-            make.trailing.equalTo(heartButton.snp.leading).offset(-4)
+            make.trailing.lessThanOrEqualTo(heartButton.snp.leading).offset(-4)
         }
         
         configureDropDown()
@@ -85,7 +85,7 @@ extension DetailChartView {
         chartHostingViewController?.view.snp.makeConstraints { make in
             make.height.equalTo(150)
             make.leading.trailing.equalToSuperview().inset(24)
-            make.top.equalTo(chartType ? dropDown.snp.bottom : descriptionLabel.snp.bottom).offset(12)
+            make.top.equalTo(chartType ? dropDown.snp.bottom : descriptionLabel.snp.bottom).offset(16)
         }
     }
     

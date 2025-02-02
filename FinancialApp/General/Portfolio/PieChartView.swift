@@ -26,20 +26,24 @@ struct PieChartView: View {
     var body: some View {
         ZStack {
             Chart {
-                ForEach(chartData, id: \.name) { data in
-                    let percentage = (data.value / totalValue) * 100
+                let sortedChartData = chartData.sorted(by: { $0.value > $1.value })
+                
+                ForEach(sortedChartData.indices, id: \.self) { index in
+                    let percentage = (sortedChartData[index].value / totalValue) * 100
                     SectorMark(
-                        angle: .value("Value", data.value),
+                        angle: .value("Value", sortedChartData[index].value),
                         innerRadius: .ratio(0.5),
                         angularInset: 2
                     )
-                    .foregroundStyle(data.color)
+                    .foregroundStyle(sortedChartData[index].color)
                     .annotation(position: .overlay) {
-                        Text("\(data.name)\n\(percentage, specifier: "%.1f")%")
-                            .font(.caption)
-                            .foregroundColor(.white)
-                            .bold()
-                            .multilineTextAlignment(.center)
+                        if index < 3 {
+                            Text("\(sortedChartData[index].name)\n\(percentage, specifier: "%.1f")%")
+                                .font(.caption)
+                                .foregroundColor(.white)
+                                .bold()
+                                .multilineTextAlignment(.center)
+                        }
                     }
                 }
             }
