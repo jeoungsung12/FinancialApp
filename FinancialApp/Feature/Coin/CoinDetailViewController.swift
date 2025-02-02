@@ -19,6 +19,7 @@ final class CoinDetailViewController: UIViewController {
     private let loadingIndicator = NVActivityIndicatorView(frame: CGRect(origin: .zero, size: CGSize(width: 50, height: 30)), type: .ballPulseSync, color: .white)
     private let tableView = UITableView()
     private let db = Database.shared
+    private var searchCoinType: CandleType = .days
     
     private var coinData: CoinDetailModel = CoinDetailModel(chartData: [], newsData: [], ticksData: [], greedIndex: nil) {
         didSet {
@@ -37,7 +38,7 @@ final class CoinDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: .days)))
+        inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: searchCoinType)))
         setupTimer()
     }
     
@@ -116,7 +117,8 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
             cell.configure(coinData.chartData[0], coinData.ticksData[0][0], greed: coinData.greedIndex?.data.first)
             //TODO: 수정
             cell.dropdownTapped = { [weak self] title in
-                self?.inputTrigger.onNext((CoinDetailInput(name: self?.coinName, type: CandleType.days.returnType(title))))
+                self?.searchCoinType = CandleType.days.returnType(title)
+                self?.inputTrigger.onNext((CoinDetailInput(name: self?.coinName, type: self?.searchCoinType ?? .days)))
             }
             
             cell.heartTapped = { [weak self] isAlert, title in
@@ -125,13 +127,13 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
                 if isAlert {
                     self.showInputDialog(for: title) {
                         tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
-                        self.inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: .days)))
+                        self.inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: self.searchCoinType)))
                     }
                 } else {
                     self.db.removeHeartItem(title)
                     tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
                     self.view.customMakeToast(ToastModel(title: nil, message: "찜하기 📭 목록에서 삭제되었습니다!"), self, .center)
-                    self.inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: .days)))
+                    self.inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: self.searchCoinType)))
                 }
             }
             cell.aiTapped = { [weak self] in
@@ -162,7 +164,7 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc private func reloadData() {
-        inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: .days)))
+        inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: searchCoinType)))
     }
     
 }
