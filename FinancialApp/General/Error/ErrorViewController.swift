@@ -43,8 +43,8 @@ extension ErrorViewController {
     
     private func configureLayout() {
         titleLabel.snp.makeConstraints { make in
+            make.centerY.equalToSuperview().offset(-100)
             make.horizontalEdges.equalToSuperview().inset(12)
-            make.top.equalTo(self.view.safeAreaLayoutGuide).offset(12)
         }
         
         descriptioinLabel.snp.makeConstraints { make in

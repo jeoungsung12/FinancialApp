@@ -24,23 +24,13 @@ final class CoinDetailViewModel {
             .flatMapLatest { [weak self] input -> Observable<Result<CoinDetailModel,NetworkError.CustomError>> in
                 guard self != nil, let englishName = input.name, let data = cryptoData.filter({ $0.english_name == englishName }).first else { return Observable.empty() }
                 let coinResult = CandleService().getCandle(market: data.market, method: input.type)
-                    .map { (response: Result<[[CandleModel]],NetworkError.CustomError>) -> Result<[[CandleModel]],NetworkError.CustomError>  in
-                        switch response {
-                        case let .success(data):
-                            return .success(data)
-                        case let .failure(error):
-                            return .failure(error)
-                        }
+                    .map { (response: [CandleModel]) -> [CandleModel] in
+                        return response
                     }
                 
                 let ticksResult = OrderBookService().getDetail(coinModel: data)
-                    .map { (response: Result<[[AddTradesModel]],NetworkError.CustomError>) -> Result<[[AddTradesModel]],NetworkError.CustomError> in
-                        switch response {
-                        case let .success(data):
-                            return .success(data)
-                        case let .failure(error):
-                            return .failure(error)
-                        }
+                    .map { (response: [AddTradesModel]) -> [AddTradesModel] in
+                        return response
                     }
                 
                 let newsResult = NewsService().getNews(query: data.korean_name, display: 5)
@@ -65,19 +55,8 @@ final class CoinDetailViewModel {
                 
                 return Observable.zip(coinResult, ticksResult, newsResult, greedResult) { coinResult, ticksResult, newsResult, greedResult -> Result<CoinDetailModel,NetworkError.CustomError> in
                     var coinDetail = CoinDetailModel(chartData: nil, newsData: nil, ticksData: nil, greedIndex: nil)
-                    switch coinResult {
-                    case let .success(data):
-                        coinDetail.chartData = data
-                    case let .failure(error):
-                        return .failure(error)
-                    }
-                    
-                    switch ticksResult {
-                    case let .success(data):
-                        coinDetail.ticksData = data
-                    case let .failure(error):
-                        return .failure(error)
-                    }
+                    coinDetail.chartData = [coinResult]
+                    coinDetail.ticksData = [ticksResult]
                     
                     switch newsResult {
                     case let .success(data):

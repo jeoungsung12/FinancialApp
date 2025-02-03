@@ -27,7 +27,7 @@ final class NetworkManager {
                     case let .success(data):
                         observer.onNext(.success(data))
                         observer.onCompleted()
-                    case let .failure(error):
+                    case .failure:
                         observer.onNext(.failure(statusCode))
                     }
                 }
@@ -46,7 +46,7 @@ final class NetworkManager {
                     case let .success(data):
                         observer.onNext(.success(data))
                         observer.onCompleted()
-                    case let .failure(error):
+                    case .failure:
                         observer.onNext(.failure(statusCode))
                     }
                 }

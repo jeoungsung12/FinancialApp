@@ -121,9 +121,15 @@ extension HeartViewController {
             let input = HeartViewModel.Input(inputTrigger: inputTrigger.asObserver())
             let output = heartViewModel.transform(input: input)
             output.heartList
-                .bind(onNext: { [weak self] (list:[[AddTradesModel]]) in
-                    self?.heartList = list
-                    self?.loadingIndicator.stopAnimating()
+                .bind(onNext: { [weak self] (result) in
+                    switch result {
+                    case let .success(data):
+                        self?.heartList = data
+                        self?.loadingIndicator.stopAnimating()
+                    case let .failure(error):
+                        self?.errorPresent(error)
+                        self?.loadingIndicator.stopAnimating()
+                    }
                 })
                 .disposed(by: disposeBag)
         }

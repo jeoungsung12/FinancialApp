@@ -14,19 +14,23 @@ final class CandleService {
         let returnObserver = markets.map { market in
             return self.getCandle(market: market, method: method)
         }
-        return Observable.zip(returnObserver).map { observer in
-            return observer[0]
-        }
+        return Observable.zip(returnObserver)
+            .map { candles in
+                return .success(candles)
+            }
+            .catch { error in
+                return Observable.just(.failure(.notFount))
+            }
     }
     
-    func getCandle(market : String, method : CandleType) -> Observable<Result<[[CandleModel]],NetworkError.CustomError>> {
+    func getCandle(market : String, method : CandleType) -> Observable<[CandleModel]> {
         return NetworkManager.shared.getData(APIEndpoint.getCandle(method: method, market: market))
-            .flatMap { (result: Result<[CandleModel],NetworkError.CustomError>) -> Observable<Result<[[CandleModel]],NetworkError.CustomError>> in
+            .flatMap { (result: Result<[CandleModel], NetworkError.CustomError>) -> Observable<[CandleModel]> in
                 switch result {
-                case let .success(data):
-                    return Observable.just(.success([data]))
-                case let .failure(error):
-                    return Observable.just(.failure(error))
+                case .success(let data):
+                    return Observable.just(data)
+                case .failure:
+                    return Observable.just([])
                 }
             }
     }

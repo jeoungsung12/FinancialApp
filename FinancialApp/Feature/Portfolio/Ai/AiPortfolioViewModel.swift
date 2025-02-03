@@ -15,10 +15,7 @@ final class AiPortfolioViewModel {
     }
     
     struct Output {
-        let news: Observable<[NewsItems]>
-        let chartData: Observable<[[CandleModel]]>
-        let orderBook: Observable<[[AddTradesModel]]>
-        let aiPrediction: Observable<String>
+        let aiPrediction: Observable<Result<String,NetworkError.CustomError>>
     }
     
     private let disposeBag = DisposeBag()
@@ -49,11 +46,18 @@ final class AiPortfolioViewModel {
                     
                     \(ModelTuning.TuningType.portfolio.message)
                     """
-                return AiService().requestChat(search: "소유한 암호화폐 분석", info: summary)
-                    .map { $0.choices.first?.message.content ?? "분석 실패" }
+                return AiService().requestChat(search: "코인 분석", info: summary)
+                    .map { (result: Result<ChatServiceModel, NetworkError.CustomError>) -> Result<String,NetworkError.CustomError> in
+                        switch result {
+                        case let .success(data):
+                            return .success(data.choices.first?.message.content ?? "분석 결과 없음")
+                        case let .failure(error):
+                            return .failure(error)
+                        }
+                    }
             }
         
-        return Output(news: news, chartData: chartData, orderBook: orderBook, aiPrediction: aiPrediction)
+        return Output(aiPrediction: aiPrediction)
     }
     
 }

@@ -77,11 +77,17 @@ extension HomeViewController {
         let input = HomeViewModel.Input(chartInput: inputTrigger.asObserver())
         let output = homeViewModel.transform(input: input)
         
-        output.chartOutput.bind { [weak self] data in
+        output.chartOutput.bind { [weak self] result in
             guard let self = self else { return }
-            self.homeData = data
-            self.configureTableView()
-            self.loadingIndicator.stopAnimating()
+            switch result {
+            case let .success(data):
+                self.homeData = data
+                self.configureTableView()
+                self.loadingIndicator.stopAnimating()
+            case let .failure(error):
+                self.errorPresent(error)
+                self.loadingIndicator.stopAnimating()
+            }
         }.disposed(by: disposeBag)
     }
     

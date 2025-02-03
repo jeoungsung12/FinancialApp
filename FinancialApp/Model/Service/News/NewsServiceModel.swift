@@ -17,7 +17,6 @@ struct NewsServiceModel: Decodable {
 struct NewsItems: Decodable {
     let title: String
     let originallink: String
-    let link: String
     let description: String
     let pubDate: String
 }
