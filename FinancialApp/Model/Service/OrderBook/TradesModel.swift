@@ -6,13 +6,14 @@
 //
 
 import Foundation
-struct TradesModel : Hashable, Decodable {
+
+struct TradesModel: Decodable {
     let market : String
     let trade_price : Double
     let trade_volume : Double
     let ask_bid : String
 }
-struct AddTradesModel : Hashable, Decodable {
+struct AddTradesModel: Decodable {
     let tradesData: TradesModel
     let coinName: String
     let englishName: String

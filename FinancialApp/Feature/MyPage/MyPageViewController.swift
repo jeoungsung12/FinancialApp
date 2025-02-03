@@ -112,7 +112,7 @@ extension MyPageViewController {
     @objc
     private func feedbackTapped(_ sender: UIButton) {
         print(#function)
-        UIApplication.shared.open(URL(string: APIEndpoint.feedback.rawValue)!)
+        UIApplication.shared.open(URL(string: APIEndpoint.feedback.baseURL)!)
     }
     
     @objc

@@ -73,7 +73,7 @@ enum APIEndpoint {
             ["Content-Type" : "application/json"]
         case .getCandle:
             ["Content-Type" : "application/json"]
-        case .news(let search, let display):
+        case .news:
             [
                 "accept" : "application/json",
                 "X-Naver-Client-Id" : Bundle.main.NewsClientID,
