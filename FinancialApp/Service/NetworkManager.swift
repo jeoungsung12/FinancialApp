@@ -16,38 +16,38 @@ final class NetworkManager {
     
     private init() { }
     
-    func getData<T: Decodable>(_ api: APIEndpoint) -> Observable<T> {
+    func getData<T: Decodable>(_ api: APIEndpoint) -> Observable<Result<T,NetworkError.CustomError>> {
         return Observable.create { observer in
             AF.request(api.baseURL, method: api.method, encoding: JSONEncoding.default, headers: api.headers)
                 .validate()
                 .responseDecodable(of: T.self) { response in
+                    let statusCode = NetworkError().checkErrorType(response.response?.statusCode)
 //                    print(response.debugDescription)
                     switch response.result {
                     case let .success(data):
-                        observer.onNext(data)
+                        observer.onNext(.success(data))
                         observer.onCompleted()
                     case let .failure(error):
-                        //TODO: - 에러 처리
-                        print(error)
+                        observer.onNext(.failure(statusCode))
                     }
                 }
             return Disposables.create()
         }
     }
     
-    func postData<T: Decodable>(_ api: APIEndpoint) -> Observable<T> {
+    func postData<T: Decodable>(_ api: APIEndpoint) -> Observable<Result<T,NetworkError.CustomError>> {
         return Observable.create { observer in
             AF.request(api.baseURL, method: api.method, parameters: api.params, encoding: JSONEncoding.default, headers: api.headers)
                 .validate()
                 .responseDecodable(of: T.self) { response in
+                    let statusCode = NetworkError().checkErrorType(response.response?.statusCode)
 //                    print(response.debugDescription)
                     switch response.result {
                     case let .success(data):
-                        observer.onNext(data)
+                        observer.onNext(.success(data))
                         observer.onCompleted()
                     case let .failure(error):
-                        //TODO: - 에러 처리
-                        print(error)
+                        observer.onNext(.failure(statusCode))
                     }
                 }
             return Disposables.create()

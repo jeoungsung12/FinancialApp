@@ -8,11 +8,16 @@
 import Foundation
 import RxSwift
 
-class AiService {
-    func requestChat(search: String, info: String) -> Observable<ChatServiceModel> {
+final class AiService {
+    func requestChat(search: String, info: String) -> Observable<Result<ChatServiceModel,NetworkError.CustomError>> {
         return NetworkManager.shared.postData(APIEndpoint.ai(search: search, info: info))
-            .flatMap { (response: ChatServiceModel) -> Observable<ChatServiceModel> in
-                return Observable.just(response)
+            .flatMap { (response: Result<ChatServiceModel,NetworkError.CustomError>) -> Observable<Result<ChatServiceModel,NetworkError.CustomError>> in
+                switch response {
+                case let .success(data):
+                    return Observable.just(.success(data))
+                case let .failure(error):
+                    return Observable.just(.failure(error))
+                }
             }
     }
 }

@@ -7,15 +7,18 @@
 
 import Foundation
 import RxSwift
-import RxCocoa
-import Alamofire
 
-class CoinService {
+final class CoinService {
     
-    func getFearGreedIndex() -> Observable<GreedModel> {
+    func getFearGreedIndex() -> Observable<Result<GreedModel,NetworkError.CustomError>> {
         return NetworkManager.shared.getData(APIEndpoint.greedIndex)
-            .flatMap { (response: GreedModel) in
-            return Observable.just(response)
+            .flatMap { (response: Result<GreedModel,NetworkError.CustomError>) -> Observable<Result<GreedModel,NetworkError.CustomError>> in
+                switch response {
+                case let .success(data):
+                    return Observable.just(.success(data))
+                case let .failure(error):
+                    return Observable.just(.failure(error))
+                }
         }
     }
     

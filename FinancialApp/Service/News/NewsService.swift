@@ -8,12 +8,17 @@
 import Foundation
 import RxSwift
 
-class NewsService {
-    func getNews(query: String, display: Int) -> Observable<[NewsItems]> {
+final class NewsService {
+    func getNews(query: String, display: Int) -> Observable<Result<[NewsItems],NetworkError.CustomError>> {
         let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
         return NetworkManager.shared.getData(APIEndpoint.news(search: queryEncoded, display: display))
-            .flatMap { (result: NewsServiceModel) -> Observable<[NewsItems]> in
-                return Observable.just(result.items)
+            .flatMap { (response: Result<[NewsItems],NetworkError.CustomError>) -> Observable<Result<[NewsItems],NetworkError.CustomError>> in
+                switch response {
+                case let .success(data):
+                    return Observable.just(.success(data))
+                case let .failure(error):
+                    return Observable.just(.failure(error))
+                }
             }
     }
     
