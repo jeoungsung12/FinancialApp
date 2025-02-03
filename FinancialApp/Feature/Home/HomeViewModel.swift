@@ -45,9 +45,10 @@ final class HomeViewModel {
                             let priceDict: [String: Double] = coinData
                                 .flatMap { $0 }
                                 .reduce(into: [String: Double]()) { dict, coin in
-                                    dict[coin.market] = coin.opening_price
+                                    if dict[coin.market] == nil {
+                                        dict[coin.market] = coin.opening_price
+                                    }
                                 }
-                            
                             let priceList = db.compactMap { priceDict[$0.name] }
                             let rateResult = self.calculateRate(priceList, db)
                             
