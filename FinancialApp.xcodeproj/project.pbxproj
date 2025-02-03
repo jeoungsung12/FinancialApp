@@ -29,6 +29,7 @@
 		E43C80AA2D3F40EB009C81C2 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C80A92D3F40EB009C81C2 /* CryptoData.swift */; };
 		E43C81822D3FC25A009C81C2 /* GreedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C81812D3FC25A009C81C2 /* GreedModel.swift */; };
 		E45AA8862D5093F70012B694 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E45AA8852D5093F70012B694 /* Lottie */; };
+		E45AA88A2D509AA30012B694 /* lottie.json in Resources */ = {isa = PBXBuildFile; fileRef = E45AA8892D509AA30012B694 /* lottie.json */; };
 		E45B49812D388BFD008803B6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E45B49802D388BFD008803B6 /* .gitignore */; };
 		E45B49BE2D38C518008803B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B49B72D38C518008803B6 /* SceneDelegate.swift */; };
 		E45B49BF2D38C518008803B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B49B62D38C518008803B6 /* AppDelegate.swift */; };
@@ -148,6 +149,7 @@
 		E43C80A52D3F34CF009C81C2 /* DatabaseObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseObject.swift; sourceTree = "<group>"; };
 		E43C80A92D3F40EB009C81C2 /* CryptoData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CryptoData.swift; sourceTree = "<group>"; };
 		E43C81812D3FC25A009C81C2 /* GreedModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GreedModel.swift; sourceTree = "<group>"; };
+		E45AA8892D509AA30012B694 /* lottie.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = lottie.json; sourceTree = "<group>"; };
 		E45B49802D388BFD008803B6 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		E45B49B62D38C518008803B6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E45B49B72D38C518008803B6 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -552,6 +554,7 @@
 		E4CAF4972BB9808300CB18EC /* FinancialApp */ = {
 			isa = PBXGroup;
 			children = (
+				E45AA8892D509AA30012B694 /* lottie.json */,
 				E4CAF4A62BB9808400CB18EC /* Info.plist */,
 				E43C7EB62D3E3D89009C81C2 /* ApiKeyList.plist */,
 				E4CAF4D42BB9A77400CB18EC /* Service */,
@@ -824,6 +827,7 @@
 				E43C7EB72D3E3D89009C81C2 /* ApiKeyList.plist in Resources */,
 				E40B24712D410A7800A16D4C /* LaunchScreen.storyboard in Resources */,
 				E45B49812D388BFD008803B6 /* .gitignore in Resources */,
+				E45AA88A2D509AA30012B694 /* lottie.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

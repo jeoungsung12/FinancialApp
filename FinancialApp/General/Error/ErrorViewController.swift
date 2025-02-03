@@ -11,7 +11,7 @@ import Lottie
 
 final class ErrorViewController: UIViewController {
     private lazy var dismissBarButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissButtonTapped))
-    private let imageView = LottieAnimationView()
+    private let imageView = LottieAnimationView(name: "lottie")
     private let titleLabel = UILabel()
     private let descriptioinLabel = UILabel()
     
@@ -66,8 +66,10 @@ extension ErrorViewController {
         
         dismissBarButton.tintColor = .white
         
+        imageView.loopMode = .loop
         imageView.backgroundColor = .clear
         imageView.contentMode = .scaleAspectFit
+        imageView.play()
         
         titleLabel.textAlignment = .center
         titleLabel.textColor = .systemOrange

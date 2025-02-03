@@ -85,11 +85,17 @@ extension CoinDetailViewController {
         let input = CoinDetailViewModel.Input(chartInput: inputTrigger.asObserver())
         let output = viewModel.transform(input: input)
         
-        output.chartOutput.bind { [weak self] data in
+        output.chartOutput.bind { [weak self] result in
             guard let self = self else { return }
-            self.coinData = data
-            self.configureTableView()
-            self.loadingIndicator.stopAnimating()
+            switch result {
+            case let .success(data):
+                self.coinData = data
+                self.configureTableView()
+                self.loadingIndicator.stopAnimating()
+            case let .failure(error):
+                self.errorPresent(error)
+                self.loadingIndicator.stopAnimating()
+            }
         }.disposed(by: disposeBag)
     }
     
@@ -114,11 +120,13 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
         switch CoinItems.allCases[indexPath.row] {
         case .chart:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailChartTableViewCell.id, for: indexPath) as? DetailChartTableViewCell else { return UITableViewCell() }
-            cell.configure(coinData.chartData[0], coinData.ticksData[0][0], greed: coinData.greedIndex?.data.first)
-            //TODO: 수정
-            cell.dropdownTapped = { [weak self] title in
-                self?.searchCoinType = CandleType.days.returnType(title)
-                self?.inputTrigger.onNext((CoinDetailInput(name: self?.coinName, type: self?.searchCoinType ?? .days)))
+            if let chartData = coinData.chartData, let ticksData = coinData.ticksData {
+                cell.configure(chartData[0], ticksData[0][0], greed: coinData.greedIndex?.data.first)
+                //TODO: 수정
+                cell.dropdownTapped = { [weak self] title in
+                    self?.searchCoinType = CandleType.days.returnType(title)
+                    self?.inputTrigger.onNext((CoinDetailInput(name: self?.coinName, type: self?.searchCoinType ?? .days)))
+                }
             }
             
             cell.heartTapped = { [weak self] isAlert, title in
@@ -149,7 +157,7 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
             
         case .news:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: NewsListTableViewCell.id, for: indexPath) as? NewsListTableViewCell else { return UITableViewCell() }
-            cell.configure(coinData.newsData)
+            cell.configure(coinData.newsData ?? [])
             return cell
         }
     }
