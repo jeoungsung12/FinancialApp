@@ -48,7 +48,6 @@ final class HomeViewModel {
                                     dict[coin.market] = coin.opening_price
                                 }
                             
-                            print(ticksData)
                             let priceList = db.compactMap { priceDict[$0.name] }
                             let rateResult = self.calculateRate(priceList, db)
                             

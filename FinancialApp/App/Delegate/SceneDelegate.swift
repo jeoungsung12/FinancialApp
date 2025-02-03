@@ -22,14 +22,30 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidBecomeActive(_ scene: UIScene) {
-        requestTrackingPermission()
-    }
-    
-    private func requestTrackingPermission() {
-        ATTrackingManager.requestTrackingAuthorization { status in
-            print("App Tracking Transparency Status: \(status.rawValue)")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.requestPermission()
         }
     }
+    
+    func requestPermission() {
+        if #available(iOS 15.0, *) {
+            ATTrackingManager.requestTrackingAuthorization(completionHandler: { status in
+                switch status {
+                case .authorized:
+                    print("앱 추적 허용: Tracking authorized.")
+                case .denied:
+                    print("앱 추적 거부: Tracking denied.")
+                case .notDetermined:
+                    print("앱 추적 미결정: Tracking not determined.")
+                case .restricted:
+                    print("앱 추적 제한: Tracking restricted.")
+                @unknown default:
+                    print("앱 추적 알 수 없음: Unknown status.")
+                }
+            })
+        }
+    }
+    
     
     func sceneDidDisconnect(_ scene: UIScene) {
         
