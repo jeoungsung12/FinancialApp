@@ -102,7 +102,6 @@
 		E4DABECC2BBEB21C00AE9DFB /* CandleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABECB2BBEB21C00AE9DFB /* CandleModel.swift */; };
 		E4DABECF2BBEB68E00AE9DFB /* iOSDropDown in Frameworks */ = {isa = PBXBuildFile; productRef = E4DABECE2BBEB68E00AE9DFB /* iOSDropDown */; };
 		E4DABED22BBF0D0200AE9DFB /* TradesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABED12BBF0D0200AE9DFB /* TradesModel.swift */; };
-		E4DABED52BBF0D3200AE9DFB /* TradesService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABED42BBF0D3200AE9DFB /* TradesService.swift */; };
 		E4DABEE02BBF17A600AE9DFB /* OrderBookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABEDF2BBF17A600AE9DFB /* OrderBookService.swift */; };
 		E4DABEE82BBFBDB800AE9DFB /* GetPaprikaModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABEE72BBFBDB800AE9DFB /* GetPaprikaModel.swift */; };
 		E4DABEF22BC0108C00AE9DFB /* OrderBookModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DABEF12BC0108C00AE9DFB /* OrderBookModel.swift */; };
@@ -219,7 +218,6 @@
 		E4DABEC72BBEB19F00AE9DFB /* CandleService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandleService.swift; sourceTree = "<group>"; };
 		E4DABECB2BBEB21C00AE9DFB /* CandleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CandleModel.swift; sourceTree = "<group>"; };
 		E4DABED12BBF0D0200AE9DFB /* TradesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradesModel.swift; sourceTree = "<group>"; };
-		E4DABED42BBF0D3200AE9DFB /* TradesService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradesService.swift; sourceTree = "<group>"; };
 		E4DABEDF2BBF17A600AE9DFB /* OrderBookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookService.swift; sourceTree = "<group>"; };
 		E4DABEE72BBFBDB800AE9DFB /* GetPaprikaModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPaprikaModel.swift; sourceTree = "<group>"; };
 		E4DABEF12BC0108C00AE9DFB /* OrderBookModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderBookModel.swift; sourceTree = "<group>"; };
@@ -638,7 +636,6 @@
 			isa = PBXGroup;
 			children = (
 				E4DABEDE2BBF177500AE9DFB /* OrderBook */,
-				E4DABED32BBF0D2600AE9DFB /* Trades */,
 				E4DABEC62BBEB19100AE9DFB /* Candle */,
 				E4DABEC52BBEB18900AE9DFB /* Info */,
 			);
@@ -693,14 +690,6 @@
 			children = (
 				E4DABED12BBF0D0200AE9DFB /* TradesModel.swift */,
 				E4DABEE72BBFBDB800AE9DFB /* GetPaprikaModel.swift */,
-			);
-			path = Trades;
-			sourceTree = "<group>";
-		};
-		E4DABED32BBF0D2600AE9DFB /* Trades */ = {
-			isa = PBXGroup;
-			children = (
-				E4DABED42BBF0D3200AE9DFB /* TradesService.swift */,
 			);
 			path = Trades;
 			sourceTree = "<group>";
@@ -898,7 +887,6 @@
 				E4DC77E52C50ED6700B45001 /* FinancialResult.swift in Sources */,
 				E40B271A2D426FEF00A16D4C /* UIView + Extension.swift in Sources */,
 				E4788EDA2D49F583008D4B3A /* UIButton + Extension.swift in Sources */,
-				E4DABED52BBF0D3200AE9DFB /* TradesService.swift in Sources */,
 				E4DABF322BC2EDEA00AE9DFB /* ChatServiceModel.swift in Sources */,
 				E43C80A62D3F34CF009C81C2 /* DatabaseObject.swift in Sources */,
 				E4DABECC2BBEB21C00AE9DFB /* CandleModel.swift in Sources */,

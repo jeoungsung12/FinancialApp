@@ -16,9 +16,9 @@ final class NetworkManager {
     
     private init() { }
     
-    func getData<T: Decodable>(_ url: String, headers: HTTPHeaders?) -> Observable<T> {
+    func getData<T: Decodable>(_ api: APIEndpoint) -> Observable<T> {
         return Observable.create { observer in
-            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: headers)
+            AF.request(api.baseURL, method: api.method, encoding: JSONEncoding.default, headers: api.headers)
                 .validate()
                 .responseDecodable(of: T.self) { response in
 //                    print(response.debugDescription)
@@ -35,9 +35,9 @@ final class NetworkManager {
         }
     }
     
-    func postData<T: Decodable>(_ url: String, headers: HTTPHeaders?, params: Parameters) -> Observable<T> {
+    func postData<T: Decodable>(_ api: APIEndpoint) -> Observable<T> {
         return Observable.create { observer in
-            AF.request(url, method: .post, parameters: params, encoding: JSONEncoding.default, headers: headers)
+            AF.request(api.baseURL, method: api.method, parameters: api.params, encoding: JSONEncoding.default, headers: api.headers)
                 .validate()
                 .responseDecodable(of: T.self) { response in
 //                    print(response.debugDescription)

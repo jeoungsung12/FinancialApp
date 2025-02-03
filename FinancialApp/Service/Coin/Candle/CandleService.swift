@@ -7,35 +7,6 @@
 
 import Foundation
 import RxSwift
-import RxCocoa
-import Alamofire
-
-enum CandleType: String, CaseIterable {
-    case days = "days?market="
-    case weeks = "weeks?market="
-    case months = "months?market="
-    case years = "years?market="
-    
-    var title: String {
-        switch self {
-        case .days:
-            "일"
-        case .weeks:
-            "주"
-        case .months:
-            "월"
-        case .years:
-            "년"
-        }
-    }
-    
-    func returnType(_ title: String) -> CandleType {
-        if let type = CandleType.allCases.filter({$0.title == title}).first {
-            return type
-        }
-        return .days
-    }
-}
 
 class CandleService {
     
@@ -47,9 +18,7 @@ class CandleService {
     }
     
     func getCandle(market : String, method : CandleType) -> Observable<[CandleModel]> {
-        let url = APIEndpoint.getCandle.rawValue + method.rawValue + "\(market)&count=30"
-        let headers: HTTPHeaders = ["accept" : "application/json"]
-        return NetworkManager.shared.getData(url, headers: headers)
+        return NetworkManager.shared.getData(APIEndpoint.getCandle(method: method, market: market))
             .flatMap { (result: [CandleModel]) -> Observable<[CandleModel]> in
                 return Observable.just(result)
             }

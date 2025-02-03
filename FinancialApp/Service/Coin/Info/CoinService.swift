@@ -13,8 +13,7 @@ import Alamofire
 class CoinService {
     
     func getFearGreedIndex() -> Observable<GreedModel> {
-        let url = "https://api.alternative.me/fng/"
-        return NetworkManager.shared.getData(url, headers: nil)
+        return NetworkManager.shared.getData(APIEndpoint.greedIndex)
             .flatMap { (response: GreedModel) in
             return Observable.just(response)
         }
