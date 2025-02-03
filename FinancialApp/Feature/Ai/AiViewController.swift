@@ -102,15 +102,23 @@ extension AiViewController {
         loadingIndicator.startAnimating()
         output.aiPrediction
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] resultText in
+            .subscribe(onNext: { [weak self] result in
                 guard let self = self else { return }
-                self.updateUI(with: resultText)
-                self.loadingIndicator.stopAnimating()
-                self.rewardHelper.showRewardedAd(viewController: self)
+                switch result {
+                case let .success(text):
+                    self.updateUI(with: text)
+                    self.loadingIndicator.stopAnimating()
+                    self.rewardHelper.showRewardedAd(viewController: self)
+                case let .failure(error):
+                    self.errorPresent(error)
+                    self.loadingIndicator.stopAnimating()
+                }
+               
             })
             .disposed(by: disposeBag)
     }
     
+    //TODO: - 수정
     private func updateUI(with result: String) {
         let trend: String
         let confidence: Float

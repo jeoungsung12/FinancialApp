@@ -28,6 +28,7 @@
 		E43C80A62D3F34CF009C81C2 /* DatabaseObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C80A52D3F34CF009C81C2 /* DatabaseObject.swift */; };
 		E43C80AA2D3F40EB009C81C2 /* CryptoData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C80A92D3F40EB009C81C2 /* CryptoData.swift */; };
 		E43C81822D3FC25A009C81C2 /* GreedModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C81812D3FC25A009C81C2 /* GreedModel.swift */; };
+		E45AA8862D5093F70012B694 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E45AA8852D5093F70012B694 /* Lottie */; };
 		E45B49812D388BFD008803B6 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = E45B49802D388BFD008803B6 /* .gitignore */; };
 		E45B49BE2D38C518008803B6 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B49B72D38C518008803B6 /* SceneDelegate.swift */; };
 		E45B49BF2D38C518008803B6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E45B49B62D38C518008803B6 /* AppDelegate.swift */; };
@@ -81,6 +82,7 @@
 		E47B10242D4CEDFE0071CE59 /* RewardedHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47B10232D4CEDFE0071CE59 /* RewardedHelper.swift */; };
 		E47B10262D4CF9340071CE59 /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47B10252D4CF9340071CE59 /* FAQViewController.swift */; };
 		E47B132B2D5044A50071CE59 /* TradesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47B132A2D5044A50071CE59 /* TradesModel.swift */; };
+		E47B13672D508A050071CE59 /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47B13662D508A050071CE59 /* ErrorViewController.swift */; };
 		E483068A2C4914F90017F6B2 /* CoinResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48306892C4914F90017F6B2 /* CoinResult.swift */; };
 		E483068E2C49651C0017F6B2 /* TicksCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */; };
 		E492F2C72C43BD5E0012B7F3 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */; };
@@ -199,6 +201,7 @@
 		E47B10232D4CEDFE0071CE59 /* RewardedHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RewardedHelper.swift; sourceTree = "<group>"; };
 		E47B10252D4CF9340071CE59 /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		E47B132A2D5044A50071CE59 /* TradesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TradesModel.swift; sourceTree = "<group>"; };
+		E47B13662D508A050071CE59 /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		E48306892C4914F90017F6B2 /* CoinResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinResult.swift; sourceTree = "<group>"; };
 		E483068D2C49651C0017F6B2 /* TicksCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TicksCollectionViewCell.swift; sourceTree = "<group>"; };
 		E492F2C62C43BD5E0012B7F3 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
@@ -238,6 +241,7 @@
 				E4CAF4B92BB982F200CB18EC /* SwiftKeychainWrapper in Frameworks */,
 				E4CAF4DF2BBBB6F800CB18EC /* DGCharts in Frameworks */,
 				E4CAF4B12BB982BD00CB18EC /* RxCocoa in Frameworks */,
+				E45AA8862D5093F70012B694 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -247,6 +251,7 @@
 		E43C7EA92D3E3AE2009C81C2 /* General */ = {
 			isa = PBXGroup;
 			children = (
+				E47B13652D5089F90071CE59 /* Error */,
 				E4788FAE2D4A8B0A008D4B3A /* Portfolio */,
 				E4788F872D49FAE4008D4B3A /* Profile */,
 				E43C7EAA2D3E3B00009C81C2 /* Home */,
@@ -496,6 +501,14 @@
 				E4788FC12D4B5393008D4B3A /* CoinItems.swift */,
 			);
 			path = Coin;
+			sourceTree = "<group>";
+		};
+		E47B13652D5089F90071CE59 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				E47B13662D508A050071CE59 /* ErrorViewController.swift */,
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		E492F2C52C43BD4C0012B7F3 /* Home */ = {
@@ -749,6 +762,7 @@
 				E4DABECE2BBEB68E00AE9DFB /* iOSDropDown */,
 				E4F56AE32C5F4EAC00FE4DDF /* GoogleMobileAds */,
 				E40B27172D426F4700A16D4C /* Toast */,
+				E45AA8852D5093F70012B694 /* Lottie */,
 			);
 			productName = Beecher;
 			productReference = E4CAF4952BB9808300CB18EC /* FinancialApp.app */;
@@ -789,6 +803,7 @@
 				E4DABECD2BBEB68D00AE9DFB /* XCRemoteSwiftPackageReference "iOSDropDown" */,
 				E4F56AE22C5F4EAC00FE4DDF /* XCRemoteSwiftPackageReference "swift-package-manager-google-mobile-ads" */,
 				E40B27162D426F4700A16D4C /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				E45AA8842D5093F70012B694 /* XCRemoteSwiftPackageReference "lottie-ios" */,
 			);
 			productRefGroup = E4CAF4962BB9808300CB18EC /* Products */;
 			projectDirPath = "";
@@ -824,6 +839,7 @@
 				E43C80AA2D3F40EB009C81C2 /* CryptoData.swift in Sources */,
 				E40B247E2D41156200A16D4C /* Database.swift in Sources */,
 				E4788D002D491C5F008D4B3A /* NewsListTableViewCell.swift in Sources */,
+				E47B13672D508A050071CE59 /* ErrorViewController.swift in Sources */,
 				E47B10242D4CEDFE0071CE59 /* RewardedHelper.swift in Sources */,
 				E492F2CF2C46D6E90012B7F3 /* NewsListCollectionViewCell.swift in Sources */,
 				E4788ED82D49F54A008D4B3A /* OnboardingViewController.swift in Sources */,
@@ -1138,6 +1154,14 @@
 				minimumVersion = 5.1.1;
 			};
 		};
+		E45AA8842D5093F70012B694 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.5.1;
+			};
+		};
 		E4CAF4AF2BB982BD00CB18EC /* XCRemoteSwiftPackageReference "RxSwift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
@@ -1217,6 +1241,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E40B27162D426F4700A16D4C /* XCRemoteSwiftPackageReference "Toast-Swift" */;
 			productName = Toast;
+		};
+		E45AA8852D5093F70012B694 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E45AA8842D5093F70012B694 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
 		};
 		E4CAF4B02BB982BD00CB18EC /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;

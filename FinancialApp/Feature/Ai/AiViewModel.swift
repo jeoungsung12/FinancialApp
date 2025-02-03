@@ -7,7 +7,6 @@
 
 import RxSwift
 import RxSwift
-import RxCocoa
 
 final class AiViewModel {
     private let disposeBag = DisposeBag()
@@ -17,7 +16,7 @@ final class AiViewModel {
     }
     
     struct Output {
-        let aiPrediction: Observable<String>
+        let aiPrediction: Observable<Result<String,NetworkError.CustomError>>
     }
     
     func transform(input: Input) -> Output {
@@ -34,7 +33,14 @@ final class AiViewModel {
                 """
                 
                 return AiService().requestChat(search: "코인 분석", info: prompt)
-                    .map { $0.choices.first?.message.content ?? "분석 결과 없음" }
+                    .map { (result: Result<ChatServiceModel, NetworkError.CustomError>) -> Result<String,NetworkError.CustomError> in
+                        switch result {
+                        case let .success(data):
+                            return .success(data.choices.first?.message.content ?? "분석 결과 없음")
+                        case let .failure(error):
+                            return .failure(error)
+                        }
+                    }
             }
         
         return Output(aiPrediction: aiPrediction)
