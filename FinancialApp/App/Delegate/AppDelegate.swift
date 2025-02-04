@@ -13,36 +13,44 @@ import AppTrackingTransparency
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        window = UIWindow(frame: UIScreen.main.bounds)
-        let viewController = HomeViewController()
-        let navigationController = UINavigationController(rootViewController: viewController)
-        window?.rootViewController = navigationController
-        window?.makeKeyAndVisible()
+        requestTrackingPermission()
         
-        //앱 추적 허용
-        self.requestIDEA()
-        
-        //구글 광고 초기화
         GADMobileAds.sharedInstance().start(completionHandler: nil)
+        
         return true
     }
     
-    private func requestIDEA() {
-        ATTrackingManager.requestTrackingAuthorization { status in
-            print("앱 추적 허용 : \(status)")
+    private func requestTrackingPermission() {
+        if #available(iOS 14, *) {
+            ATTrackingManager.requestTrackingAuthorization { status in
+                switch status {
+                case .authorized:
+                    print("앱 추적 허용: Tracking authorized.")
+                case .denied:
+                    print("앱 추적 거부: Tracking denied.")
+                case .restricted:
+                    print("앱 추적 제한: Tracking restricted.")
+                case .notDetermined:
+                    print("앱 추적 미결정: Tracking not determined.")
+                @unknown default:
+                    print("앱 추적 알 수 없음: Unknown status.")
+                }
+            }
         }
     }
+    
     // MARK: UISceneSession Lifecycle
-
+    
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
-
+    
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         
     }
-
-
+    
+    
 }
 

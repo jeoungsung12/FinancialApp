@@ -6,44 +6,39 @@
 //
 
 import Foundation
-struct CandleMinuteModel : Codable {
-    let market : String?
-    let candle_date_time_utc : String?
-    let candle_date_time_kst : String?
-    let opening_price : Double?
-    let high_price : Double?
-    let low_price : Double?
-    let trade_price : Double?
-    let timestamp : Double??
-    let candle_acc_trade_price : Double?
-    let candle_acc_trade_volume : Double?
-    let unit : Int?
+
+struct CandleModel: Decodable, Hashable {
+    let market: String
+    let opening_price: Double
+    let high_price: Double
+    let low_price: Double
+    let trade_price: Double
 }
-struct CandleDayModel : Codable {
-    let market : String?
-    let candle_date_time_utc : String?
-    let candle_date_time_kst : String?
-    let opening_price : Double?
-    let high_price : Double?
-    let low_price : Double?
-    let trade_price : Double?
-    let timestamp : Double?
-    let candle_acc_trade_price : Double?
-    let candle_acc_trade_volume : Double?
-    let prev_closing_price : Double?
-    let change_price : Double?
-    let change_rate : Double?
-}
-struct CandleWMModel : Codable {
-    let market : String?
-    let candle_date_time_utc : String?
-    let candle_date_time_kst : String?
-    let opening_price : Double?
-    let high_price : Double?
-    let low_price : Double?
-    let trade_price : Double?
-    let timestamp : Double?
-    let candle_acc_trade_price : Double?
-    let candle_acc_trade_volume : Double?
-    let first_day_of_period : String?
+
+
+enum CandleType: String, CaseIterable {
+    case days = "days?market="
+    case weeks = "weeks?market="
+    case months = "months?market="
+    case years = "years?market="
+    
+    var title: String {
+        switch self {
+        case .days:
+            "일"
+        case .weeks:
+            "주"
+        case .months:
+            "월"
+        case .years:
+            "년"
+        }
+    }
+    
+    func returnType(_ title: String) -> CandleType {
+        if let type = CandleType.allCases.filter({$0.title == title}).first {
+            return type
+        }
+        return .days
+    }
 }

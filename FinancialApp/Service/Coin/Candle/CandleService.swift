@@ -7,59 +7,32 @@
 
 import Foundation
 import RxSwift
-import RxCocoa
-import Alamofire
 
-class CandleService {
-    static func MinuteCandle(market : String, method : String) -> Observable<[CandleMinuteModel]> {
-        return Observable.create { observer in
-            let url = "https://api.upbit.com/v1/candles/\(method)/1?market=\(market)&count=30"
-            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
-                .validate()
-                .responseDecodable(of: [CandleMinuteModel].self) { response in
-                    switch response.result {
-                    case .success(let data):
-                        observer.onNext(data)
-                        observer.onCompleted()
-                    case .failure(let error):
-                        observer.onError(error)
-                    }
-                }
-            return Disposables.create()
+final class CandleService {
+    
+    func getCandleList(markets : [String], method : CandleType) -> Observable<Result<[[CandleModel]],NetworkError.CustomError>> {
+        let returnObserver = markets.map { market in
+            return self.getCandle(market: market, method: method)
         }
+        return Observable.zip(returnObserver)
+            .map { candles in
+                return .success(candles)
+            }
+            .catch { error in
+                return Observable.just(.failure(.notFount))
+            }
     }
-    static func DayCandle(market : String, method : String) -> Observable<[CandleDayModel]> {
-        return Observable.create { observer in
-            let url = "https://api.upbit.com/v1/candles/\(method)?market=\(market)&count=30"
-            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
-                .validate()
-                .responseDecodable(of: [CandleDayModel].self) { response in
-                    switch response.result {
-                    case .success(let data):
-                        observer.onNext(data)
-                        observer.onCompleted()
-                    case .failure(let error):
-                        observer.onError(error)
-                    }
+    
+    func getCandle(market : String, method : CandleType) -> Observable<[CandleModel]> {
+        return NetworkManager.shared.getData(APIEndpoint.getCandle(method: method, market: market))
+            .flatMap { (result: Result<[CandleModel], NetworkError.CustomError>) -> Observable<[CandleModel]> in
+                switch result {
+                case .success(let data):
+                    return Observable.just(data)
+                case .failure:
+                    return Observable.just([])
                 }
-            return Disposables.create()
-        }
+            }
     }
-    static func WMCandle(market : String, method : String) -> Observable<[CandleWMModel]> {
-        return Observable.create { observer in
-            let url = "https://api.upbit.com/v1/candles/\(method)?market=\(market)&count=30"
-            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
-                .validate()
-                .responseDecodable(of: [CandleWMModel].self) { response in
-                    switch response.result {
-                    case .success(let data):
-                        observer.onNext(data)
-                        observer.onCompleted()
-                    case .failure(let error):
-                        observer.onError(error)
-                    }
-                }
-            return Disposables.create()
-        }
-    }
+    
 }

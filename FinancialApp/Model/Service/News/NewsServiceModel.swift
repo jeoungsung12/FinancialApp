@@ -6,17 +6,17 @@
 //
 
 import Foundation
-struct NewsServiceModel : Codable {
-    let lastBuildDate : String?
-    let total : Int?
-    let start : Int?
-    let display : Int?
-    let items : [NewsItems]?
+struct NewsServiceModel: Decodable {
+    let lastBuildDate: String
+    let total: Int
+    let start: Int
+    let display: Int
+    let items: [NewsItems]
 }
-struct NewsItems : Codable, Hashable {
-    let title : String?
-    let originallink : String?
-    let link : String?
-    let description : String?
-    let pubDate : String?
+
+struct NewsItems: Decodable {
+    let title: String
+    let originallink: String
+    let description: String
+    let pubDate: String
 }

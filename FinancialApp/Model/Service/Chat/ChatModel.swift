@@ -7,6 +7,6 @@
 
 import Foundation
 struct ChatModel {
-    let data : [CandleWMModel]
+    let data : [CandleModel]
     let news : [NewsItems]
 }
