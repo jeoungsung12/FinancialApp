@@ -14,3 +14,31 @@ struct CandleModel: Decodable, Hashable {
     let low_price: Double
     let trade_price: Double
 }
+
+
+enum CandleType: String, CaseIterable {
+    case days = "days?market="
+    case weeks = "weeks?market="
+    case months = "months?market="
+    case years = "years?market="
+    
+    var title: String {
+        switch self {
+        case .days:
+            "일"
+        case .weeks:
+            "주"
+        case .months:
+            "월"
+        case .years:
+            "년"
+        }
+    }
+    
+    func returnType(_ title: String) -> CandleType {
+        if let type = CandleType.allCases.filter({$0.title == title}).first {
+            return type
+        }
+        return .days
+    }
+}

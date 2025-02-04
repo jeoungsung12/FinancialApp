@@ -20,7 +20,7 @@ final class AiPortfolioViewController: UIViewController {
     var potfolioData: [PortfolioModel]?
     private let titleLabel: UILabel = {
         let label = UILabel()
-        label.text = "📊 AI 포트폴리오 분석"
+        label.text = "📊 Ai 포트폴리오 분석"
         label.font = .boldSystemFont(ofSize: 20)
         label.textAlignment = .center
         label.textColor = .white
@@ -86,9 +86,15 @@ extension AiPortfolioViewController {
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] prediction in
                 guard let self = self else { return }
-                self.textView.text = prediction
-                self.loadingIndicator.stopAnimating()
-                self.rewardHelper.showRewardedAd(viewController: self)
+                switch prediction {
+                case let .success(data):
+                    self.textView.text = data
+                    self.loadingIndicator.stopAnimating()
+                    self.rewardHelper.showRewardedAd(viewController: self)
+                case let .failure(error):
+                    self.errorPresent(error)
+                    self.loadingIndicator.stopAnimating()
+                }
             })
             .disposed(by: disposeBag)
     }

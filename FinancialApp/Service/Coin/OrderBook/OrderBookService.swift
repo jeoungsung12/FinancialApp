@@ -7,45 +7,33 @@
 
 import Foundation
 import RxSwift
-import RxCocoa
-import Alamofire
 
-class OrderBookService {
-    func getTotal(totalData: [CryptoModel]) -> Observable<[[AddTradesModel]]> {
+final class OrderBookService {
+    func getTotal(totalData: [CryptoModel]) -> Observable<Result<[[AddTradesModel]],NetworkError.CustomError>> {
         let returnObserver = totalData.compactMap {
             return self.getDetail(coinModel: $0)
         }
+        
         return Observable.zip(returnObserver)
-    }
-    
-    //TODO: - 변경
-    //체결보기
-    func getDetail(coinModel: CryptoModel) -> Observable<[AddTradesModel]> {
-        let url = APIEndpoint.getTicks.rawValue + "market=\(coinModel.market)&count=1"
-        let headers: HTTPHeaders = ["accept" : "application/json"]
-        return NetworkManager.shared.getData(url, headers: headers)
-            .flatMap { (response: [TradesModel]) -> Observable<[AddTradesModel]> in
-                let coinDataWithAdditionalInfo = response.map { AddTradesModel(tradesData: $0, coinName: coinModel.korean_name, englishName: coinModel.english_name) }
-                return Observable.just(coinDataWithAdditionalInfo)
+            .map { ticks in
+                return .success(ticks)
+            }
+            .catch { error in
+                return Observable.just(.failure(.notFount))
             }
     }
     
-    //호가 정보조회
-    func getOrderBook(market : String) -> Observable<[OrderBookModel]> {
-        return Observable.create { observer in
-            let url = "https://api.upbit.com/v1/orderbook?markets=\(market)"
-            AF.request(url, method: .get, encoding: JSONEncoding.default, headers: ["accept" : "application/json"])
-                .validate()
-                .responseDecodable(of: [OrderBookModel].self) { response in
-                    switch response.result {
-                    case .success(let data):
-                        observer.onNext(data)
-                        observer.onCompleted()
-                    case .failure(let error):
-                        observer.onError(error)
-                    }
+    func getDetail(coinModel: CryptoModel) -> Observable<[AddTradesModel]> {
+        return NetworkManager.shared.getData(APIEndpoint.getTicks(market: coinModel.market))
+            .flatMap { (response: Result<[TradesModel],NetworkError.CustomError>) -> Observable<[AddTradesModel]> in
+                switch response {
+                case let .success(data):
+                    let coinDataWithAdditionalInfo = data.map { AddTradesModel(tradesData: $0, coinName: coinModel.korean_name, englishName: coinModel.english_name) }
+                    return Observable.just(coinDataWithAdditionalInfo)
+                case let .failure(error):
+                    return Observable.just([])
                 }
-            return Disposables.create()
-        }
+            }
     }
+    
 }

@@ -17,7 +17,7 @@ final class HeartViewModel {
     }
     
     struct Output {
-        let heartList: Observable<[[AddTradesModel]]>
+        let heartList: Observable<Result<[[AddTradesModel]],NetworkError.CustomError>>
     }
     
     func transform(input: Input) -> Output {

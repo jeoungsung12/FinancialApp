@@ -18,43 +18,53 @@ final class HomeViewModel {
     }
     
     struct Output {
-        //TODO: - 에러 처리
-        let chartOutput : Observable<CoinResult>
+        let chartOutput : Observable<Result<CoinResult,NetworkError.CustomError>>
     }
     
     func transform(input: Input) -> Output {
-        //TODO: - DispatchGroup
         let chartOutput = input.chartInput
-            .flatMapLatest { [weak self] db -> Observable<CoinResult> in
-                let data = cryptoData.prefix(6)
-                let cryptoData: [String] = (db.isEmpty) ? data.map { $0.market } : db.map ({ $0.name })
+            .flatMapLatest { [weak self] db -> Observable<Result<CoinResult, NetworkError.CustomError>> in
+                guard let self = self else { return .just(.failure(.notFount)) }
                 
-                guard self != nil else { return Observable.empty() }
-                let coinResult = CandleService().getCandleList(markets: cryptoData , method: .months)
+                let data = cryptoData.prefix(6)
+                let cryptoData: [String] = db.isEmpty ? data.map { $0.market } : db.map { $0.name }
+                
+                let coinResult = CandleService().getCandleList(markets: cryptoData, method: .months)
                 let ticksResult = OrderBookService().getTotal(totalData: Array(data))
                 let newsResult = NewsService().getNews(query: "암호화폐", display: 5)
                 
-                return Observable.zip(coinResult, ticksResult, newsResult) { coinResult, ticksResult, newsResult in
-                    let priceDict: [String: Double] = coinResult
-                        .map { $0 }
-                        .reduce(into: [String: Double]()) { dict, coin in
-                            guard let coinData = coin.first else { return }
-                            dict[coinData.market] = coinData.opening_price
+                return Observable.zip(coinResult, ticksResult, newsResult)
+                    .map { coinResult, ticksResult, newsResult -> Result<CoinResult, NetworkError.CustomError> in
+                        switch (coinResult, ticksResult, newsResult) {
+                        case let (.failure(error), _, _),
+                            let (_, .failure(error), _),
+                            let (_, _, .failure(error)):
+                            return .failure(error)
+                            
+                        case let (.success(coinData), .success(ticksData), .success(newsData)):
+                            let priceDict: [String: Double] = coinData
+                                .flatMap { $0 }
+                                .reduce(into: [String: Double]()) { dict, coin in
+                                    if dict[coin.market] == nil {
+                                        dict[coin.market] = coin.opening_price
+                                    }
+                                }
+                            let priceList = db.compactMap { priceDict[$0.name] }
+                            let rateResult = self.calculateRate(priceList, db)
+                            
+                            return .success(CoinResult(chartData: coinData, newsData: newsData, ticksData: ticksData, rate: rateResult))
                         }
-                    
-                    let priceList = db.compactMap { priceDict[$0.name] }
-                    let rateResult = self?.calculateRate(priceList, db)
-                    return CoinResult(chartData: coinResult, newsData: newsResult, ticksData: ticksResult, rate: rateResult ?? 0)
-                }
+                    }
             }
         
         return Output(chartOutput: chartOutput)
     }
     
+    
     private func calculateRate(_ openingPrices: [Double],_ db: [HeartItem]) -> Double {
         let heartList = db
         guard !heartList.isEmpty, !openingPrices.isEmpty else { return 0 }
-
+        
         var totalInvested: Double = 0
         var totalCurrentValue: Double = 0
         
@@ -75,5 +85,5 @@ final class HomeViewModel {
         let rate = ((totalCurrentValue - totalInvested) / totalInvested) * 100
         return rate
     }
-
+    
 }

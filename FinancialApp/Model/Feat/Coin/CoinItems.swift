@@ -14,10 +14,10 @@ enum CoinItems: CaseIterable {
 }
 
 struct CoinDetailModel {
-    let chartData: [[CandleModel]]
-    let newsData: [NewsItems]
-    let ticksData: [[AddTradesModel]]
-    let greedIndex: GreedModel?
+    var chartData: [[CandleModel]]?
+    var newsData: [NewsItems]?
+    var ticksData: [[AddTradesModel]]?
+    var greedIndex: GreedModel?
 }
 
 struct CoinDetailInput {

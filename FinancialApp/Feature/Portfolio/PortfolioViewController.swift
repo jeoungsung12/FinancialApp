@@ -87,11 +87,18 @@ extension PortfolioViewController {
         let output = portfolioViewModel.transform(input: input)
         loadingIndicator.startAnimating()
         output.portfolioOutput
-            .bind { data in
-                self.portfolioData = data
-                self.summaryView.configure(data: data)
-                self.loadingIndicator.stopAnimating()
-                self.configureTableView()
+            .bind { result in
+                switch result {
+                case let .success(data):
+                    self.portfolioData = data
+                    self.summaryView.configure(data: data)
+                    self.loadingIndicator.stopAnimating()
+                    self.configureTableView()
+                    
+                case let .failure(error):
+                    self.errorPresent(error)
+                    self.loadingIndicator.stopAnimating()
+                }
             }
             .disposed(by: disposeBag)
     }

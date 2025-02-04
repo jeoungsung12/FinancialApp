@@ -13,10 +13,10 @@ struct NewsServiceModel: Decodable {
     let display: Int
     let items: [NewsItems]
 }
-struct NewsItems : Decodable, Hashable {
+
+struct NewsItems: Decodable {
     let title: String
     let originallink: String
-    let link: String
     let description: String
     let pubDate: String
 }

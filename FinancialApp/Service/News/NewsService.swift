@@ -7,22 +7,18 @@
 
 import Foundation
 import RxSwift
-import RxCocoa
-import Alamofire
 
-class NewsService {
-    func getNews(query: String, display: Int) -> Observable<[NewsItems]> {
+final class NewsService {
+    func getNews(query: String, display: Int) -> Observable<Result<[NewsItems],NetworkError.CustomError>> {
         let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        let url =
-        APIEndpoint.news.rawValue + "\(queryEncoded)&display=\(display)&sort=sim"
-        let headers: HTTPHeaders = [
-            "accept" : "application/json",
-            "X-Naver-Client-Id" : Bundle.main.NewsClientID,
-            "X-Naver-Client-Secret" : Bundle.main.NewsClientSecret
-        ]
-        return NetworkManager.shared.getData(url, headers: headers)
-            .flatMap { (result: NewsServiceModel) -> Observable<[NewsItems]> in
-                return Observable.just(result.items)
+        return NetworkManager.shared.getData(APIEndpoint.news(search: queryEncoded, display: display))
+            .flatMap { (response: Result<NewsServiceModel,NetworkError.CustomError>) -> Observable<Result<[NewsItems],NetworkError.CustomError>> in
+                switch response {
+                case let .success(data):
+                    return Observable.just(.success(data.items))
+                case let .failure(error):
+                    return Observable.just(.failure(error))
+                }
             }
     }
     
