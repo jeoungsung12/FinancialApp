@@ -12,6 +12,7 @@ ApiKeyList.plist
 CryptoData.swift
 Tuning.swift
 RewardedHelper.swift
+ChartInfo.swift
 
 .DS_Store
 
