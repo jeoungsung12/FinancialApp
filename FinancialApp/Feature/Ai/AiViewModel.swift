@@ -16,7 +16,7 @@ final class AiViewModel {
     }
     
     struct Output {
-        let aiPrediction: Observable<Result<String,NetworkError.CustomError>>
+        let aiPrediction: Observable<Result<[String],NetworkError.CustomError>>
     }
     
     func transform(input: Input) -> Output {
@@ -33,16 +33,26 @@ final class AiViewModel {
                 """
                 
                 return AiService().requestChat(search: "코인 분석", info: prompt)
-                    .map { (result: Result<ChatServiceModel, NetworkError.CustomError>) -> Result<String,NetworkError.CustomError> in
+                    .map { (result: Result<ChatServiceModel, NetworkError.CustomError>) -> Result<[String],NetworkError.CustomError> in
                         switch result {
                         case let .success(data):
-                            return .success(data.choices.first?.message.content ?? "분석 결과 없음")
+                            let chartInfo = self.checkChartInfo(data.choices.first?.message.content)
+                            return .success([data.choices.first?.message.content ?? "분석 결과 없음", chartInfo])
                         case let .failure(error):
                             return .failure(error)
                         }
                     }
             }
-        
         return Output(aiPrediction: aiPrediction)
+    }
+    
+    private func checkChartInfo(_ result: String?) -> String {
+        guard let result = result else { return "" }
+        for (key, value) in chartPatterns {
+            if result.contains(key) {
+                return value
+            }
+        }
+        return ""
     }
 }

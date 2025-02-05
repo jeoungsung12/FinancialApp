@@ -14,6 +14,7 @@
 		E40B27182D426F4700A16D4C /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = E40B27172D426F4700A16D4C /* Toast */; };
 		E40B271A2D426FEF00A16D4C /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40B27192D426FEF00A16D4C /* UIView + Extension.swift */; };
 		E40B271C2D42816E00A16D4C /* HeartCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40B271B2D42816E00A16D4C /* HeartCustomView.swift */; };
+		E42E36022D53666600822908 /* ChartInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42E36012D53666600822908 /* ChartInfo.swift */; };
 		E43C7EAE2D3E3B8F009C81C2 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */; };
 		E43C7EB02D3E3B92009C81C2 /* UserDefinedFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */; };
 		E43C7EB52D3E3CB6009C81C2 /* HomeItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EB42D3E3CB6009C81C2 /* HomeItems.swift */; };
@@ -135,6 +136,7 @@
 		E40B247F2D411D3600A16D4C /* HeartTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartTableViewCell.swift; sourceTree = "<group>"; };
 		E40B27192D426FEF00A16D4C /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		E40B271B2D42816E00A16D4C /* HeartCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartCustomView.swift; sourceTree = "<group>"; };
+		E42E36012D53666600822908 /* ChartInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartInfo.swift; sourceTree = "<group>"; };
 		E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefinedFunction.swift; sourceTree = "<group>"; };
 		E43C7EB42D3E3CB6009C81C2 /* HomeItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItems.swift; sourceTree = "<group>"; };
@@ -592,6 +594,7 @@
 				E4DABF192BC2D4DE00AE9DFB /* HIDEAPIKEY++Bundle.swift */,
 				E43C80A92D3F40EB009C81C2 /* CryptoData.swift */,
 				E471E0952D4B899800AB42D1 /* Tuning.swift */,
+				E42E36012D53666600822908 /* ChartInfo.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -842,6 +845,7 @@
 				E4788EE52D49F65D008D4B3A /* CustomProfileButton.swift in Sources */,
 				E43C80AA2D3F40EB009C81C2 /* CryptoData.swift in Sources */,
 				E40B247E2D41156200A16D4C /* Database.swift in Sources */,
+				E42E36022D53666600822908 /* ChartInfo.swift in Sources */,
 				E4788D002D491C5F008D4B3A /* NewsListTableViewCell.swift in Sources */,
 				E47B13672D508A050071CE59 /* ErrorViewController.swift in Sources */,
 				E47B10242D4CEDFE0071CE59 /* RewardedHelper.swift in Sources */,
