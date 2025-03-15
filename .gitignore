@@ -13,6 +13,8 @@ CryptoData.swift
 Tuning.swift
 RewardedHelper.swift
 ChartInfo.swift
+CoinRouter.swift
+NewsRouter.swift
 
 .DS_Store
 
