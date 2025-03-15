@@ -15,6 +15,7 @@ RewardedHelper.swift
 ChartInfo.swift
 CoinRouter.swift
 NewsRouter.swift
+AiRouter.swift
 
 .DS_Store
 

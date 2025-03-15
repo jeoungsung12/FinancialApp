@@ -25,6 +25,9 @@
 		E4365A232D85466100247FF6 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A1C2D85466100247FF6 /* BaseTableViewCell.swift */; };
 		E4365A272D8546FC00247FF6 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A252D8546FC00247FF6 /* BaseViewModel.swift */; };
 		E4365A282D8546FC00247FF6 /* ReusableIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A262D8546FC00247FF6 /* ReusableIdentifier.swift */; };
+		E4365A2B2D85498B00247FF6 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A2A2D85498B00247FF6 /* Router.swift */; };
+		E4365A2D2D85499100247FF6 /* CoinRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A2C2D85499100247FF6 /* CoinRouter.swift */; };
+		E4365A2F2D85499600247FF6 /* NewsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A2E2D85499600247FF6 /* NewsRouter.swift */; };
 		E43C7EAE2D3E3B8F009C81C2 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */; };
 		E43C7EB02D3E3B92009C81C2 /* UserDefinedFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */; };
 		E43C7EB52D3E3CB6009C81C2 /* HomeItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EB42D3E3CB6009C81C2 /* HomeItems.swift */; };
@@ -157,6 +160,9 @@
 		E4365A1E2D85466100247FF6 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		E4365A252D8546FC00247FF6 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		E4365A262D8546FC00247FF6 /* ReusableIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReusableIdentifier.swift; sourceTree = "<group>"; };
+		E4365A2A2D85498B00247FF6 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		E4365A2C2D85499100247FF6 /* CoinRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRouter.swift; sourceTree = "<group>"; };
+		E4365A2E2D85499600247FF6 /* NewsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRouter.swift; sourceTree = "<group>"; };
 		E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefinedFunction.swift; sourceTree = "<group>"; };
 		E43C7EB42D3E3CB6009C81C2 /* HomeItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItems.swift; sourceTree = "<group>"; };
@@ -312,6 +318,33 @@
 			path = Protocol;
 			sourceTree = "<group>";
 		};
+		E4365A292D85497A00247FF6 /* Router */ = {
+			isa = PBXGroup;
+			children = (
+				E4365A2A2D85498B00247FF6 /* Router.swift */,
+				E4365A2C2D85499100247FF6 /* CoinRouter.swift */,
+				E4365A2E2D85499600247FF6 /* NewsRouter.swift */,
+			);
+			path = Router;
+			sourceTree = "<group>";
+		};
+		E4365A302D8549B600247FF6 /* Repository */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Repository;
+			sourceTree = "<group>";
+		};
+		E4365A312D8549BC00247FF6 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E4DABF262BC2E79F00AE9DFB /* Ai */,
+				E4DABF0B2BC2CBD900AE9DFB /* News */,
+				E4CAF4E32BBBC91400CB18EC /* Coin */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		E43C7EA92D3E3AE2009C81C2 /* General */ = {
 			isa = PBXGroup;
 			children = (
@@ -320,6 +353,8 @@
 				E4788FAE2D4A8B0A008D4B3A /* Portfolio */,
 				E4788F872D49FAE4008D4B3A /* Profile */,
 				E43C7EAA2D3E3B00009C81C2 /* Home */,
+				E47B10232D4CEDFE0071CE59 /* RewardedHelper.swift */,
+				E40B247D2D41156200A16D4C /* Database.swift */,
 			);
 			path = General;
 			sourceTree = "<group>";
@@ -678,11 +713,9 @@
 				E4365A112D8544D700247FF6 /* NetworkMonitorManager.swift */,
 				E4788CFD2D491961008D4B3A /* NetworkError.swift */,
 				E43C7EBC2D3E4650009C81C2 /* APIEndpoint.swift */,
-				E47B10232D4CEDFE0071CE59 /* RewardedHelper.swift */,
-				E40B247D2D41156200A16D4C /* Database.swift */,
-				E4DABF262BC2E79F00AE9DFB /* Ai */,
-				E4DABF0B2BC2CBD900AE9DFB /* News */,
-				E4CAF4E32BBBC91400CB18EC /* Coin */,
+				E4365A302D8549B600247FF6 /* Repository */,
+				E4365A312D8549BC00247FF6 /* Services */,
+				E4365A292D85497A00247FF6 /* Router */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -909,6 +942,7 @@
 				E40B247E2D41156200A16D4C /* Database.swift in Sources */,
 				E4365A162D85454E00247FF6 /* ErrorViewModel.swift in Sources */,
 				E4365A172D85454E00247FF6 /* ErrorViewController.swift in Sources */,
+				E4365A2D2D85499100247FF6 /* CoinRouter.swift in Sources */,
 				E42E36022D53666600822908 /* ChartInfo.swift in Sources */,
 				E4788D002D491C5F008D4B3A /* NewsListTableViewCell.swift in Sources */,
 				E47B13672D508A050071CE59 /* StatusErrorViewController.swift in Sources */,
@@ -939,6 +973,7 @@
 				E4788F8E2D49FB48008D4B3A /* MyPageType.swift in Sources */,
 				E4DABEE02BBF17A600AE9DFB /* OrderBookService.swift in Sources */,
 				E43C7EAE2D3E3B8F009C81C2 /* UIViewController + Extension.swift in Sources */,
+				E4365A2F2D85499600247FF6 /* NewsRouter.swift in Sources */,
 				E40B271A2D426FEF00A16D4C /* UIView + Extension.swift in Sources */,
 				E4788EDA2D49F583008D4B3A /* UIButton + Extension.swift in Sources */,
 				E4DABF322BC2EDEA00AE9DFB /* ChatServiceModel.swift in Sources */,
@@ -955,6 +990,7 @@
 				E43C7EB52D3E3CB6009C81C2 /* HomeItems.swift in Sources */,
 				E4788F922D49FC1A008D4B3A /* ProfileImageCollectionViewCell.swift in Sources */,
 				E4788FA82D4A8A7C008D4B3A /* PortfolioViewModel.swift in Sources */,
+				E4365A2B2D85498B00247FF6 /* Router.swift in Sources */,
 				E43C7EC92D3E4D76009C81C2 /* ChartCell.swift in Sources */,
 				E4788F862D49FACC008D4B3A /* MyPageSectionButton.swift in Sources */,
 				E4788FA12D4A1F3C008D4B3A /* CryptoInput.swift in Sources */,
