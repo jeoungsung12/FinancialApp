@@ -28,12 +28,15 @@
 		E4365A2B2D85498B00247FF6 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A2A2D85498B00247FF6 /* Router.swift */; };
 		E4365A2D2D85499100247FF6 /* CoinRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A2C2D85499100247FF6 /* CoinRouter.swift */; };
 		E4365A2F2D85499600247FF6 /* NewsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A2E2D85499600247FF6 /* NewsRouter.swift */; };
+		E4365A352D854B8A00247FF6 /* AiRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A342D854B8A00247FF6 /* AiRouter.swift */; };
+		E4365A392D854C2B00247FF6 /* AiRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A382D854C2B00247FF6 /* AiRepository.swift */; };
+		E4365A3B2D854C3000247FF6 /* NewsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A3A2D854C3000247FF6 /* NewsRepository.swift */; };
+		E4365A3D2D854C3500247FF6 /* CoinRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A3C2D854C3500247FF6 /* CoinRepository.swift */; };
 		E43C7EAE2D3E3B8F009C81C2 /* UIViewController + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */; };
 		E43C7EB02D3E3B92009C81C2 /* UserDefinedFunction.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */; };
 		E43C7EB52D3E3CB6009C81C2 /* HomeItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EB42D3E3CB6009C81C2 /* HomeItems.swift */; };
 		E43C7EB72D3E3D89009C81C2 /* ApiKeyList.plist in Resources */ = {isa = PBXBuildFile; fileRef = E43C7EB62D3E3D89009C81C2 /* ApiKeyList.plist */; };
 		E43C7EBB2D3E45F4009C81C2 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EBA2D3E45F4009C81C2 /* NetworkManager.swift */; };
-		E43C7EBD2D3E4650009C81C2 /* APIEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EBC2D3E4650009C81C2 /* APIEndpoint.swift */; };
 		E43C7EC32D3E478C009C81C2 /* ChartHostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC02D3E478C009C81C2 /* ChartHostingViewController.swift */; };
 		E43C7EC42D3E478C009C81C2 /* PieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC12D3E478C009C81C2 /* PieChartView.swift */; };
 		E43C7EC52D3E478C009C81C2 /* DetailChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C7EC22D3E478C009C81C2 /* DetailChartView.swift */; };
@@ -163,12 +166,15 @@
 		E4365A2A2D85498B00247FF6 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		E4365A2C2D85499100247FF6 /* CoinRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRouter.swift; sourceTree = "<group>"; };
 		E4365A2E2D85499600247FF6 /* NewsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRouter.swift; sourceTree = "<group>"; };
+		E4365A342D854B8A00247FF6 /* AiRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiRouter.swift; sourceTree = "<group>"; };
+		E4365A382D854C2B00247FF6 /* AiRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiRepository.swift; sourceTree = "<group>"; };
+		E4365A3A2D854C3000247FF6 /* NewsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsRepository.swift; sourceTree = "<group>"; };
+		E4365A3C2D854C3500247FF6 /* CoinRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRepository.swift; sourceTree = "<group>"; };
 		E43C7EAD2D3E3B8F009C81C2 /* UIViewController + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController + Extension.swift"; sourceTree = "<group>"; };
 		E43C7EAF2D3E3B92009C81C2 /* UserDefinedFunction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefinedFunction.swift; sourceTree = "<group>"; };
 		E43C7EB42D3E3CB6009C81C2 /* HomeItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeItems.swift; sourceTree = "<group>"; };
 		E43C7EB62D3E3D89009C81C2 /* ApiKeyList.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKeyList.plist; sourceTree = "<group>"; };
 		E43C7EBA2D3E45F4009C81C2 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
-		E43C7EBC2D3E4650009C81C2 /* APIEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIEndpoint.swift; sourceTree = "<group>"; };
 		E43C7EC02D3E478C009C81C2 /* ChartHostingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartHostingViewController.swift; sourceTree = "<group>"; };
 		E43C7EC12D3E478C009C81C2 /* PieChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PieChartView.swift; sourceTree = "<group>"; };
 		E43C7EC22D3E478C009C81C2 /* DetailChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailChartView.swift; sourceTree = "<group>"; };
@@ -324,6 +330,7 @@
 				E4365A2A2D85498B00247FF6 /* Router.swift */,
 				E4365A2C2D85499100247FF6 /* CoinRouter.swift */,
 				E4365A2E2D85499600247FF6 /* NewsRouter.swift */,
+				E4365A342D854B8A00247FF6 /* AiRouter.swift */,
 			);
 			path = Router;
 			sourceTree = "<group>";
@@ -331,6 +338,9 @@
 		E4365A302D8549B600247FF6 /* Repository */ = {
 			isa = PBXGroup;
 			children = (
+				E4365A382D854C2B00247FF6 /* AiRepository.swift */,
+				E4365A3A2D854C3000247FF6 /* NewsRepository.swift */,
+				E4365A3C2D854C3500247FF6 /* CoinRepository.swift */,
 			);
 			path = Repository;
 			sourceTree = "<group>";
@@ -712,7 +722,6 @@
 				E43C7EBA2D3E45F4009C81C2 /* NetworkManager.swift */,
 				E4365A112D8544D700247FF6 /* NetworkMonitorManager.swift */,
 				E4788CFD2D491961008D4B3A /* NetworkError.swift */,
-				E43C7EBC2D3E4650009C81C2 /* APIEndpoint.swift */,
 				E4365A302D8549B600247FF6 /* Repository */,
 				E4365A312D8549BC00247FF6 /* Services */,
 				E4365A292D85497A00247FF6 /* Router */,
@@ -943,6 +952,7 @@
 				E4365A162D85454E00247FF6 /* ErrorViewModel.swift in Sources */,
 				E4365A172D85454E00247FF6 /* ErrorViewController.swift in Sources */,
 				E4365A2D2D85499100247FF6 /* CoinRouter.swift in Sources */,
+				E4365A392D854C2B00247FF6 /* AiRepository.swift in Sources */,
 				E42E36022D53666600822908 /* ChartInfo.swift in Sources */,
 				E4788D002D491C5F008D4B3A /* NewsListTableViewCell.swift in Sources */,
 				E47B13672D508A050071CE59 /* StatusErrorViewController.swift in Sources */,
@@ -964,6 +974,7 @@
 				E43C7EC52D3E478C009C81C2 /* DetailChartView.swift in Sources */,
 				E4788FAB2D4A8ACA008D4B3A /* PortfolioSummaryView.swift in Sources */,
 				E43C81822D3FC25A009C81C2 /* GreedModel.swift in Sources */,
+				E4365A352D854B8A00247FF6 /* AiRouter.swift in Sources */,
 				E4788FA62D4A8A76008D4B3A /* PortfolioViewController.swift in Sources */,
 				E4DABF142BC2CEC200AE9DFB /* NewsServiceModel.swift in Sources */,
 				E47B10262D4CF9340071CE59 /* FAQViewController.swift in Sources */,
@@ -972,12 +983,14 @@
 				E4DABF182BC2D46100AE9DFB /* String + Extension.swift in Sources */,
 				E4788F8E2D49FB48008D4B3A /* MyPageType.swift in Sources */,
 				E4DABEE02BBF17A600AE9DFB /* OrderBookService.swift in Sources */,
+				E4365A3D2D854C3500247FF6 /* CoinRepository.swift in Sources */,
 				E43C7EAE2D3E3B8F009C81C2 /* UIViewController + Extension.swift in Sources */,
 				E4365A2F2D85499600247FF6 /* NewsRouter.swift in Sources */,
 				E40B271A2D426FEF00A16D4C /* UIView + Extension.swift in Sources */,
 				E4788EDA2D49F583008D4B3A /* UIButton + Extension.swift in Sources */,
 				E4DABF322BC2EDEA00AE9DFB /* ChatServiceModel.swift in Sources */,
 				E43C80A62D3F34CF009C81C2 /* DatabaseObject.swift in Sources */,
+				E4365A3B2D854C3000247FF6 /* NewsRepository.swift in Sources */,
 				E4DABECC2BBEB21C00AE9DFB /* CandleModel.swift in Sources */,
 				E4DABF2F2BC2EDC500AE9DFB /* AiService.swift in Sources */,
 				E483068A2C4914F90017F6B2 /* CoinResult.swift in Sources */,
@@ -1000,7 +1013,6 @@
 				E4DABEC82BBEB19F00AE9DFB /* CandleService.swift in Sources */,
 				E40B24802D411D3600A16D4C /* HeartTableViewCell.swift in Sources */,
 				E4989EDA2BC43FA500D888DC /* ChatModel.swift in Sources */,
-				E43C7EBD2D3E4650009C81C2 /* APIEndpoint.swift in Sources */,
 				E4365A272D8546FC00247FF6 /* BaseViewModel.swift in Sources */,
 				E4365A282D8546FC00247FF6 /* ReusableIdentifier.swift in Sources */,
 				E4788FAD2D4A8AE8008D4B3A /* PortfolioTableViewCell.swift in Sources */,
