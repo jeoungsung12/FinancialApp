@@ -9,7 +9,7 @@ import UIKit
 import SnapKit
 import Lottie
 
-final class ErrorViewController: UIViewController {
+final class StatusErrorViewController: UIViewController {
     private lazy var dismissBarButton = UIBarButtonItem(image: UIImage(systemName: "xmark"), style: .plain, target: self, action: #selector(dismissButtonTapped))
     private let imageView = LottieAnimationView(name: "lottie")
     private let titleLabel = UILabel()
@@ -31,7 +31,7 @@ final class ErrorViewController: UIViewController {
     
 }
 
-extension ErrorViewController {
+extension StatusErrorViewController {
     
     private func configureHierarchy() {
         self.navigationItem.leftBarButtonItem = dismissBarButton
@@ -85,7 +85,7 @@ extension ErrorViewController {
     }
 }
 
-extension ErrorViewController {
+extension StatusErrorViewController {
     
     @objc
     private func dismissButtonTapped(_ sender: UIBarButtonItem) {

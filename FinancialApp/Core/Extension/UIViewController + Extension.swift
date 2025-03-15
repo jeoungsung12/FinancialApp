@@ -28,7 +28,7 @@ extension UIViewController {
     }
     
     func errorPresent(_ type: NetworkError.CustomError) {
-        let vc = UINavigationController(rootViewController: ErrorViewController(type.errorDescription ?? ""))
+        let vc = UINavigationController(rootViewController: StatusErrorViewController(type.errorDescription ?? ""))
         vc.modalPresentationStyle = .fullScreen
         self.present(vc, animated: false)
     }

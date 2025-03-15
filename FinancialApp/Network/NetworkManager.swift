@@ -9,6 +9,9 @@ import Foundation
 import Alamofire
 import RxSwift
 //TODO: - Router Pattern
+protocol NetworkManagerType: AnyObject {
+    
+}
 
 final class NetworkManager {
     
