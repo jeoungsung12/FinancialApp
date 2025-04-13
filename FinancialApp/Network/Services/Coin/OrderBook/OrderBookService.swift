@@ -30,7 +30,7 @@ final class OrderBookService {
                 case let .success(data):
                     let coinDataWithAdditionalInfo = data.map { AddTradesModel(tradesData: $0, coinName: coinModel.korean_name, englishName: coinModel.english_name) }
                     return Observable.just(coinDataWithAdditionalInfo)
-                case let .failure(error):
+                case .failure:
                     return Observable.just([])
                 }
             }
