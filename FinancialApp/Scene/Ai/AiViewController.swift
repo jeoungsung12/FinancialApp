@@ -22,7 +22,7 @@ final class AiViewController: UIViewController {
         color: .white
     )
     private let scrollView = UIScrollView()
-    private let contentView = UIView()  // ✅ 스크롤 뷰 내부의 컨텐츠 뷰 추가
+    private let contentView = UIView()
     private let stackView = UIStackView()
     private let imageView = UIImageView()
     private let resultLabel = UILabel()

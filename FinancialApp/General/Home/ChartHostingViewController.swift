@@ -10,3 +10,7 @@ import SwiftUI
 
 final class ChartHostingViewController: UIHostingController<CandleChartView> { 
 }
+
+
+final class LineHostingViewController: UIHostingController<LineChartView> {
+}

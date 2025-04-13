@@ -4,15 +4,36 @@
 //
 //  Created by 정성윤 on 1/30/25.
 //
+//
+//  DetailChartCell.swift
+//  FinancialApp
+//
+//  Created by 정성윤 on 1/30/25.
+//
 
 import UIKit
 import SnapKit
 import Toast
 import iOSDropDown
+import RxSwift
+import RxCocoa
 
 final class DetailChartTableViewCell: UITableViewCell {
     static let id: String = "ChartTableViewCell"
     private let chartView = DetailChartView(true)
+    private let lineChartView = DetailLineView()
+
+    private let viewModel = DetailWebSocketViewModel()
+    private let input = DetailWebSocketViewModel.Input(
+        loadTrigger: PublishRelay()
+    )
+    private var disposeBag = DisposeBag()
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+//        disposeBag = DisposeBag()
+//        viewModel.disconnectSocket()
+    }
     
     private let price: UILabel = {
         let label = UILabel()
@@ -62,16 +83,17 @@ final class DetailChartTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         self.contentView.isUserInteractionEnabled = false
         configureView()
+        setBinding()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(_ candleModel: [CandleModel],_ ticksModel: AddTradesModel, greed: GreedData?) {
+    func configure(_ candleModel: [CandleModel], _ ticksModel: AddTradesModel, greed: GreedData?, dropDownText: String) {
         let price = ticksModel.tradesData.trade_price
         let ask_bid = ticksModel.tradesData.ask_bid
-        chartView.configure(candleModel[0].market, candleModel[0].opening_price.formatted(), candleModel)
+        chartView.configure(candleModel[0].market, candleModel[0].opening_price.formatted(), candleModel, dropDownText)
         
         self.price.text = "\(price.formatted())₩"
         if ask_bid == "ASK" {
@@ -81,7 +103,7 @@ final class DetailChartTableViewCell: UITableViewCell {
             }
             self.arrow.text = "📈매수"
             self.arrow.textColor = .red
-        }else {
+        } else {
             self.price.layer.borderColor = UIColor.systemGreen.cgColor
             DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                 self.price.layer.borderColor = UIColor.black.cgColor
@@ -93,6 +115,8 @@ final class DetailChartTableViewCell: UITableViewCell {
         guard let greed else { return }
         let greedText = KoreanGreed.greed.catchText(greed.value_classification)
         greedLabel.text = " 공포탐욕지수 \(greed.value)% \(greedText.returnText) "
+        
+        input.loadTrigger.accept(candleModel[0].market)
     }
     
 }
@@ -100,19 +124,24 @@ final class DetailChartTableViewCell: UITableViewCell {
 extension DetailChartTableViewCell {
     
     private func configureHierarchy() {
-        self.addSubview(chartView)
-        self.addSubview(price)
-        self.addSubview(arrow)
-        self.addSubview(greedLabel)
-        self.addSubview(aiButton)
+        [lineChartView, chartView, price, arrow, greedLabel, aiButton].forEach {
+            self.addSubview($0)
+        }
         configureLayout()
     }
     
     private func configureLayout() {
-        chartView.snp.makeConstraints { make in
-            make.height.equalTo(250)
+        lineChartView.snp.makeConstraints { make in
+            make.height.equalTo(150)
             make.top.horizontalEdges.equalToSuperview()
         }
+        
+        chartView.snp.makeConstraints { make in
+            make.height.equalTo(250)
+            make.horizontalEdges.equalToSuperview()
+            make.top.equalTo(lineChartView.snp.bottom).offset(60)
+        }
+        
         price.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(24)
             make.top.equalTo(chartView.snp.bottom).offset(36)
@@ -150,10 +179,22 @@ extension DetailChartTableViewCell {
                 self.heartTapped?(false, title)
             }
         }
+        
         configureHierarchy()
     }
     
     @objc private func aiButtonTapped() {
         aiTapped?()
+    }
+    
+    private func setBinding() {
+        let output = viewModel.transform(input)
+        
+        output.coinResult
+            .drive(with: self) { owner, candleData in
+                if candleData.isEmpty { return }
+                owner.lineChartView.configure(candleData)
+            }
+            .disposed(by: disposeBag)
     }
 }

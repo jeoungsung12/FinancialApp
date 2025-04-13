@@ -74,6 +74,8 @@ extension CoinDetailViewController {
         self.setNavigation("")
         self.view.backgroundColor = .black
         
+        print(cryptoData.filter({ $0.english_name == coinName ?? "" }).first!.market)
+        
         configureHierarchy()
     }
 }
@@ -121,8 +123,8 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
         case .chart:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: DetailChartTableViewCell.id, for: indexPath) as? DetailChartTableViewCell else { return UITableViewCell() }
             if let chartData = coinData.chartData, let ticksData = coinData.ticksData {
-                cell.configure(chartData[0], ticksData[0][0], greed: coinData.greedIndex?.data.first)
-                //TODO: 수정
+                cell.configure(chartData[0], ticksData[0][0], greed: coinData.greedIndex?.data.first, dropDownText: self.searchCoinType.title)
+                
                 cell.dropdownTapped = { [weak self] title in
                     self?.searchCoinType = CandleType.days.returnType(title)
                     self?.inputTrigger.onNext((CoinDetailInput(name: self?.coinName, type: self?.searchCoinType ?? .days)))
@@ -172,7 +174,7 @@ extension CoinDetailViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     @objc private func reloadData() {
-        inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: searchCoinType)))
+        inputTrigger.onNext((CoinDetailInput(name: self.coinName, type: self.searchCoinType)))
     }
     
 }

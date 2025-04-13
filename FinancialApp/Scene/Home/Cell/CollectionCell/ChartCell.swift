@@ -46,8 +46,8 @@ private extension ChartCell {
 
 extension ChartCell {
     
-    func configure(_ model: [CandleModel]) {
-        chartView.configure(model[0].market, model[0].opening_price.formatted(), model)
+    func configure(_ model: [CandleModel], type: String) {
+        chartView.configure(model[0].market, model[0].opening_price.formatted(), model, type)
     }
     
 }

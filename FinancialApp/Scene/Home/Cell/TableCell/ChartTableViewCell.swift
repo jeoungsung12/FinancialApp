@@ -107,7 +107,7 @@ extension ChartTableViewCell: UICollectionViewDelegate, UICollectionViewDataSour
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ChartCell.id, for: indexPath) as? ChartCell else { return UICollectionViewCell() }
         configurePage()
-        cell.configure(coinData[indexPath.item])
+        cell.configure(coinData[indexPath.item], type: "일")
         cell.heartTapped = { [weak self] type in
             guard let self = self else { return }
             switch type {

@@ -15,6 +15,11 @@
 		E40B271A2D426FEF00A16D4C /* UIView + Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40B27192D426FEF00A16D4C /* UIView + Extension.swift */; };
 		E40B271C2D42816E00A16D4C /* HeartCustomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40B271B2D42816E00A16D4C /* HeartCustomView.swift */; };
 		E42E36022D53666600822908 /* ChartInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42E36012D53666600822908 /* ChartInfo.swift */; };
+		E42F14E42DABD620007DB350 /* WebSocketManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42F14E32DABD61F007DB350 /* WebSocketManager.swift */; };
+		E42F14E62DABDEA4007DB350 /* DetailWebSocketViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42F14E52DABDEA4007DB350 /* DetailWebSocketViewModel.swift */; };
+		E42F14E82DABE499007DB350 /* DetailLineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42F14E72DABE499007DB350 /* DetailLineView.swift */; };
+		E42F14EA2DABE5A3007DB350 /* LineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42F14E92DABE5A3007DB350 /* LineChartView.swift */; };
+		E42F15102DABEBBE007DB350 /* WebSocketCandleData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42F150F2DABEBBE007DB350 /* WebSocketCandleData.swift */; };
 		E4365A122D8544D700247FF6 /* NetworkMonitorManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A112D8544D700247FF6 /* NetworkMonitorManager.swift */; };
 		E4365A162D85454E00247FF6 /* ErrorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A142D85454E00247FF6 /* ErrorViewModel.swift */; };
 		E4365A172D85454E00247FF6 /* ErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4365A132D85454E00247FF6 /* ErrorViewController.swift */; };
@@ -148,6 +153,11 @@
 		E40B27192D426FEF00A16D4C /* UIView + Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView + Extension.swift"; sourceTree = "<group>"; };
 		E40B271B2D42816E00A16D4C /* HeartCustomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartCustomView.swift; sourceTree = "<group>"; };
 		E42E36012D53666600822908 /* ChartInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartInfo.swift; sourceTree = "<group>"; };
+		E42F14E32DABD61F007DB350 /* WebSocketManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketManager.swift; sourceTree = "<group>"; };
+		E42F14E52DABDEA4007DB350 /* DetailWebSocketViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailWebSocketViewModel.swift; sourceTree = "<group>"; };
+		E42F14E72DABE499007DB350 /* DetailLineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailLineView.swift; sourceTree = "<group>"; };
+		E42F14E92DABE5A3007DB350 /* LineChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LineChartView.swift; sourceTree = "<group>"; };
+		E42F150F2DABEBBE007DB350 /* WebSocketCandleData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebSocketCandleData.swift; sourceTree = "<group>"; };
 		E4365A112D8544D700247FF6 /* NetworkMonitorManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitorManager.swift; sourceTree = "<group>"; };
 		E4365A132D85454E00247FF6 /* ErrorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewController.swift; sourceTree = "<group>"; };
 		E4365A142D85454E00247FF6 /* ErrorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorViewModel.swift; sourceTree = "<group>"; };
@@ -346,6 +356,8 @@
 				E43C7EC22D3E478C009C81C2 /* DetailChartView.swift */,
 				E40B246C2D41008D00A16D4C /* CandleChartView.swift */,
 				E4788EE42D49F65D008D4B3A /* CustomProfileButton.swift */,
+				E42F14E72DABE499007DB350 /* DetailLineView.swift */,
+				E42F14E92DABE5A3007DB350 /* LineChartView.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -568,6 +580,7 @@
 			isa = PBXGroup;
 			children = (
 				E4788FC32D4B5D8C008D4B3A /* DetailChartTableViewCell.swift */,
+				E42F14E52DABDEA4007DB350 /* DetailWebSocketViewModel.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -691,6 +704,7 @@
 			children = (
 				E43C7EBA2D3E45F4009C81C2 /* NetworkManager.swift */,
 				E4365A112D8544D700247FF6 /* NetworkMonitorManager.swift */,
+				E42F14E32DABD61F007DB350 /* WebSocketManager.swift */,
 				E4788CFD2D491961008D4B3A /* NetworkError.swift */,
 				E472933E2DAB9038009D60D3 /* APIEndpoint.swift */,
 				E4365A312D8549BC00247FF6 /* Services */,
@@ -758,6 +772,7 @@
 			isa = PBXGroup;
 			children = (
 				E4DABECB2BBEB21C00AE9DFB /* CandleModel.swift */,
+				E42F150F2DABEBBE007DB350 /* WebSocketCandleData.swift */,
 			);
 			path = Candle;
 			sourceTree = "<group>";
@@ -946,6 +961,7 @@
 				E4DABF142BC2CEC200AE9DFB /* NewsServiceModel.swift in Sources */,
 				E47B10262D4CF9340071CE59 /* FAQViewController.swift in Sources */,
 				E4788F982D4A1853008D4B3A /* CryptoInputViewController.swift in Sources */,
+				E42F14E62DABDEA4007DB350 /* DetailWebSocketViewModel.swift in Sources */,
 				E40B246D2D41008D00A16D4C /* CandleChartView.swift in Sources */,
 				E4DABF182BC2D46100AE9DFB /* String + Extension.swift in Sources */,
 				E4788F8E2D49FB48008D4B3A /* MyPageType.swift in Sources */,
@@ -959,12 +975,14 @@
 				E4DABECC2BBEB21C00AE9DFB /* CandleModel.swift in Sources */,
 				E4DABF2F2BC2EDC500AE9DFB /* AiService.swift in Sources */,
 				E483068A2C4914F90017F6B2 /* CoinResult.swift in Sources */,
+				E42F14E82DABE499007DB350 /* DetailLineView.swift in Sources */,
 				E4788FC42D4B5D8C008D4B3A /* DetailChartTableViewCell.swift in Sources */,
 				E4788F9B2D4A189D008D4B3A /* CryptoCell.swift in Sources */,
 				E4788E392D49E8B5008D4B3A /* Color + Extension.swift in Sources */,
 				E4CAF4ED2BBBD04600CB18EC /* HeartViewController.swift in Sources */,
 				E4788FB72D4B3D1B008D4B3A /* RecommandTableViewCell.swift in Sources */,
 				E4788E3B2D49E97B008D4B3A /* TabBarController.swift in Sources */,
+				E42F15102DABEBBE007DB350 /* WebSocketCandleData.swift in Sources */,
 				E43C7EB52D3E3CB6009C81C2 /* HomeItems.swift in Sources */,
 				E4788F922D49FC1A008D4B3A /* ProfileImageCollectionViewCell.swift in Sources */,
 				E4788FA82D4A8A7C008D4B3A /* PortfolioViewModel.swift in Sources */,
@@ -990,6 +1008,7 @@
 				E4DABF162BC2CECB00AE9DFB /* NewsService.swift in Sources */,
 				E4788D022D491C82008D4B3A /* TicksTableViewCell.swift in Sources */,
 				E483068E2C49651C0017F6B2 /* TicksCollectionViewCell.swift in Sources */,
+				E42F14EA2DABE5A3007DB350 /* LineChartView.swift in Sources */,
 				E471E09B2D4B964800AB42D1 /* AiViewModel.swift in Sources */,
 				E47B132B2D5044A50071CE59 /* TradesModel.swift in Sources */,
 				E43C7EC72D3E489F009C81C2 /* ChartData.swift in Sources */,
@@ -1006,6 +1025,7 @@
 				E4365A122D8544D700247FF6 /* NetworkMonitorManager.swift in Sources */,
 				E4CAF4EF2BBBD04D00CB18EC /* HeartViewModel.swift in Sources */,
 				E4CAF4D92BB9B2AD00CB18EC /* CoinService.swift in Sources */,
+				E42F14E42DABD620007DB350 /* WebSocketManager.swift in Sources */,
 				E4788CFE2D491961008D4B3A /* NetworkError.swift in Sources */,
 				E4788D042D491CA7008D4B3A /* AdsTableViewCell.swift in Sources */,
 				E471E0A02D4BC78A00AB42D1 /* AiViewController.swift in Sources */,

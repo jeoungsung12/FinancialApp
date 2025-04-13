@@ -4,6 +4,12 @@
 //
 //  Created by 정성윤 on 1/18/25.
 //
+//
+//  DetailChartView.swift
+//  SeSAC_Week4(Assignment5)
+//
+//  Created by 정성윤 on 1/18/25.
+//
 
 import UIKit
 import SnapKit
@@ -39,11 +45,17 @@ final class DetailChartView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func configure(_ title: String, _ open_price: String ,_ model: [CandleModel]) {
+    func configure(_ title: String, _ open_price: String, _ model: [CandleModel], _ dropDownText: String) {
         descriptionLabel.text = "시가 \(open_price)₩"
         selectedType = (db.heartList.map{ $0.name }.contains(title)) ? true : false
         titleLabel.text = cryptoData.filter( { $0.market == title }).first?.korean_name
         heartButton.setImage(UIImage(systemName: selectedType ? "heart.fill" : "heart"), for: .normal)
+        
+        // 드롭다운 텍스트 설정
+        if chartType {
+            dropDown.text = dropDownText
+        }
+        
         chartHostingViewController?.view.removeFromSuperview()
         chartHostingViewController = ChartHostingViewController(rootView: CandleChartView(chartData: model))
         configureView()
@@ -105,7 +117,7 @@ extension DetailChartView {
     
     private func configureDropDown() {
         if !chartType { return }
-        dropDown.text = "일"
+        // "일"로 초기화하는 부분 제거함
         dropDown.selectedIndex = 0
         dropDown.textColor = .white
         dropDown.arrowColor = .white
