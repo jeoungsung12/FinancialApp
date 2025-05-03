@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 import RxCocoa
+
 protocol WebSocketManagerType: AnyObject {
     func connect()
     func receiveMessage()

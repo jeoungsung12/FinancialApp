@@ -12,6 +12,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
     private var networkMonitor: NetworkMonitorManagerType = NetworkMonitorManager()
+    private var webSocketManager: WebSocketManagerType = WebSocketManager.shared
     
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let scene = (scene as? UIWindowScene) else { return }
@@ -82,7 +83,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
     
     func sceneDidDisconnect(_ scene: UIScene) {
-        
+        webSocketManager.disConnect()
     }
 
     func sceneWillResignActive(_ scene: UIScene) {
@@ -94,9 +95,7 @@ final class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {
-        
+        webSocketManager.disConnect()
     }
-
-
 }
 
